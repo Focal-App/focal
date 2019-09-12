@@ -1,0 +1,49 @@
+@import 'styles/_shared.scss';
+
+.clients--container {
+    max-width: $max-width;
+    margin: 0 auto;
+
+    h1 {
+        text-align: left;
+        color: $theme-color--darker;
+        margin-bottom: 10px;
+    }
+    
+}
+
+table {
+    background-color: $grey-100;
+    width: 100%;
+    text-align: left;
+    font-size: $h5;
+
+    th {
+        padding: 16px;
+        font-weight: 400;
+        color: $grey-800;
+    }
+
+    tr:first-child {
+        text-transform: uppercase;
+        font-size: $h6--larger;
+        font-weight: 600;
+        th {
+            font-weight: 700;
+            color: $grey-700;
+        }
+    }
+
+    tr:nth-child(even) {
+        background-color: white;
+    }
+
+    .client--stage {
+        font-weight: 700;
+    }
+
+    .client--category {
+        color: $grey-600;
+        font-weight: 700;
+    }
+}

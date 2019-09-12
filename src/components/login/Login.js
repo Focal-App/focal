@@ -10,7 +10,7 @@ const Login = ({ apiHandler, setUser, match: { params: { uuid } } }) => {
     const [success, setSuccess] = useState(false)
     useEffect(() => {
         const fetchUser = async () => {
-            const { data, errors } = await apiHandler.get(`/api/users/${uuid}`);
+            const { data, errors } = await apiHandler.get(`/api/user/${uuid}`);
             if (data) {
                 localStorage.setItem("user", JSON.stringify(data))
                 setSuccess(true)

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import AuthenticatedHeader from 'components/header/Header';
-import ClientsPage from "components/Clients/ClientsPage";
+import Clients from "components/Clients/Clients";
 import Login from 'components/login/Login';
 import APIHandler from './utilities/APIHandler/apiHandler';
 import './App.scss';
@@ -23,7 +23,7 @@ export const AuthenticatedApp = (props) => {
     <>
       <AuthenticatedHeader user={user} setUser={setUser} apiHandler={apiHandler} />
       <UnauthenticatedApp setUser={setUser} apiHandler={apiHandler}>
-        <Route exact path="/clients" render={(props) => <ClientsPage apiHandler={apiHandler} {...props} />} />
+        <Route exact path="/clients" render={(props) => <Clients apiHandler={apiHandler} user_uuid={user.uuid} {...props} />} />
       </UnauthenticatedApp>
     </>
   )

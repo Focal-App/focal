@@ -1,9 +1,12 @@
 import React from "react";
 import Page from "components/UI/Page";
 
-const ClientsPage = () => (
-    <Page>
-        <h1>All Clients</h1>
+const ClientsPage = ({ loading, children }) => (
+    <Page loading={loading} >
+        <section className='clients--container'>
+            <h1>Clients</h1>
+            {children}
+        </section>
     </Page>
 )
 

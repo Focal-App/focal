@@ -22,14 +22,14 @@ describe('Login Flow', () => {
             }
         };
         const apiHandler = new MockAPIHandler(successfulLoginData);
-        const { findByText } = render(
+        const { findAllByText } = render(
             <MemoryRouter initialEntries={["/login/uuid", "/clients"]} initialIndex={0}>
                 <App apiHandler={apiHandler} />
             </MemoryRouter>
         )
 
         await waitForElement(() =>
-            findByText(/clients/i)
+            findAllByText(/clients/i)
         )
     })
 
@@ -40,7 +40,7 @@ describe('Login Flow', () => {
             }
         };
         const apiHandler = new MockAPIHandler(failedLoginData);
-        const { findAllByText, findByText } = render(
+        const { findAllByText, getByText } = render(
             <MemoryRouter initialEntries={["/login/uuid"]} initialIndex={0}>
                 <App apiHandler={apiHandler} />
             </MemoryRouter>
@@ -49,6 +49,7 @@ describe('Login Flow', () => {
         await waitForElement(() =>
             findAllByText(/log in/i)
         )
-        findByText(/issue logging in/i)
+
+        getByText(/issue logging in/i)
     })
 })
