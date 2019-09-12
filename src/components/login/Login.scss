@@ -1,0 +1,38 @@
+@import 'styles/_shared.scss';
+
+.login--container {
+    background-color: white;
+    width: 400px;
+    padding: 40px 30px;
+    border-radius: 6px;
+    box-shadow: $box-shadow-blue;
+    margin: 100px auto;
+    justify-items: center;
+    align-items: center;
+
+    h1 {
+        text-align: center;
+        color: $theme-color;
+        font-size: $h2;
+        font-family: Helvetica;
+    }
+
+    .google-btn {
+        background-color: $theme-color;
+        border: none;
+        box-shadow: $box-shadow;
+        padding: 20px;
+        width: 100%;
+        cursor: pointer;
+        
+        color: white;
+        font-size: 16px;
+        font-weight: 700;
+        text-align: center;
+        text-transform: capitalize;
+
+        &:hover {
+            background-color: $theme-color--dark;
+        }
+    }
+}

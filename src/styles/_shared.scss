@@ -22,6 +22,13 @@ $h5: 16px;
 $h6--larger: 14px;
 $h6: 12px;
 
+@mixin logo {
+    color: $theme-color;
+    font-size: $h4--larger;
+    font-family: Helvetica;
+    text-transform: lowercase;
+    font-weight: 700;
+}
 /*
 ==========================
 COLORS
@@ -37,14 +44,13 @@ $grey-300: #e6e6e6;
 $grey-200: #efefef;
 $grey-100: #f8f8f8;
 
-$blue-100: #F5F7FA;
+$blue-100: #EFF2FA;
 $blue-200: #E5F6FF;
-$blue-300: rgb(177, 213, 243);
+$blue-300: #A2AEC3;
 $blue-400: rgb(69, 140, 199);
-$blue-500: #2186EB;
-$blue-600: rgb(22, 100, 179);
-$blue-gradient:  linear-gradient(30deg, $theme-color--dark, $theme-color);
-$blue-gradient-med:  linear-gradient(5deg,  rgb(142, 182, 218), $theme-color--med-light);
+$blue-500: #466D98;
+$blue-600: rgb(54, 91, 131);
+
 
 $purple-1000: #19216C;
 $purple-900: #2D3A8C;
@@ -68,7 +74,6 @@ $red-300: #FF9B9B;
 $red-200: #FFBDBD;
 $red-100: #FFE3E3;
 
-
 $green-1000: #014D40;
 $green-900: #0C6B58;
 $green-800: #147D64;
@@ -80,19 +85,25 @@ $green-300: #8EEDC7;
 $green-200: #C6F7E2;
 $green-100: #EFFCF6;
 
-
 $attention-red: rgb(236, 82, 71);
 $attention-red--light: rgb(250, 230, 228);
 $success-green: rgb(117, 195, 128);
 $success-green--light: rgb(220, 250, 224); 
+
+$theme-color: $blue-500;
+$theme-color--light: $blue-300;
+$theme-color--dark: $blue-600;
+$theme-color--med-light: $blue-400;
+$theme-color--gradient: linear-gradient(30deg, $theme-color--light, $theme-color);
+$blue-gradient-med:  linear-gradient(5deg,  rgb(142, 182, 218), $theme-color--med-light);
 /*
 ==========================
 STYLING
 ==========================
 */
 $page-padding: 20px;
-$box-shadow: 0px 3px 6px $light-grey;
-$box-shadow-blue: 0px 3px 6px $theme-color--dark;
+$box-shadow: 0px 3px 6px $grey-400;
+$box-shadow-blue: 0px 3px 6px $theme-color--light;
 $max-width: 1180px;
 
 /*
