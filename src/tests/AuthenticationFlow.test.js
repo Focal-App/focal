@@ -3,27 +3,24 @@ import { App } from 'App';
 import { MemoryRouter } from "react-router-dom";
 import { render, cleanup, fireEvent, waitForElement } from '@testing-library/react';
 import MockAPIHandler from 'utilities/APIHandler/mockApiHandler';
+import Endpoints from "utilities/apiEndpoint";
+import MockApiData from "utilities/APIHandler/mockApiData";
 
 describe('Login Flow', () => {
     afterEach(() => {
         cleanup();
     })
+    const uuid = "1234";
 
     it('renders Client Page after successful fetch for user data during Login', async () => {
-        const successfulLoginData = {
-            "data": {
-                "data": {
-                    "avatar": "avatar-image-link",
-                    "email": "email",
-                    "first_name": "test-user",
-                    "provider": "google",
-                    "uuid": "uuid"
-                }
-            }
-        };
-        const apiHandler = new MockAPIHandler(successfulLoginData);
+        const successfulLoginData = MockApiData.successfulLoginData({ uuid: uuid })
+        const clientsList = MockApiData.successData([]);
+        const apiHandler = new MockAPIHandler({ 
+            [Endpoints.getUser(uuid)]: [successfulLoginData], 
+            [Endpoints.getClients(uuid)]: [clientsList] 
+        });
         const { findAllByText } = render(
-            <MemoryRouter initialEntries={["/login/uuid", "/clients"]} initialIndex={0}>
+            <MemoryRouter initialEntries={[`/login/${uuid}`, "/clients"]} initialIndex={0}>
                 <App apiHandler={apiHandler} />
             </MemoryRouter>
         )
@@ -34,14 +31,10 @@ describe('Login Flow', () => {
     })
 
     it('renders Login Page with Error Banner after failed fetch for user data during Login', async () => {
-        const failedLoginData = {
-            "data": {
-                "errors": ["Issue logging in"]
-            }
-        };
-        const apiHandler = new MockAPIHandler(failedLoginData);
+        const failedLoginData = MockApiData.errorData(["Issue logging in"]);
+        const apiHandler = new MockAPIHandler({ [Endpoints.getUser(uuid)]: [failedLoginData],  });
         const { findAllByText, getByText } = render(
-            <MemoryRouter initialEntries={["/login/uuid"]} initialIndex={0}>
+            <MemoryRouter initialEntries={[`/login/${uuid}`]} initialIndex={0}>
                 <App apiHandler={apiHandler} />
             </MemoryRouter>
         )

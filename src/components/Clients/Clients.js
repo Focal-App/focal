@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import ClientsPage from "./ClientsPage";
 import Error from "components/UI/Error";
-import { formatDate } from "utilities/date";
 import NoContent from "components/UI/NoContent";
+import Endpoints from "utilities/apiEndpoint";
 import DataAdapter from "utilities/APIHandler/dataAdapter";
 import "./ClientsPage.scss";
 
@@ -14,8 +14,7 @@ const Clients = ({ apiHandler, user_uuid }) => {
     useEffect(() => {
         const fetchClients = async () => {
             setLoading(true);
-            const { data, errors } = await apiHandler.get(`/api/user/${user_uuid}/clients/data`);
-            console.log({ data, errors })
+            const { data, errors } = await apiHandler.get(Endpoints.getClients(user_uuid));
             if (data) {
                 setClients(DataAdapter.toAllClientDataModel(data));
             } else {

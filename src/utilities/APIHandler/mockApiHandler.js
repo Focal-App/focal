@@ -1,20 +1,24 @@
 class MockAPIHandler {
     constructor(data) {
         this.data = data;
-        this.resolvedData = this.setResolvedData();
     }
 
     get = async (endpoint) => {
-        return Promise.resolve(this.resolvedData);
+        let resolvedData = this.setResolvedDataFor(endpoint)
+        return Promise.resolve(resolvedData);
     }
     
-    setResolvedData = () => {
-        if (this.data) {
-            return this.data.errors ? this.data : this.data.data;
+    setResolvedDataFor = (endpoint) => {
+        let endpointData = this.data[endpoint];
+        if (endpointData) {
+            const resolvedData = endpointData[0];
+            if (endpointData.length > 1) {
+                endpointData.shift()
+            } 
+            return resolvedData.errors ? resolvedData : resolvedData.data;
         } else {
-            return true;
+            return `Missing mock data for ${endpoint}.`;
         }
-
     }
 }
 

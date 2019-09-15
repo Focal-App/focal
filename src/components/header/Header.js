@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import './Header.scss';
+import Endpoints from "utilities/apiEndpoint";
 
 const BasicHeader = (props) => (
     <header className="header--container">
@@ -18,7 +19,7 @@ const AuthenticatedHeader = ({ user, setUser, apiHandler }) => {
     const logOut = async() => {
         localStorage.removeItem("user");
         localStorage.removeItem("token");
-        await apiHandler.get(`/auth/signout`);
+        const response = await apiHandler.get(Endpoints.logout);
         setUser(null)
     }
 
