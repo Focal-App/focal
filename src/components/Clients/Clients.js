@@ -3,6 +3,7 @@ import ClientsPage from "./ClientsPage";
 import Error from "components/UI/Error";
 import { formatDate } from "utilities/date";
 import NoContent from "components/UI/NoContent";
+import DataAdapter from "utilities/APIHandler/dataAdapter";
 import "./ClientsPage.scss";
 
 const Clients = ({ apiHandler, user_uuid }) => {
@@ -16,7 +17,7 @@ const Clients = ({ apiHandler, user_uuid }) => {
             const { data, errors } = await apiHandler.get(`/api/user/${user_uuid}/clients/data`);
             console.log({ data, errors })
             if (data) {
-                setClients(data);
+                setClients(DataAdapter.toAllClientDataModel(data));
             } else {
                 setErrors(errors);
             }
@@ -40,19 +41,21 @@ const Clients = ({ apiHandler, user_uuid }) => {
 
 const ClientsTable = ({ clients }) => {
     const createClientsTable = (data) => {
-        return data.map(client => {
-            const { uuid, client_name, current_stage } = client;
-            const { package_events, package_name } = client.package;
-            const { category, step } = current_stage
-            console.log(package_events)
+        return data.map(allClientData => {
+            const { 
+                client: { client_name, uuid }, 
+                current_stage: { category, step }, 
+                package: { package_name, upcoming_shoot_date } 
+            } = allClientData;
+
             return (
                 <tr key={uuid}>
-                    <th>{client_name ? client_name : "-"}</th>
-                    <th>{package_name ? package_name : "-"}</th>
-                    <th>{package_events.length > 0 && package_events[0].shoot_date ? formatDate(package_events[0].shoot_date) : "-"}</th>
+                    <th>{client_name}</th>
+                    <th>{package_name}</th>
+                    <th>{upcoming_shoot_date}</th>
                     <th>
-                        <div className="client--category">{category ? category : "-"}</div>
-                        <div className="client--stage">{step ? step : "-"}</div>
+                        <div className="client--category">{category}</div>
+                        <div className="client--stage">{step}</div>
                     </th>
                 </tr>
             )
