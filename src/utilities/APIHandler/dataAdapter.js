@@ -16,9 +16,13 @@ class DataAdapter {
     }
 
     static toClientModel = (apiClient) => {
-        const { client_name, uuid } = apiClient;
+        const { client_first_name, client_last_name, client_email, client_phone_number, private_notes, uuid } = apiClient;
         return {
-            client_name: client_name ? client_name : DefaultText.noContent,
+            client_first_name: client_first_name ? client_first_name : DefaultText.noContent,
+            client_last_name: client_last_name ? client_last_name : DefaultText.noContent,
+            client_email: client_email ? client_email : DefaultText.noContent,
+            client_phone_number: client_phone_number ? client_phone_number : DefaultText.noContent,
+            private_notes: private_notes ? private_notes : DefaultText.noContent,
             uuid
         }
 }
@@ -44,16 +48,23 @@ class DataAdapter {
     }
 
     static toPackageModel = (apiPackage) => {
-        const { package_events, package_name, uuid } = apiPackage;
-        const upcoming_shoot_date = package_events.length > 0 && package_events[0].shoot_date 
-                                    ? formatDate(package_events[0].shoot_date) 
-                                    : DefaultText.noContent;
+        if (apiPackage) {
+            const { package_events, package_name, uuid } = apiPackage;
+            const upcoming_shoot_date = package_events.length > 0 && package_events[0].shoot_date 
+                                        ? formatDate(package_events[0].shoot_date) 
+                                        : DefaultText.noContent;
+            return {
+                package_events: package_events.map(event => this.toEventModel(event)),
+                package_name: package_name ? package_name : DefaultText.noContent,
+                uuid,
+                upcoming_shoot_date
+            }
+        }
         
         return {
-            package_events: package_events.map(event => this.toEventModel(event)),
-            package_name: package_name ? package_name : DefaultText.noContent,
-            uuid,
-            upcoming_shoot_date
+            package_events: [],
+            package_name: DefaultText.noContent,
+            upcoming_shoot_date: DefaultText.noContent
         }
     }
 

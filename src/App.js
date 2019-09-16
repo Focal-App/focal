@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { BrowserRouter, Route, Switch } from "react-router-dom";
-import AuthenticatedHeader from 'components/header/Header';
 import Clients from "components/Clients/Clients";
-import Login from 'components/login/Login';
+import AuthenticatedHeader from 'components/Header/AuthenticatedHeader';
+import NewClient from "components/NewClient/NewClient";
+import Login from 'components/Login/Login';
 import APIHandler from './utilities/APIHandler/apiHandler';
 import './App.scss';
 
@@ -24,17 +25,14 @@ export const AuthenticatedApp = (props) => {
       <AuthenticatedHeader user={user} setUser={setUser} apiHandler={apiHandler} />
       <UnauthenticatedApp setUser={setUser} apiHandler={apiHandler}>
         <Route exact path="/clients" render={(props) => <Clients apiHandler={apiHandler} user_uuid={user.uuid} {...props} />} />
+        <Route exact path="/clients/new" render={(props) => <NewClient apiHandler={apiHandler} user_uuid={user.uuid} {...props} />} />
       </UnauthenticatedApp>
     </>
   )
 }
 
 export const App = (props) => {
-  const [user, setUser] = useState(null);
-
-  useEffect(() => {
-    setUser(JSON.parse(localStorage.getItem("user")))
-  }, [])
+  const [user, setUser] = useState(props.authUser);
 
   const app = user
     ? <AuthenticatedApp setUser={setUser} user={user} apiHandler={props.apiHandler} />
@@ -49,9 +47,9 @@ export const App = (props) => {
 
 
 const apiHandler = new APIHandler();
-
+const user = JSON.parse(localStorage.getItem("user"));
 export const AppRouter = (props) => (
   <BrowserRouter>
-    <App apiHandler={apiHandler} />
+    <App apiHandler={apiHandler} authUser={user} />
   </BrowserRouter>
 )

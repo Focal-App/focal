@@ -14,46 +14,13 @@ describe('Clients', () => {
 
     it('renders list of clients if there is client data after successfull call', async () => {
         const clientsList = MockApiData.successData([
-            {
-                "client_name": "Sammy & David",
-                "user_uuid": "user_uuid",
-                "uuid": "1111",
-                "package": {
-                    "package_name": "Premier Wedding",
-                    "package_events": [
-                        {
-                            "event_name": "Engagement",
-                            "shoot_date": "2020-07-17T16:53:52Z",
-                        },
-                        {
-                            "event_name": "Wedding",
-                            "shoot_date": null,
-                        }
-                    ],
-                },
-                "current_stage": {
-                    "category": "New Client Inquiry",
-                    "step": "Request more information"
-                }
-            },
-            {
-                "client_name": "Natasha & Zihao",
-                "user_uuid": "user_uuid",
-                "uuid": "1234",
-                "package": {
-                    "package_name": "Engagement",
-                    "package_events": [
-                        {
-                            "event_name": "Engagement",
-                            "shoot_date": "2020-09-17T16:53:52Z",
-                        }
-                    ],
-                },
-                "current_stage": {
-                    "category": "Proposal & Retainer",
-                    "step": "Confirm Proposal & Retainer"
-                }
-            },
+            MockApiData.allClientData(),
+            MockApiData.allClientData({ 
+                client_first_name: "Natasha & Zihao", 
+                uuid: "0000",
+                package: MockApiData.packageData({ package_name: "Wedding Classic", package_events: [MockApiData.eventData({ shoot_date: "2020-09-17T14:00:00Z" })] }),
+                current_stage: MockApiData.taskData({ category: "Proposal & Retainer", step: "Confirm Proposal & Retainer" })
+            })
         ])
 
         const getClientsUrl = Endpoints.getClients(user_uuid)
@@ -66,7 +33,7 @@ describe('Clients', () => {
             findByText(/Sammy & David/i)
         )
 
-        getByText(/Premier Wedding/i)
+        getByText(/Wedding Premier/i)
         getByText(/July 17, 2020/i)
         getByText(/New Client Inquiry/i)
         getByText(/Request More Information/i)
@@ -91,7 +58,7 @@ describe('Clients', () => {
     })
 
     it('renders Error Banner after failed fetch', async () => {
-        const failedData =  MockApiData.errorData(["Issue fetching data"]);
+        const failedData = MockApiData.errorData(["Issue fetching data"]);
         const getClientsUrl = Endpoints.getClients(user_uuid)
         const apiHandler = new MockAPIHandler({ [getClientsUrl]: [failedData] });
         const { findByText } = render(

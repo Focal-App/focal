@@ -42,14 +42,14 @@ const ClientsTable = ({ clients }) => {
     const createClientsTable = (data) => {
         return data.map(allClientData => {
             const { 
-                client: { client_name, uuid }, 
+                client: { client_first_name, uuid }, 
                 current_stage: { category, step }, 
                 package: { package_name, upcoming_shoot_date } 
             } = allClientData;
 
             return (
                 <tr key={uuid}>
-                    <th>{client_name}</th>
+                    <th>{client_first_name}</th>
                     <th>{package_name}</th>
                     <th>{upcoming_shoot_date}</th>
                     <th>

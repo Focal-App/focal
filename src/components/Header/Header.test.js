@@ -1,5 +1,5 @@
 import React from 'react';
-import Header from './Header';
+import AuthenticatedHeader from './AuthenticatedHeader';
 import { render, cleanup, fireEvent, waitForElement } from '@testing-library/react';
 import MockAPIHandler from 'utilities/APIHandler/mockApiHandler';
 
@@ -11,7 +11,7 @@ describe('Header', () => {
     })
 
     it('renders Authenticated Header if user exists', () => {
-        const { getByAltText, getByText } = render(<Header user={{}} apiHandler={mockApiHandler} />)
+        const { getByAltText, getByText } = render(<AuthenticatedHeader user={{}} apiHandler={mockApiHandler} />)
         fireEvent.click(getByAltText('avatar'))
 
         getByText('Log Out')
@@ -19,7 +19,7 @@ describe('Header', () => {
 
     it('clicking log out in Authenticated Header should redirect back to Log In Page', () => {
         const { getByAltText, getByText } = render(
-            <Header user={{}} apiHandler={mockApiHandler} />
+            <AuthenticatedHeader user={{}} apiHandler={mockApiHandler} />
         )
         fireEvent.click(getByAltText('avatar'))
         fireEvent.click(getByText('Log Out'))
