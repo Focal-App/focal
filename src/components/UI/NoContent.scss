@@ -1,0 +1,22 @@
+@import 'styles/_shared.scss';
+
+.no-content {
+    display: block;
+    text-transform: capitalize;
+    font-weight: 600;
+    font-size: 26px;
+    text-align: center;
+    color: $grey-600;
+    background-color: white;
+    box-shadow: $box-shadow;
+    border-radius: 6px;
+    padding: 40px;
+    width: 95%;
+    margin: 0 auto;
+    grid-column: 1 / -1;
+
+    p {
+        font-size: 18px;
+        margin: 0 auto;
+    }
+}

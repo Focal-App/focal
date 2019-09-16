@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import './Header.scss';
+import Endpoints from "utilities/apiEndpoint";
 
 const BasicHeader = (props) => (
     <header className="header--container">
         <section className='header'>
-            <a className='logo' href="/">focal</a>
+            <a className='logo' href="/clients">focal</a>
             <section className='navigation'>
                 {props.children}
             </section>
@@ -18,7 +19,7 @@ const AuthenticatedHeader = ({ user, setUser, apiHandler }) => {
     const logOut = async() => {
         localStorage.removeItem("user");
         localStorage.removeItem("token");
-        await apiHandler.get(`/auth/signout`);
+        const response = await apiHandler.get(Endpoints.logout);
         setUser(null)
     }
 
@@ -30,6 +31,7 @@ const AuthenticatedHeader = ({ user, setUser, apiHandler }) => {
 
     return (
         <BasicHeader>
+            <a href="/clients">Clients</a>
             <div className='avatar'>
                 <img className='avatar-img' alt="avatar" src={userAvatar} onClick={() => toggleDropdown(!dropdownVisible)} />
                 {
