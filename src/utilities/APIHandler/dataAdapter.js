@@ -54,7 +54,6 @@ class DataAdapter {
                                         ? formatDate(package_events[0].shoot_date) 
                                         : DefaultText.noContent;
             return {
-                package_events: package_events.map(event => this.toEventModel(event)),
                 package_name: package_name ? package_name : DefaultText.noContent,
                 uuid,
                 upcoming_shoot_date
@@ -72,15 +71,40 @@ class DataAdapter {
         if (apiUserClients.length === 0) { 
             return [];
         }
+        
         return apiUserClients.map(client => {
-            return {
+            const data = {
                 client: this.toClientModel(client),
                 current_stage: this.toTaskModel(client.current_stage),
-                package: this.toPackageModel(client.package)
+                package: this.toPackageModel(client.package),
+                events: {}
             }
+            if (client.package && client.package.package_events) {
+                client.package.package_events.forEach((event) => {
+                    data.events[event.event_name] = this.toEventModel(event);
+                });
+            }
+            return data;
         })
     }
 
+    static toAllClientPartialDataModel = (apiUserClients) => {
+        if (apiUserClients.length === 0) { 
+            return [];
+        }
+        
+        return apiUserClients.map(client => {
+            const { client_first_name, partner_first_name, package_name, current_stage, upcoming_shoot_date, uuid } = client;
+            return {
+                partner_first_name: partner_first_name ? partner_first_name : DefaultText.noContent,
+                client_first_name: client_first_name ? client_first_name : DefaultText.noContent,
+                package_name: package_name ? package_name : DefaultText.noContent,
+                current_stage: this.toTaskModel(current_stage),
+                upcoming_shoot_date: upcoming_shoot_date ? formatDate(upcoming_shoot_date) : DefaultText.noContent,
+                uuid
+            }
+        });
+    }
 }
 
 export default DataAdapter;

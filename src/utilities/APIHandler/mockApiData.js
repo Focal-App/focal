@@ -129,7 +129,25 @@ const MockApiData = {
     successfulClient: (dataObject) => {
         let apiData = MockApiData.allClientData(dataObject);
         return successResult(apiData);
-    }
+    },
+    partialClientData: (dataObject) => {
+        let apiData = { 
+            "client_first_name":"Natasha",
+            "current_stage": {
+                "category": "New Client Inquiry",
+                "client_uuid": "cc14121c-ff53-4edb-832b-8adda60cb372",
+                "event_uuid": "6607cce2-0d61-4fb9-8caa-058fc62c73ca",
+                "is_completed": false,
+                "step": "Request More Information",
+                "uuid": "fe71fd1a-32a5-497c-b480-a510bf94bace"
+            },
+            "package_name":"Wedding Premier",
+            "partner_first_name": "Zihao",
+            "upcoming_shoot_date":"2020-04-17T14:00:00Z",
+            "uuid":"ce20b995-0368-4a59-9ae4-ad858b77f8af"
+         };
+         return Object.assign(apiData, dataObject);
+    },
 }
 
 export default MockApiData;

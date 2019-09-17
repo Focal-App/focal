@@ -20,12 +20,14 @@ export const UnauthenticatedApp = (props) => {
 
 export const AuthenticatedApp = (props) => {
   const { setUser, apiHandler, user } = props;
+  const [clients, setClients] = useState([]);
+
   return (
     <>
       <AuthenticatedHeader user={user} setUser={setUser} apiHandler={apiHandler} />
       <UnauthenticatedApp setUser={setUser} apiHandler={apiHandler}>
-        <Route exact path="/clients" render={(props) => <Clients apiHandler={apiHandler} user_uuid={user.uuid} {...props} />} />
-        <Route exact path="/clients/new" render={(props) => <NewClient apiHandler={apiHandler} user_uuid={user.uuid} {...props} />} />
+        <Route exact path="/clients" render={(props) => <Clients apiHandler={apiHandler} user_uuid={user.uuid} clients={clients} setClients={setClients} {...props} />} />
+        <Route exact path="/clients/new" render={(props) => <NewClient apiHandler={apiHandler} {...props} />} />
       </UnauthenticatedApp>
     </>
   )

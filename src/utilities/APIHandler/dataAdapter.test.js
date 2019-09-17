@@ -39,7 +39,7 @@ describe("Data Adapter", () => {
             "uuid": "fe71fd1a-32a5-497c-b480-a510bf94bace"
         })
     })
-    
+
     it("maps Event API data to a EventModel", () => {
         let apiEventData = MockApiData.eventData()
         const eventModel = DataAdapter.toEventModel(apiEventData);
@@ -57,20 +57,6 @@ describe("Data Adapter", () => {
         const packageModel = DataAdapter.toPackageModel(apiPackageData);
 
         expect(packageModel).toEqual({
-            "package_events": [
-                {
-                    "event_name": "Engagement",
-                    "package_uuid": "654a66f1-055f-4525-906e-9334e28b1966",
-                    "shoot_date": "April 17, 2020",
-                    "uuid": "6607cce2-0d61-4fb9-8caa-058fc62c73ca"
-                },
-                {
-                    "event_name": "Wedding",
-                    "package_uuid": "654a66f1-055f-4525-906e-9334e28b1966",
-                    "shoot_date": "April 17, 2020",
-                    "uuid": "6607cce2-0d61-4fb9-8caa-058fc62c73ca"
-                }
-            ],
             "package_name": "Wedding Premier",
             "uuid": "654a66f1-055f-4525-906e-9334e28b1966",
             "upcoming_shoot_date": "April 17, 2020"
@@ -97,18 +83,39 @@ describe("Data Adapter", () => {
                 "uuid": "fe71fd1a-32a5-497c-b480-a510bf94bace"
             },
             "package": {
-                "package_events": [
-                    {
-                        "event_name": "Engagement",
-                        "package_uuid": "654a66f1-055f-4525-906e-9334e28b1966",
-                        "shoot_date": "July 17, 2020",
-                        "uuid": "6607cce2-0d61-4fb9-8caa-058fc62c73ca"
-                    }
-                ],
                 "package_name": "Wedding Premier",
                 "uuid": "654a66f1-055f-4525-906e-9334e28b1966",
                 "upcoming_shoot_date": "July 17, 2020"
             },
+            "events": {
+                "Engagement": {
+                    "event_name": "Engagement",
+                    "package_uuid": "654a66f1-055f-4525-906e-9334e28b1966",
+                    "shoot_date": "July 17, 2020",
+                    "uuid": "6607cce2-0d61-4fb9-8caa-058fc62c73ca"
+                }
+            }
         }])
+    })
+
+    it("maps user clients API object to an array of AllClientPartialDataModel", () => {
+        const apiUserClientsData = [MockApiData.partialClientData()]
+        const allClientPartialDataModel = DataAdapter.toAllClientPartialDataModel(apiUserClientsData);
+
+        expect(allClientPartialDataModel).toEqual([
+            {
+                "client_first_name": "Natasha",
+                "current_stage": {
+                    "category": "New Client Inquiry",
+                    "is_completed": false,
+                    "step": "Request More Information",
+                    "uuid": "fe71fd1a-32a5-497c-b480-a510bf94bace",
+                },
+                "package_name": "Wedding Premier",
+                "partner_first_name": "Zihao",
+                "upcoming_shoot_date": "April 17, 2020",
+                "uuid": "ce20b995-0368-4a59-9ae4-ad858b77f8af",
+            }
+        ])
     })
 })
