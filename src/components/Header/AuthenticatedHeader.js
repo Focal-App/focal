@@ -19,7 +19,7 @@ const AuthenticatedHeader = ({ user, setUser, apiHandler }) => {
     const logOut = async() => {
         localStorage.removeItem("user");
         localStorage.removeItem("token");
-        const response = await apiHandler.get(Endpoints.logout);
+        await apiHandler.get(Endpoints.logout);
         setUser(null)
     }
 
@@ -31,6 +31,7 @@ const AuthenticatedHeader = ({ user, setUser, apiHandler }) => {
 
     return (
         <BasicHeader>
+            <a href="/clients/new">New Client</a>
             <a href="/clients">Clients</a>
             <div className='avatar'>
                 <img className='avatar-img' alt="avatar" src={userAvatar} onClick={() => toggleDropdown(!dropdownVisible)} />

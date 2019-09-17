@@ -7,6 +7,7 @@ process.env.REACT_APP_STAGE === 'dev'
 const Endpoints = {
   getUser: (user_uuid) => `${API_URL}/api/user/${user_uuid}`,
   getClients: (user_uuid) => `${API_URL}/api/user/${user_uuid}/clients/data`,
+  newClient: `${API_URL}/api/client`,
   googleLogin: `${API_URL}/auth/google?scope=email%20profile`,
   logout: `${API_URL}/auth/signout`
 }

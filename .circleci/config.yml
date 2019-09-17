@@ -5,6 +5,8 @@ jobs:
       - image: circleci/node:10
     environment:
       TZ: "America/Los_Angeles"
+      NODE_PATH: src/
+      SASS_PATH: src/
     steps:
       - checkout
       - restore_cache:

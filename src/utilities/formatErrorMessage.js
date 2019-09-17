@@ -3,9 +3,9 @@ export const formatErrorMessage = (errors) => {
       return errors;
     } 
     const errorKeys = Object.keys(errors);
-    let errorMessage = "Error - ";
+    let errorMessage = "";
     errorKeys.forEach(key => {
-      errorMessage += `${errors[key]}`
+      errorMessage += `${key} ${errors[key]}`
     })
     return errorMessage;
 }
