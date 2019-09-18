@@ -36,13 +36,10 @@
         align-items: end;
 
         .btn-tertiary {
-            display: inline-block;
-            border: 1px solid $theme-color;
-            color: $theme-color;
-            margin: 0px;
-            padding: 10px 30px !important;
-            font-size: 16px;
-            font-weight: 600;
+            align-self: flex-end;
+            margin-bottom: 10px;
+            padding: 5px 10px;
+            background-color: $blue-100;
         }
     }
 }

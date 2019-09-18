@@ -23,7 +23,7 @@ class DataAdapter {
                 last_name: last_name ? last_name : DefaultText.noContent,
                 email: email ? email : DefaultText.noContent,
                 phone_number: phone_number ? phone_number : DefaultText.noContent,
-                label: label,
+                label: label ? label : DefaultText.noContent,
                 best_time_to_contact: best_time_to_contact ? best_time_to_contact : DefaultText.noContent,
                 uuid
             }
@@ -48,7 +48,7 @@ class DataAdapter {
             private_notes: private_notes ? private_notes : DefaultText.noContent,
             uuid
         }
-}
+    }
 
     static toTaskModel = (apiTask) => {
         const { category, is_completed, step, uuid } = apiTask;
@@ -73,16 +73,16 @@ class DataAdapter {
     static toPackageModel = (apiPackage) => {
         if (apiPackage) {
             const { package_events, package_name, uuid } = apiPackage;
-            const upcoming_shoot_date = package_events.length > 0 && package_events[0].shoot_date 
-                                        ? formatDate(package_events[0].shoot_date) 
-                                        : DefaultText.noContent;
+            const upcoming_shoot_date = package_events.length > 0 && package_events[0].shoot_date
+                ? formatDate(package_events[0].shoot_date)
+                : DefaultText.noContent;
             return {
                 package_name: package_name ? package_name : DefaultText.noContent,
                 uuid,
                 upcoming_shoot_date
             }
         }
-        
+
         return {
             package_events: [],
             package_name: DefaultText.noContent,
@@ -118,19 +118,32 @@ class DataAdapter {
     }
 
     static toAllClientDataModel = (apiUserClients) => {
-        if (apiUserClients.length === 0) { 
+        if (apiUserClients.length === 0) {
             return [];
         }
-        
+
         return apiUserClients.map(client => this.toFullClientDataModel(client))
     }
 
     static toAllClientPartialDataModel = (apiUserClients) => {
-        if (apiUserClients.length === 0) { 
+        if (apiUserClients.length === 0) {
             return [];
         }
-        
+
         return apiUserClients.map(client => this.toPartialClientDataModel(client));
+    }
+
+    static toApiReadyClient = (values) => {
+        Object.keys(values).forEach(key => {
+            if (typeof values[key] === 'object') {
+                DataAdapter.toApiReadyClient(values[key])
+            }
+            if (values[key] === DefaultText.noContent || values[key] === "") {
+                values[key] = null;
+            }
+        })
+
+        return values;
     }
 }
 
