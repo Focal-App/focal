@@ -19,10 +19,25 @@ describe("Data Adapter", () => {
         const clientModel = DataAdapter.toClientModel(apiClientData);
 
         expect(clientModel).toEqual({
-            client_first_name: "Natasha & Zihao",
-            "client_last_name": "-",
-            "client_email": "-",
-            "client_phone_number": "-",
+            contacts: [
+                {
+                    "first_name": "Natasha",
+                    "last_name": "Lee",
+                    "email": "client@gmail.com",
+                    "phone_number": "123-456-7890",
+                    "label": "Bride",
+                    "best_time_to_contact": "Evening",
+                    "uuid": "cc14121c-ff53-4edb-832b-8adda60cb372"
+                },
+                {
+                    "first_name": "-",
+                    "last_name": "-",
+                    "email": "-",
+                    "phone_number": "-",
+                    "label": null,
+                    "best_time_to_contact": "-",
+                }
+            ],
             "private_notes": "-",
             uuid: "cc14121c-ff53-4edb-832b-8adda60cb372"
         })
@@ -39,7 +54,7 @@ describe("Data Adapter", () => {
             "uuid": "fe71fd1a-32a5-497c-b480-a510bf94bace"
         })
     })
-    
+
     it("maps Event API data to a EventModel", () => {
         let apiEventData = MockApiData.eventData()
         const eventModel = DataAdapter.toEventModel(apiEventData);
@@ -57,20 +72,6 @@ describe("Data Adapter", () => {
         const packageModel = DataAdapter.toPackageModel(apiPackageData);
 
         expect(packageModel).toEqual({
-            "package_events": [
-                {
-                    "event_name": "Engagement",
-                    "package_uuid": "654a66f1-055f-4525-906e-9334e28b1966",
-                    "shoot_date": "April 17, 2020",
-                    "uuid": "6607cce2-0d61-4fb9-8caa-058fc62c73ca"
-                },
-                {
-                    "event_name": "Wedding",
-                    "package_uuid": "654a66f1-055f-4525-906e-9334e28b1966",
-                    "shoot_date": "April 17, 2020",
-                    "uuid": "6607cce2-0d61-4fb9-8caa-058fc62c73ca"
-                }
-            ],
             "package_name": "Wedding Premier",
             "uuid": "654a66f1-055f-4525-906e-9334e28b1966",
             "upcoming_shoot_date": "April 17, 2020"
@@ -78,17 +79,33 @@ describe("Data Adapter", () => {
     })
 
     it("maps user clients API object to an array of AllClientDataModel", () => {
-        const apiUserClientsData = [MockApiData.allClientData({ "client_first_name": "Natasha & Zihao" })]
+        const apiUserClientsData = [MockApiData.allClientData()]
         const allClientDataModel = DataAdapter.toAllClientDataModel(apiUserClientsData);
 
         expect(allClientDataModel).toEqual([{
             client: {
-                "client_first_name": "Natasha & Zihao",
                 "uuid": "cc14121c-ff53-4edb-832b-8adda60cb372",
-                "client_last_name": "-",
-                "client_email": "-",
-                "client_phone_number": "-",
                 "private_notes": "-",
+                contacts: [
+                    {
+                        "first_name": "Sammy",
+                        "last_name": "Lee",
+                        "email": "client@gmail.com",
+                        "phone_number": "123-456-7890",
+                        "label": "Bride",
+                        "best_time_to_contact": "Evening",
+                        "uuid": "cc14121c-ff53-4edb-832b-8adda60cb372"
+                    },
+                    {
+                        "first_name": "-",
+                        "last_name": "-",
+                        "email": "-",
+                        "phone_number": "-",
+                        "label": null,
+                        "best_time_to_contact": "-",
+                        "uuid": undefined,
+                    }
+                ]
             },
             "current_stage": {
                 "category": "New Client Inquiry",
@@ -97,18 +114,39 @@ describe("Data Adapter", () => {
                 "uuid": "fe71fd1a-32a5-497c-b480-a510bf94bace"
             },
             "package": {
-                "package_events": [
-                    {
-                        "event_name": "Engagement",
-                        "package_uuid": "654a66f1-055f-4525-906e-9334e28b1966",
-                        "shoot_date": "July 17, 2020",
-                        "uuid": "6607cce2-0d61-4fb9-8caa-058fc62c73ca"
-                    }
-                ],
                 "package_name": "Wedding Premier",
                 "uuid": "654a66f1-055f-4525-906e-9334e28b1966",
                 "upcoming_shoot_date": "July 17, 2020"
             },
+            "events": {
+                "Engagement": {
+                    "event_name": "Engagement",
+                    "package_uuid": "654a66f1-055f-4525-906e-9334e28b1966",
+                    "shoot_date": "July 17, 2020",
+                    "uuid": "6607cce2-0d61-4fb9-8caa-058fc62c73ca"
+                }
+            }
         }])
+    })
+
+    it("maps user clients API object to an array of AllClientPartialDataModel", () => {
+        const apiUserClientsData = [MockApiData.partialClientData()]
+        const allClientPartialDataModel = DataAdapter.toAllClientPartialDataModel(apiUserClientsData);
+
+        expect(allClientPartialDataModel).toEqual([
+            {
+                "client_first_name": "Natasha",
+                "current_stage": {
+                    "category": "New Client Inquiry",
+                    "is_completed": false,
+                    "step": "Request More Information",
+                    "uuid": "fe71fd1a-32a5-497c-b480-a510bf94bace",
+                },
+                "package_name": "Wedding Premier",
+                "partner_first_name": "Zihao",
+                "upcoming_shoot_date": "April 17, 2020",
+                "uuid": "ce20b995-0368-4a59-9ae4-ad858b77f8af",
+            }
+        ])
     })
 })

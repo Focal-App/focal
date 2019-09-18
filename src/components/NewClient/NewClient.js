@@ -15,11 +15,12 @@ const NewClient = ({ apiHandler, user_uuid }) => {
 
     const onSubmit = async (values) => {
         setLoading(true)
-        const { data, errors } = await apiHandler.post(Endpoints.newClient, values);
+        const newClientData = { contacts: [values], private_notes: values.private_notes };
+        const { data, errors } = await apiHandler.post(Endpoints.newClient, newClientData);
         setLoading(false)
         if (data) {
             setSuccess(true)
-            setTimeout(() => { setRedirect(true) }, 700)
+            setTimeout(() => { setRedirect(true) }, 1200)
         } else {
             setErrors(errors)
         }

@@ -16,7 +16,7 @@ const errorResult = (errors = []) => {
 
 const MockApiData = {
     successData: (dataObject) => {
-    return successResult(dataObject);
+        return successResult(dataObject);
     },
     errorData: (errorsArray) => {
         return errorResult(errorsArray)
@@ -35,12 +35,23 @@ const MockApiData = {
         let apiData = MockApiData.userData(dataObject);
         return successResult(apiData);
     },
+    contactData: (dataObject) => {
+        let apiData = {
+            "first_name": "Natasha",
+            "last_name": "Lee",
+            "email": "client@gmail.com",
+            "phone_number": "123-456-7890",
+            "label": "Bride",
+            "best_time_to_contact": "Evening",
+            "uuid": "cc14121c-ff53-4edb-832b-8adda60cb372"
+        };
+        return Object.assign(apiData, dataObject);
+    },
     clientData: (dataObject) => {
         let apiData = {
-            "client_first_name": "Natasha & Zihao",
-            "client_last_name": null,
-            "client_email": null,
-            "client_phone_number": null,
+            contacts: [
+                MockApiData.contactData()
+            ],
             "private_notes": null,
             "user_uuid": "6602aa08-765f-4197-9237-b69da4ca496f",
             "uuid": "cc14121c-ff53-4edb-832b-8adda60cb372"
@@ -94,10 +105,9 @@ const MockApiData = {
     },
     allClientData: (dataObject) => {
         let apiData = {
-            "client_first_name": "Sammy & David",
-            "client_last_name": null,
-            "client_email": null,
-            "client_phone_number": null,
+            contacts: [
+                MockApiData.contactData({ first_name: "Sammy" }),
+            ],
             "private_notes": null,
             "user_uuid": "user_uuid",
             "uuid": "cc14121c-ff53-4edb-832b-8adda60cb372",
@@ -129,7 +139,25 @@ const MockApiData = {
     successfulClient: (dataObject) => {
         let apiData = MockApiData.allClientData(dataObject);
         return successResult(apiData);
-    }
+    },
+    partialClientData: (dataObject) => {
+        let apiData = {
+            "client_first_name": "Natasha",
+            "current_stage": {
+                "category": "New Client Inquiry",
+                "client_uuid": "cc14121c-ff53-4edb-832b-8adda60cb372",
+                "event_uuid": "6607cce2-0d61-4fb9-8caa-058fc62c73ca",
+                "is_completed": false,
+                "step": "Request More Information",
+                "uuid": "fe71fd1a-32a5-497c-b480-a510bf94bace"
+            },
+            "package_name": "Wedding Premier",
+            "partner_first_name": "Zihao",
+            "upcoming_shoot_date": "2020-04-17T14:00:00Z",
+            "uuid": "ce20b995-0368-4a59-9ae4-ad858b77f8af"
+        };
+        return Object.assign(apiData, dataObject);
+    },
 }
 
 export default MockApiData;
