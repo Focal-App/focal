@@ -87,7 +87,7 @@ const MockApiData = {
                     "client_uuid": "cc14121c-ff53-4edb-832b-8adda60cb372",
                     "event_name": "Engagement",
                     "package_uuid": "654a66f1-055f-4525-906e-9334e28b1966",
-                    "shoot_date": "2020-04-17T14:00:00Z",
+                    "shoot_date": "2020-07-17T14:00:00Z",
                     "uuid": "6607cce2-0d61-4fb9-8caa-058fc62c73ca"
                 },
                 {
@@ -99,6 +99,24 @@ const MockApiData = {
                 }
             ],
             "package_name": "Wedding Premier",
+            proposal_signed: false,
+            package_contents: `
+                Up To Eight Hours of Photographic Coverage
+                
+                Handcrafted 10x10 Thirty Sided Artisan Album
+                
+                Complimentary Engagement Session
+                
+                Private Online Gallery of All Images for Friends and Family
+                
+                Five Hundred+ Digital Negatives on a Custom USB Drive`,
+            package_price: 480000,
+            retainer_price: 100000,
+            retainer_paid_amount: 0,
+            retainer_paid: false,
+            discount_offered: 0,
+            balance_remaining: 480000,
+            balance_received: false,
             "uuid": "654a66f1-055f-4525-906e-9334e28b1966"
         }
         return Object.assign(apiData, dataObject);
@@ -119,20 +137,7 @@ const MockApiData = {
                 "step": "Request More Information",
                 "uuid": "fe71fd1a-32a5-497c-b480-a510bf94bace"
             },
-            "package": {
-                "client_uuid": "cc14121c-ff53-4edb-832b-8adda60cb372",
-                "package_events": [
-                    {
-                        "client_uuid": "cc14121c-ff53-4edb-832b-8adda60cb372",
-                        "event_name": "Engagement",
-                        "package_uuid": "654a66f1-055f-4525-906e-9334e28b1966",
-                        "shoot_date": "2020-07-17T16:53:52Z",
-                        "uuid": "6607cce2-0d61-4fb9-8caa-058fc62c73ca"
-                    }
-                ],
-                "package_name": "Wedding Premier",
-                "uuid": "654a66f1-055f-4525-906e-9334e28b1966"
-            },
+            "package": MockApiData.packageData(),
         };
         return Object.assign(apiData, dataObject);
     },
