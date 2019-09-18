@@ -4,7 +4,7 @@ import Error from "components/UI/Error";
 import NoContent from "components/UI/NoContent";
 import { Link } from "react-router-dom";
 import Endpoints from "utilities/apiEndpoint";
-import DataAdapter from "utilities/APIHandler/dataAdapter";
+import DataAdapter, { DefaultText } from "utilities/APIHandler/dataAdapter";
 import "./ClientsPage.scss";
 
 const Clients = ({ apiHandler, user_uuid, setClients, clients }) => {
@@ -49,10 +49,13 @@ const ClientsTable = ({ clients }) => {
                 upcoming_shoot_date,
                 uuid
             } = allClientData;
+            const coupleName = partner_first_name === DefaultText.noContent 
+                                ? client_first_name 
+                                : `${client_first_name} & ${partner_first_name}`;
 
             return (
                 <tr key={uuid}>
-                    <th>{client_first_name} & {partner_first_name}</th>
+                    <th>{coupleName}</th>
                     <th>{package_name}</th>
                     <th>{upcoming_shoot_date}</th>
                     <th>

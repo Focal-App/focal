@@ -19,10 +19,25 @@ describe("Data Adapter", () => {
         const clientModel = DataAdapter.toClientModel(apiClientData);
 
         expect(clientModel).toEqual({
-            client_first_name: "Natasha & Zihao",
-            "client_last_name": "-",
-            "client_email": "-",
-            "client_phone_number": "-",
+            contacts: [
+                {
+                    "first_name": "Natasha",
+                    "last_name": "Lee",
+                    "email": "client@gmail.com",
+                    "phone_number": "123-456-7890",
+                    "label": "Bride",
+                    "best_time_to_contact": "Evening",
+                    "uuid": "cc14121c-ff53-4edb-832b-8adda60cb372"
+                },
+                {
+                    "first_name": "-",
+                    "last_name": "-",
+                    "email": "-",
+                    "phone_number": "-",
+                    "label": null,
+                    "best_time_to_contact": "-",
+                }
+            ],
             "private_notes": "-",
             uuid: "cc14121c-ff53-4edb-832b-8adda60cb372"
         })
@@ -64,17 +79,33 @@ describe("Data Adapter", () => {
     })
 
     it("maps user clients API object to an array of AllClientDataModel", () => {
-        const apiUserClientsData = [MockApiData.allClientData({ "client_first_name": "Natasha & Zihao" })]
+        const apiUserClientsData = [MockApiData.allClientData()]
         const allClientDataModel = DataAdapter.toAllClientDataModel(apiUserClientsData);
 
         expect(allClientDataModel).toEqual([{
             client: {
-                "client_first_name": "Natasha & Zihao",
                 "uuid": "cc14121c-ff53-4edb-832b-8adda60cb372",
-                "client_last_name": "-",
-                "client_email": "-",
-                "client_phone_number": "-",
                 "private_notes": "-",
+                contacts: [
+                    {
+                        "first_name": "Sammy",
+                        "last_name": "Lee",
+                        "email": "client@gmail.com",
+                        "phone_number": "123-456-7890",
+                        "label": "Bride",
+                        "best_time_to_contact": "Evening",
+                        "uuid": "cc14121c-ff53-4edb-832b-8adda60cb372"
+                    },
+                    {
+                        "first_name": "-",
+                        "last_name": "-",
+                        "email": "-",
+                        "phone_number": "-",
+                        "label": null,
+                        "best_time_to_contact": "-",
+                        "uuid": undefined,
+                    }
+                ]
             },
             "current_stage": {
                 "category": "New Client Inquiry",

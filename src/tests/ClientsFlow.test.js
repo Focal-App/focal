@@ -12,6 +12,7 @@ describe('Clients Flow', () => {
     })
 
     const user_uuid = "1234";
+    const client_uuid = "1111";
     const authUser = { uuid: user_uuid, avatar: "avatar-image-link" };
     it(`renders list of clients if there is client data after successfull call, 
         clicking view will take user to client detail page`, async () => {
@@ -20,6 +21,7 @@ describe('Clients Flow', () => {
                 client_first_name: "Sammy",
                 partner_first_name: "David",
                 upcoming_shoot_date: "2020-07-17T14:00:00Z",
+                uuid: client_uuid
             }),
             MockApiData.partialClientData({ 
                 uuid: "0000",
@@ -32,9 +34,14 @@ describe('Clients Flow', () => {
                 })
             })
         ])
-
+        const client = MockApiData.successData(
+            MockApiData.allClientData({ uuid: client_uuid })
+        )
         const getClientsUrl = Endpoints.getClients(user_uuid)
-        const apiHandler = new MockAPIHandler({ [getClientsUrl]: [clientsList] });
+        const apiHandler = new MockAPIHandler({ 
+            [getClientsUrl]: [clientsList],
+            [Endpoints.getClient(client_uuid)]: [client]
+        });
         const { findByText, getByText, getAllByText } = render(
             <MemoryRouter initialEntries={["/clients"]} initialIndex={0}>
                 <App apiHandler={apiHandler} authUser={authUser}/>
@@ -54,6 +61,11 @@ describe('Clients Flow', () => {
         getByText(/September 17, 2020/i)
         getByText(/Confirm Proposal & Retainer/i)
 
+        fireEvent.click(getAllByText("View")[0]);
+        
+        await waitForElement(() =>
+            findByText(/client information/i)
+        )
     })
 
 

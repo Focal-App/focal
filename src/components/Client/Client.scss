@@ -1,0 +1,88 @@
+@import 'styles/_shared.scss';
+
+.client--container {
+    display: grid;
+    grid-template-columns: repeat(4fr, 1fr);
+    grid-template-areas: "workflow workflow workflow workflow info";
+    grid-gap: 30px;
+    max-width: $max-width;
+    margin: 0 auto;
+
+    h1 {
+        text-align: left;
+        margin-bottom: 10px;
+    }
+}
+
+.client-workflow--container {
+    grid-area: workflow;
+}
+
+.client-workflow {
+    box-sizing: border-box;
+    background-color: white;
+    padding: 30px;
+    border-radius: 6px;
+    box-shadow: $box-shadow;
+    height: 500px;
+}
+
+.client-information--container {
+    grid-area: info;
+
+    .client-page--header {
+        display: flex;
+        justify-content: space-between;
+        align-items: end;
+
+        .btn-tertiary {
+            display: inline-block;
+            border: 1px solid $theme-color;
+            color: $theme-color;
+            margin: 0px;
+            padding: 10px 30px !important;
+            font-size: 16px;
+            font-weight: 600;
+        }
+    }
+}
+
+
+
+.client-information {
+    box-sizing: border-box;
+    background-color: white;
+    padding: 30px;
+    border-radius: 6px;
+    box-shadow: $box-shadow;
+
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 10px;
+    justify-items: start;
+    align-items: start;
+    text-align: left;
+
+    h6 {
+        font-size: 14px;
+        font-weight: 400;
+        margin: 0px;
+    }
+
+    h4 {
+        font-size: 16px;
+        font-weight: 700;
+        margin: 0px 0px 20px 0px;
+    }
+
+    hr {
+        grid-column: 1 / -1;
+        width: 100%;
+        border-top: 1px solid $grey-300;
+        margin-bottom: 20px;
+    }
+
+    span {
+        grid-column: 1 / -1;
+    }
+}

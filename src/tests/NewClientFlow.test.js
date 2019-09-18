@@ -16,7 +16,7 @@ describe("New Client Flow", () => {
 
     it("navigates to Clients Page with new client row if new client submission is successful", async () => {
         const successfulNewClient = MockApiData.successfulClient({ uuid: uuid })
-        const clientsList = MockApiData.successData([ MockApiData.allClientData({ uuid: uuid, client_name: "Sammy" }) ]);
+        const clientsList = MockApiData.successData([ MockApiData.partialClientData({ uuid: uuid, client_first_name: "Sammy" }) ]);
         const apiHandler = new MockAPIHandler({ 
             [Endpoints.newClient]: [successfulNewClient], 
             [Endpoints.getClients(uuid)]: [clientsList] 
