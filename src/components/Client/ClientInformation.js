@@ -62,7 +62,6 @@ const ClientInformation = ({ client, apiHandler, setClient }) => {
                     </span>
                 </section>
             </section>
-
         )
     } else {
         return null;

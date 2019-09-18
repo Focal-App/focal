@@ -1,4 +1,5 @@
 import { formatDate } from "utilities/date";
+import { convertPenniesToDollars, convertDollarsToPennies } from "utilities/price";
 
 export const DefaultText = {
     noContent: "-",
@@ -72,12 +73,36 @@ class DataAdapter {
 
     static toPackageModel = (apiPackage) => {
         if (apiPackage) {
-            const { package_events, package_name, uuid } = apiPackage;
+            const { 
+                package_events, 
+                package_name, 
+                uuid, 
+                proposal_signed,
+                package_contents,
+                package_price,
+                retainer_price,
+                retainer_paid_amount,
+                retainer_paid,
+                discount_offered,
+                balance_remaining,
+                balance_received
+            } = apiPackage;
+
             const upcoming_shoot_date = package_events.length > 0 && package_events[0].shoot_date
                 ? formatDate(package_events[0].shoot_date)
                 : DefaultText.noContent;
+
             return {
                 package_name: package_name ? package_name : DefaultText.noContent,
+                proposal_signed,
+                package_contents: package_contents ? package_contents : DefaultText.noContent,
+                package_price: package_price >= 0 ? convertPenniesToDollars(package_price) : DefaultText.noContent,
+                retainer_price: retainer_price >= 0 ? convertPenniesToDollars(retainer_price) : DefaultText.noContent,
+                retainer_paid_amount: retainer_paid_amount >= 0 ? convertPenniesToDollars(retainer_paid_amount) : DefaultText.noContent,
+                retainer_paid,
+                discount_offered: discount_offered >= 0 ? convertPenniesToDollars(discount_offered) : DefaultText.noContent,
+                balance_remaining: balance_remaining >= 0 ? convertPenniesToDollars(balance_remaining) : DefaultText.noContent,
+                balance_received,
                 uuid,
                 upcoming_shoot_date
             }

@@ -1,6 +1,6 @@
 import React from 'react';
 import Client from "./Client";
-import { render, cleanup, waitForElement } from '@testing-library/react';
+import { render, cleanup, waitForElement, getAllByText } from '@testing-library/react';
 import MockAPIHandler from 'utilities/APIHandler/mockApiHandler';
 import Endpoints from "utilities/apiEndpoint";
 import MockApiData from "utilities/APIHandler/mockApiData";
@@ -12,14 +12,14 @@ describe('Client', () => {
 
     const user_uuid = "1234";
 
-    it('renders client information', async () => {
+    it('renders client and package information', async () => {
         const client = MockApiData.successData(
             MockApiData.allClientData({ uuid: user_uuid })
         )
         const apiHandler = new MockAPIHandler({ 
             [Endpoints.getClient(user_uuid)]: [client]
         });
-        const { findAllByText, getByText } = render(<Client apiHandler={apiHandler} client_uuid={user_uuid} />)
+        const { findAllByText, getByText, getAllByText } = render(<Client apiHandler={apiHandler} client_uuid={user_uuid} />)
 
         await waitForElement(() =>
             findAllByText(/client information/i)
@@ -29,5 +29,9 @@ describe('Client', () => {
         getByText(/client@gmail.com/i)
         getByText(/123-456-7890/i)
         getByText(/evening/i)
+
+        getByText(/wedding premier/i)
+        getByText(/Eight Hours of Photographic Coverage/i)
+        getAllByText(/4800.00/i)
     })
 })

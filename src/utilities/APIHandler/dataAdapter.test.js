@@ -74,7 +74,25 @@ describe("Data Adapter", () => {
         expect(packageModel).toEqual({
             "package_name": "Wedding Premier",
             "uuid": "654a66f1-055f-4525-906e-9334e28b1966",
-            "upcoming_shoot_date": "April 17, 2020"
+            "upcoming_shoot_date": "July 17, 2020",
+            "balance_received": false,
+            "balance_remaining": "4800.00",
+            "discount_offered": "0.00",
+            package_contents: `
+                Up To Eight Hours of Photographic Coverage
+                
+                Handcrafted 10x10 Thirty Sided Artisan Album
+                
+                Complimentary Engagement Session
+                
+                Private Online Gallery of All Images for Friends and Family
+                
+                Five Hundred+ Digital Negatives on a Custom USB Drive`,
+            "package_price": "4800.00",
+            "proposal_signed": false,
+            "retainer_paid": false,
+            "retainer_paid_amount": "0.00",
+            "retainer_price": "1000.00",
         })
     })
 
@@ -116,13 +134,37 @@ describe("Data Adapter", () => {
             "package": {
                 "package_name": "Wedding Premier",
                 "uuid": "654a66f1-055f-4525-906e-9334e28b1966",
-                "upcoming_shoot_date": "July 17, 2020"
+                "upcoming_shoot_date": "July 17, 2020",
+                "balance_received": false,
+                "balance_remaining": "4800.00",
+                "discount_offered": "0.00",
+                package_contents: `
+                Up To Eight Hours of Photographic Coverage
+                
+                Handcrafted 10x10 Thirty Sided Artisan Album
+                
+                Complimentary Engagement Session
+                
+                Private Online Gallery of All Images for Friends and Family
+                
+                Five Hundred+ Digital Negatives on a Custom USB Drive`,
+                "package_price": "4800.00",
+                "proposal_signed": false,
+                "retainer_paid": false,
+                "retainer_paid_amount": "0.00",
+                "retainer_price": "1000.00",
             },
             "events": {
                 "Engagement": {
                     "event_name": "Engagement",
                     "package_uuid": "654a66f1-055f-4525-906e-9334e28b1966",
                     "shoot_date": "July 17, 2020",
+                    "uuid": "6607cce2-0d61-4fb9-8caa-058fc62c73ca"
+                },
+                "Wedding": {
+                    "event_name": "Wedding",
+                    "package_uuid": "654a66f1-055f-4525-906e-9334e28b1966",
+                    "shoot_date": "April 17, 2020",
                     "uuid": "6607cce2-0d61-4fb9-8caa-058fc62c73ca"
                 }
             }
