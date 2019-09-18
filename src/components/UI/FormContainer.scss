@@ -2,7 +2,8 @@
 
 
 .form-container {
-    max-width: 450px;
+    width: 500px;
+    max-width: 80vw;
     background-color: white;
     box-shadow: $box-shadow;
     border-radius: 6px;
@@ -72,25 +73,19 @@
         margin: 20px 0px;
       }
     }
-  }
-  
-  .btn-primary {
-    color: white;
-    background-color: $theme-color;
-    box-shadow: $box-shadow;
-    border-radius: 6px;
-    padding: 10px 40px;
-    border: none;
-    justify-self: center;
-    cursor: pointer;
-  
-    &:hover {
-      background-color: $theme-color--dark;
-    }
 
-    &:disabled {
-      background-color: $grey-500;
-      cursor: not-allowed;
-    }
+    .btn-span {
+      display: flex;
+      justify-content: space-between;
+
+      .btn-tertiary {
+        justify-self: start;
+      }
+
+      .btn-primary  {
+        justify-self: end;
+      }
+
   }
-  
+
+}

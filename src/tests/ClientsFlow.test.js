@@ -64,7 +64,7 @@ describe('Clients Flow', () => {
         fireEvent.click(getAllByText("View")[0]);
         
         await waitForElement(() =>
-            findByText(/client information/i)
+            findByText(/sammy lee/i)
         )
     })
 

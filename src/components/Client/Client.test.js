@@ -19,10 +19,10 @@ describe('Client', () => {
         const apiHandler = new MockAPIHandler({ 
             [Endpoints.getClient(user_uuid)]: [client]
         });
-        const { findByText, getByText } = render(<Client apiHandler={apiHandler} client_uuid={user_uuid} />)
+        const { findAllByText, getByText } = render(<Client apiHandler={apiHandler} client_uuid={user_uuid} />)
 
         await waitForElement(() =>
-            findByText(/client information/i)
+            findAllByText(/client information/i)
         )
 
         getByText(/sammy lee/i)

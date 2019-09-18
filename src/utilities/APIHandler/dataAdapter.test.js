@@ -34,7 +34,7 @@ describe("Data Adapter", () => {
                     "last_name": "-",
                     "email": "-",
                     "phone_number": "-",
-                    "label": null,
+                    "label": "-",
                     "best_time_to_contact": "-",
                 }
             ],
@@ -101,7 +101,7 @@ describe("Data Adapter", () => {
                         "last_name": "-",
                         "email": "-",
                         "phone_number": "-",
-                        "label": null,
+                        "label": "-",
                         "best_time_to_contact": "-",
                         "uuid": undefined,
                     }

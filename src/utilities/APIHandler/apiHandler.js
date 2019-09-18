@@ -17,6 +17,14 @@ class APIHandler {
         .catch(error => this.formatError(error));
     }
 
+    put = async (endpoint, data) => {
+        return axios.put(endpoint, data, {
+            withCredentials: true
+        })
+        .then(response => response.data)
+        .catch(error => this.formatError(error));
+    }
+
     formatError = (error) => {
         if (!error.response) {
             return { errors: error };
