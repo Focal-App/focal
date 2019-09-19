@@ -40,7 +40,7 @@ const Client = ({ apiHandler, client_uuid }) => {
                 </section>
             </section>
             <ClientInformation client={clientData.client} apiHandler={apiHandler} setClient={setClient} />
-            <PackageInformation clientPackage={clientPackage} apiHandler={apiHandler} setPackage={setPackage} />
+            <PackageInformation clientPackage={clientPackage} apiHandler={apiHandler} setPackage={setPackage} client_uuid={client_uuid} />
         </ClientPage>
     )
 }

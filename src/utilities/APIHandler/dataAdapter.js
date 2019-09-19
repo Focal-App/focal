@@ -3,6 +3,7 @@ import { convertPenniesToDollars, convertDollarsToPennies } from "utilities/pric
 
 export const DefaultText = {
     noContent: "-",
+    nothing: ""
 }
 
 class DataAdapter {
@@ -34,7 +35,7 @@ class DataAdapter {
             last_name: DefaultText.noContent,
             email: DefaultText.noContent,
             phone_number: DefaultText.noContent,
-            label: null,
+            label: DefaultText.noContent,
             best_time_to_contact: DefaultText.noContent,
         }
     }
@@ -85,17 +86,19 @@ class DataAdapter {
                 retainer_paid,
                 discount_offered,
                 balance_remaining,
-                balance_received
+                balance_received,
+                wedding_included,
+                engagement_included
             } = apiPackage;
 
-            const upcoming_shoot_date = package_events.length > 0 && package_events[0].shoot_date
+            const upcoming_shoot_date = package_events && package_events.length > 0 && package_events[0].shoot_date
                 ? formatDate(package_events[0].shoot_date)
                 : DefaultText.noContent;
 
             return {
-                package_name: package_name ? package_name : DefaultText.noContent,
+                package_name: package_name ? package_name : DefaultText.nothing,
                 proposal_signed,
-                package_contents: package_contents ? package_contents : DefaultText.noContent,
+                package_contents: package_contents ? package_contents : DefaultText.nothing,
                 package_price: package_price >= 0 ? convertPenniesToDollars(package_price) : DefaultText.noContent,
                 retainer_price: retainer_price >= 0 ? convertPenniesToDollars(retainer_price) : DefaultText.noContent,
                 retainer_paid_amount: retainer_paid_amount >= 0 ? convertPenniesToDollars(retainer_paid_amount) : DefaultText.noContent,
@@ -104,14 +107,27 @@ class DataAdapter {
                 balance_remaining: balance_remaining >= 0 ? convertPenniesToDollars(balance_remaining) : DefaultText.noContent,
                 balance_received,
                 uuid,
-                upcoming_shoot_date
+                upcoming_shoot_date,
+                wedding_included,
+                engagement_included
             }
         }
 
         return {
             package_events: [],
-            package_name: DefaultText.noContent,
-            upcoming_shoot_date: DefaultText.noContent
+            package_name: DefaultText.nothing,
+            upcoming_shoot_date: DefaultText.noContent,
+            proposal_signed: false,
+            package_contents: DefaultText.nothing,
+            package_price: convertPenniesToDollars(0),
+            retainer_price: convertPenniesToDollars(0),
+            retainer_paid_amount: convertPenniesToDollars(0),
+            retainer_paid: false,
+            discount_offered: convertPenniesToDollars(0),
+            balance_remaining: convertPenniesToDollars(0),
+            balance_received: false,
+            wedding_included: false,
+            engagement_included: false
         }
     }
 
@@ -160,11 +176,20 @@ class DataAdapter {
 
     static toApiReadyClient = (values) => {
         Object.keys(values).forEach(key => {
-            if (typeof values[key] === 'object') {
-                DataAdapter.toApiReadyClient(values[key])
+            const value = values[key];
+            if (typeof value === 'object') {
+                DataAdapter.toApiReadyClient(value)
             }
-            if (values[key] === DefaultText.noContent || values[key] === "") {
+            if (typeof value === 'boolean') {
+                return;
+            }
+            if (value === DefaultText.noContent || value === DefaultText.nothing) {
                 values[key] = null;
+                return;
+            }
+            if (Number(value) || value === "0.00") {
+                values[key] = convertDollarsToPennies(value);
+                return;
             }
         })
 

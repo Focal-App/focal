@@ -72,9 +72,27 @@
         border: 1px solid $grey-200;
         margin: 20px 0px;
       }
+
+      code {
+        background: #eee;
+        padding: .1rem;
+        font-family: 'Menlo';
+        font-size: 13px;
+        color: #ff00aa;
+      }
+      
+
+      input:focus {
+        border-color: #007eff;
+        box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075),
+          0 0 0 3px rgba(0, 126, 255, 0.1);
+        outline: none;
+      }
     }
 
     .btn-span {
+      border-top: 1px solid $grey-400;
+      padding-top: 20px;
       display: flex;
       justify-content: space-between;
 
@@ -87,5 +105,84 @@
       }
 
   }
+}
 
+
+/*
+==========================
+CHECKBOX STYLING
+==========================
+*/
+
+.checkbox-container {
+  display: block;
+  position: relative;
+  padding-left: 20px;
+  margin-bottom: 10px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  width: fit-content;
+  height: min-content;
+}
+
+/* Hide the browser's default checkbox */
+.checkbox-container input {
+  position: absolute;
+  opacity: 0;
+  cursor: default;
+}
+
+/* Create a custom checkbox */
+.checkmark {
+  position: absolute;
+  margin-left: 0px;
+  top: 5px;
+  left: 0;
+  height: 14px;
+  width: 14px;
+  background-color: white;
+  border: 1px solid $grey-600;
+}
+
+/* On mouse-over, add a grey background color */
+.checkbox-container:hover input ~ .checkmark {
+  background-color: $green-200;
+  border-color: $green-300;
+}
+
+/* When the checkbox is checked, add a blue background */
+.checkbox-container input:checked ~ .checkmark {
+  background-color: $green-500;
+  border-color: $green-500;
+}
+
+/* Create the checkmark/indicator (hidden when not checked) */
+.checkmark:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+/* Show the checkmark when checked */
+.checkbox-container input:checked ~ .checkmark:after {
+  display: block;
+}
+
+/* Style the checkmark/indicator */
+.checkbox-container .checkmark:after {
+  left: 4px;
+  top: 1.5px;
+  width: 4px;
+  height: 7px;
+  border: solid white;
+  border-width: 0 2px 2px 0;
+  -webkit-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  transform: rotate(45deg);
+}
+
+.form-checkbox-answer {
+  font-size: 14px !important;
 }

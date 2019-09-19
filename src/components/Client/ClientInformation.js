@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import UpdateClientInformation from "./UpdateClientInformation";
+import UpdateClientForm from "./UpdateClientForm";
 import FormContainer from "components/UI/FormContainer";
 import Modal from "components/UI/Modal";
 import Success from "components/UI/Success";
@@ -40,7 +40,7 @@ const ClientInformation = ({ client, apiHandler, setClient }) => {
                             {errors && <Error message={errors} />}
                             {success
                                 ? <Success text="Success!" />
-                                : <UpdateClientInformation
+                                : <UpdateClientForm
                                     initialValues={client}
                                     setModalVisibility={setModalVisibility}
                                     handleSubmit={handleSubmit} />

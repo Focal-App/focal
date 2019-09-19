@@ -93,6 +93,8 @@ describe("Data Adapter", () => {
             "retainer_paid": false,
             "retainer_paid_amount": "0.00",
             "retainer_price": "1000.00",
+            engagement_included: false,
+            wedding_included: false
         })
     })
 
@@ -153,6 +155,8 @@ describe("Data Adapter", () => {
                 "retainer_paid": false,
                 "retainer_paid_amount": "0.00",
                 "retainer_price": "1000.00",
+                engagement_included: false,
+                wedding_included: false
             },
             "events": {
                 "Engagement": {
@@ -190,5 +194,25 @@ describe("Data Adapter", () => {
                 "uuid": "ce20b995-0368-4a59-9ae4-ad858b77f8af",
             }
         ])
+    })
+
+    it("prepares data for API", () =>  {
+        const dataToSendToApi = {
+            firstName: "-",
+            lastName: "",
+            price: "1.00",
+            zeroPrice: "0.00",
+            text: "a 11 story thing",
+            isTrue: true
+        }
+
+        expect(DataAdapter.toApiReadyClient(dataToSendToApi)).toEqual({
+            firstName: null,
+            lastName: null,
+            price: 100,
+            zeroPrice: 0,
+            text: "a 11 story thing",
+            isTrue: true
+        })
     })
 })
