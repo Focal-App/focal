@@ -92,12 +92,12 @@ describe('Update Client Flow - Client Information', () => {
         await waitForElement(() =>
             findByText(/Zihao Zui/i)
         )
-        findByText(/natasha@gmail.com/i)
-        findByText(/111-111-1111/i)
-        findByText(/Referred by Pat/i)
-        findByText(/Zihao Zui/i)
-        findByText(/zihao@gmail.com/i)
-        findByText(/333-333-3333/i)
+        getByText(/natasha@gmail.com/i)
+        getAllByText(/111-111-1111/i)
+        getByText(/Referred by Pat/i)
+        getByText(/Zihao Zui/i)
+        getByText(/zihao@gmail.com/i)
+        getByText(/333-333-3333/i)
     })
 
     it(`renders the updated information after successful client package update`, async () => {
@@ -155,8 +155,8 @@ describe('Update Client Flow - Client Information', () => {
         await waitForElement(() =>
             findByText(/Natasha Lee/i)
         )
-        findByText(/wedding classic/i)
-        findAllByText(/$5000.00/i)
-        findByText(/8 Hours of Photographic Coverage/i)
+        getByText(/wedding classic/i)
+        getAllByText(/5000.00/i)
+        getByText(/8 Hours of Photographic Coverage/i)
     })
 })

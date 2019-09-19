@@ -75,7 +75,35 @@ const MockApiData = {
             "event_name": "Engagement",
             "package_uuid": "654a66f1-055f-4525-906e-9334e28b1966",
             "shoot_date": "2020-04-17T14:00:00Z",
-            "uuid": "6607cce2-0d61-4fb9-8caa-058fc62c73ca"
+            "uuid": "6607cce2-0d61-4fb9-8caa-058fc62c73ca",
+            "blog_link": "http://google.com",
+            "coordinator_name": null,
+            "edit_image_deadline": "2020-04-17T14:00:00Z",
+            "gallery_link": "http://google.com",
+            "notes": "Have clients bring extra flowers and a see through chair.",
+            "reception_location": null,
+            "shoot_location": "Los Angeles Poppy Fields",
+            "shoot_time": "6AM - 11AM",
+            "wedding_location": null
+        }
+        return Object.assign(apiData, dataObject);
+    },
+    weddingEventData: (dataObject) => {
+        let apiData = {
+            "client_uuid": "cc14121c-ff53-4edb-832b-8adda60cb372",
+            "event_name": "Wedding",
+            "package_uuid": "654a66f1-055f-4525-906e-9334e28b1966",
+            "shoot_date": "2020-08-17T14:00:00Z",
+            "uuid": "6607cce2-0d61-4fb9-8caa-058fc62c73ca",
+            "blog_link": "http://google.com",
+            "coordinator_name": "Cindy, 111-111-1111",
+            "edit_image_deadline": "2020-04-17T14:00:00Z",
+            "gallery_link": "http://google.com",
+            "notes": "Coordinate with Cindy on exact time details for bride prep",
+            "reception_location": "Redbird DTLA",
+            "shoot_location": null,
+            "shoot_time": "8AM - 11PM",
+            "wedding_location": "Viviana DTLA"
         }
         return Object.assign(apiData, dataObject);
     },
@@ -83,20 +111,8 @@ const MockApiData = {
         let apiData = {
             "client_uuid": "cc14121c-ff53-4edb-832b-8adda60cb372",
             "package_events": [
-                {
-                    "client_uuid": "cc14121c-ff53-4edb-832b-8adda60cb372",
-                    "event_name": "Engagement",
-                    "package_uuid": "654a66f1-055f-4525-906e-9334e28b1966",
-                    "shoot_date": "2020-07-17T14:00:00Z",
-                    "uuid": "6607cce2-0d61-4fb9-8caa-058fc62c73ca"
-                },
-                {
-                    "client_uuid": "cc14121c-ff53-4edb-832b-8adda60cb372",
-                    "event_name": "Wedding",
-                    "package_uuid": "654a66f1-055f-4525-906e-9334e28b1966",
-                    "shoot_date": "2020-04-17T14:00:00Z",
-                    "uuid": "6607cce2-0d61-4fb9-8caa-058fc62c73ca"
-                }
+                MockApiData.eventData(),
+                MockApiData.weddingEventData()
             ],
             "package_name": "Wedding Premier",
             proposal_signed: false,
@@ -119,7 +135,8 @@ const MockApiData = {
             balance_received: false,
             engagement_included: false,
             wedding_included: false,
-            "uuid": "654a66f1-055f-4525-906e-9334e28b1966"
+            "uuid": "654a66f1-055f-4525-906e-9334e28b1966",
+            upcoming_shoot_date: "2020-04-17T14:00:00Z",
         }
         return Object.assign(apiData, dataObject);
     },

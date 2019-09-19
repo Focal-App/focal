@@ -6,6 +6,7 @@ import DataAdapter from "utilities/APIHandler/dataAdapter";
 import "./Client.scss";
 import ClientInformation from "./ClientInformation";
 import PackageInformation from "./PackageInformation";
+import EventInformation from "./EventInformation";
 
 const Client = ({ apiHandler, client_uuid }) => {
     const [errors, setErrors] = useState(false);
@@ -39,8 +40,23 @@ const Client = ({ apiHandler, client_uuid }) => {
                 <section className="client-workflow">
                 </section>
             </section>
-            <ClientInformation client={clientData.client} apiHandler={apiHandler} setClient={setClient} />
-            <PackageInformation clientPackage={clientPackage} apiHandler={apiHandler} setPackage={setPackage} client_uuid={client_uuid} />
+            <ClientInformation 
+                client={clientData.client} 
+                apiHandler={apiHandler} 
+                setClient={setClient} 
+            />
+            <PackageInformation 
+                clientPackage={clientPackage} 
+                apiHandler={apiHandler} 
+                setPackage={setPackage} 
+                client_uuid={client_uuid} 
+            />
+            <EventInformation 
+                events={clientEvents} 
+                apiHandler={apiHandler} 
+                setEvents={setEvents} 
+                eventPackage={clientPackage} 
+            />
         </ClientPage>
     )
 }

@@ -62,20 +62,80 @@ class DataAdapter {
         }
     }
 
-    static toEventModel = (apiEvent) => {
-        const { event_name, package_uuid, shoot_date, uuid } = apiEvent;
-        return {
-            event_name: event_name ? event_name : DefaultText.noContent,
-            package_uuid,
-            shoot_date: shoot_date ? formatDate(shoot_date) : DefaultText.noContent,
-            uuid
+    static toEventModel = (apiEvent, type = "event") => {
+        if (apiEvent) {
+            const { 
+                event_name, 
+                package_uuid, 
+                shoot_date, 
+                uuid,
+                blog_link,
+                edit_image_deadline,
+                gallery_link,
+                notes,
+                shoot_location,
+                shoot_time,
+                reception_location,
+                wedding_location,
+                coordinator_name
+            } = apiEvent;
+    
+            const baseEvent = {
+                event_name: event_name ? event_name : DefaultText.noContent,
+                package_uuid,
+                shoot_date: shoot_date ? formatDate(shoot_date) : DefaultText.noContent,
+                uuid,
+                blog_link: blog_link ? blog_link : DefaultText.noContent,
+                gallery_link: gallery_link ? gallery_link : DefaultText.noContent,
+                notes: notes ? notes : DefaultText.noContent,
+                edit_image_deadline: edit_image_deadline ? formatDate(edit_image_deadline) : DefaultText.noContent,
+                shoot_time: shoot_time ? shoot_time : DefaultText.noContent,
+            }
+    
+            if (event_name.match(/wedding/i)) {
+                const weddingEvent = {
+                    reception_location: reception_location ? reception_location : DefaultText.noContent,
+                    wedding_location: wedding_location ? wedding_location : DefaultText.noContent,
+                    coordinator_name: coordinator_name ? coordinator_name : DefaultText.noContent,
+                }
+                return Object.assign(baseEvent, weddingEvent)
+            } else {
+                const event = {
+                    shoot_location: shoot_location ? shoot_location : DefaultText.noContent,
+                }
+                return Object.assign(baseEvent, event)
+            }
+        }
+        if (type === "event") {
+            return {
+                event_name: "Engagement",
+                shoot_date: DefaultText.noContent,
+                blog_link: DefaultText.noContent,
+                gallery_link: DefaultText.noContent,
+                notes: DefaultText.noContent,
+                edit_image_deadline: DefaultText.noContent,
+                shoot_time: DefaultText.noContent,
+                shoot_location: DefaultText.noContent,
+            }
+        } else {
+            return {
+                event_name: "Wedding",
+                shoot_date: DefaultText.noContent,
+                blog_link: DefaultText.noContent,
+                gallery_link: DefaultText.noContent,
+                notes: DefaultText.noContent,
+                edit_image_deadline: DefaultText.noContent,
+                shoot_time: DefaultText.noContent,
+                reception_location: DefaultText.noContent,
+                wedding_location: DefaultText.noContent,
+                coordinator_name: DefaultText.noContent,
+            }
         }
     }
 
     static toPackageModel = (apiPackage) => {
         if (apiPackage) {
             const { 
-                package_events, 
                 package_name, 
                 uuid, 
                 proposal_signed,
@@ -88,12 +148,9 @@ class DataAdapter {
                 balance_remaining,
                 balance_received,
                 wedding_included,
-                engagement_included
+                engagement_included,
+                upcoming_shoot_date
             } = apiPackage;
-
-            const upcoming_shoot_date = package_events && package_events.length > 0 && package_events[0].shoot_date
-                ? formatDate(package_events[0].shoot_date)
-                : DefaultText.noContent;
 
             return {
                 package_name: package_name ? package_name : DefaultText.nothing,
@@ -107,7 +164,7 @@ class DataAdapter {
                 balance_remaining: balance_remaining >= 0 ? convertPenniesToDollars(balance_remaining) : DefaultText.noContent,
                 balance_received,
                 uuid,
-                upcoming_shoot_date,
+                upcoming_shoot_date: upcoming_shoot_date ? formatDate(upcoming_shoot_date) :  DefaultText.noContent,
                 wedding_included,
                 engagement_included
             }
@@ -136,13 +193,9 @@ class DataAdapter {
             client: this.toClientModel(client),
             current_stage: this.toTaskModel(client.current_stage),
             package: this.toPackageModel(client.package),
-            events: {}
+            events: client.package && client.package.package_events && client.package.package_events.map(event => this.toEventModel(event))
         }
-        if (client.package && client.package.package_events) {
-            client.package.package_events.forEach((event) => {
-                data.events[event.event_name] = this.toEventModel(event);
-            });
-        }
+
         return data;
     }
 

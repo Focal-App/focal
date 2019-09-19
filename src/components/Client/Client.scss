@@ -5,6 +5,7 @@
     grid-template-columns: repeat(3fr, 1fr);
     grid-template-areas:    "workflow workflow workflow info"
                             "workflow workflow workflow package"
+                            "workflow workflow workflow events"
                             "workflow workflow workflow events";
     grid-gap: 30px;
     max-width: $max-width;
@@ -43,8 +44,13 @@
     grid-area: package;
 }
 
+.client-events--container  {
+    grid-area: events;
+}
+
 .client-information--container,
-.client-package--container {
+.client-package--container,
+.client-events--container {
 
     .client-page--header {
         display: flex;
@@ -61,9 +67,9 @@
 }
 
 
-
 .client-information,
-.package-information {
+.package-information,
+.event-information {
     color: $grey-800;
     box-sizing: border-box;
     background-color: white;
@@ -80,14 +86,14 @@
     h4 {
         font-size: 16px;
         font-weight: 700;
-        margin: 0px 0px 20px 0px;
+        margin: 0px 0px 14px 0px;
     }
 
     hr {
         grid-column: 1 / -1;
         width: 100%;
-        border-top: 1px solid $grey-300;
-        margin-bottom: 20px;
+        border-top: 1px solid $grey-200;
+        margin-bottom: 10px;
     }
 
     span {
@@ -95,13 +101,18 @@
     }
 }
 
-.client-information {
+.client-information,
+.event-information {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     grid-gap: 10px;
     justify-items: start;
     align-items: start;
     text-align: left;
+}
+
+.event-information {
+    margin-bottom: 30px;
 }
 
 .package-information  {
