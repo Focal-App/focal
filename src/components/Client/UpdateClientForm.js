@@ -2,10 +2,11 @@ import React from 'react';
 import { Formik, Field, Form, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import { DefaultText } from 'utilities/APIHandler/dataAdapter';
+import { Label } from "components/UI/FormParts";
 
 const ClientInformationSchema = Yup.object().shape({
-    contacts: [
-        {
+    contacts: Yup.array().of(
+        Yup.object().shape({
             first_name: Yup.string()
                 .required('First Name required'),
             last_name: Yup.string()
@@ -19,32 +20,13 @@ const ClientInformationSchema = Yup.object().shape({
                 .notRequired(),
             best_time_to_contact: Yup.string()
                 .notRequired(),
-        },
-        {
-            first_name: Yup.string()
-                .notRequired(),
-            last_name: Yup.string()
-                .notRequired(),
-            email: Yup.string()
-                .email('Invalid email')
-                .notRequired(),
-            phone_number: Yup.string()
-                .notRequired(),
-            label: Yup.string()
-                .notRequired(),
-            best_time_to_contact: Yup.string()
-                .notRequired(),
-        }
-    ],
+        })
+    ),
     private_notes: Yup.string()
         .notRequired(),
 });
 
-const Label = ({ label, name }) => (
-    <label htmlFor={name} >{label}</label>
-)
-
-const UpdateClientInformation = ({ onSubmit, initialValues, setModalVisibility, handleSubmit }) => {
+const UpdateClientForm = ({ initialValues, setModalVisibility, handleSubmit }) => {
     return (
         <Formik
             initialValues={initialValues}
@@ -54,6 +36,8 @@ const UpdateClientInformation = ({ onSubmit, initialValues, setModalVisibility, 
             }}
             render={({
                 isSubmitting,
+                errors,
+                values
             }) => (
                     <Form className="update-client-information--container">
                         <ContactForm contact={initialValues.contacts[0]} contactIndex={0} defaultLabel={"Client"} />
@@ -94,7 +78,6 @@ const ContactForm = ({ contact, contactIndex, defaultLabel }) => {
     const bestTimeToContact = `${contacts}.best_time_to_contact`
     const email = `${contacts}.email`
     const phoneNumber = `${contacts}.phone_number`
-
     return (
         <>
             <h3>{contactLabel} Information</h3>
@@ -125,4 +108,4 @@ const ContactForm = ({ contact, contactIndex, defaultLabel }) => {
     )
 }
 
-export default UpdateClientInformation;
+export default UpdateClientForm;

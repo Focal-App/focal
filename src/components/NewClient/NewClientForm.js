@@ -1,6 +1,7 @@
 import React from 'react';
 import { Formik, Field, Form, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
+import { Label } from "components/UI/FormParts";
 
 const NewClient = Yup.object().shape({
     first_name: Yup.string()
@@ -19,10 +20,6 @@ const NewClient = Yup.object().shape({
     best_time_to_contact: Yup.string()
         .notRequired(),
 });
-
-const Label = ({ label, name }) => (
-    <label htmlFor={name} >{label}</label>
-)
 
 const NewClientForm = ({ onSubmit }) => {
     return (

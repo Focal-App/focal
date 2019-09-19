@@ -117,6 +117,8 @@ const MockApiData = {
             discount_offered: 0,
             balance_remaining: 480000,
             balance_received: false,
+            engagement_included: false,
+            wedding_included: false,
             "uuid": "654a66f1-055f-4525-906e-9334e28b1966"
         }
         return Object.assign(apiData, dataObject);
