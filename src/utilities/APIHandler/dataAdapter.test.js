@@ -63,7 +63,33 @@ describe("Data Adapter", () => {
             "event_name": "Engagement",
             "package_uuid": "654a66f1-055f-4525-906e-9334e28b1966",
             "shoot_date": "April 17, 2020",
-            "uuid": "6607cce2-0d61-4fb9-8caa-058fc62c73ca"
+            "uuid": "6607cce2-0d61-4fb9-8caa-058fc62c73ca",
+            "blog_link": "http://google.com",
+            "edit_image_deadline": "April 17, 2020",
+            "gallery_link": "http://google.com",
+            "notes": "Have clients bring extra flowers and a see through chair.",
+            "shoot_location": "Los Angeles Poppy Fields",
+            "shoot_time": "6AM - 11AM",
+        })
+    })
+
+    it("maps Event API data to a WeddingEventModel", () => {
+        let apiEventData = MockApiData.weddingEventData()
+        const weddingEventModel = DataAdapter.toEventModel(apiEventData);
+
+        expect(weddingEventModel).toEqual({
+            "event_name": "Wedding",
+            "package_uuid": "654a66f1-055f-4525-906e-9334e28b1966",
+            "shoot_date": "August 17, 2020",
+            "uuid": "6607cce2-0d61-4fb9-8caa-058fc62c73ca",
+            "blog_link": "http://google.com",
+            "coordinator_name": "Cindy, 111-111-1111",
+            "edit_image_deadline": "April 17, 2020",
+            "gallery_link": "http://google.com",
+            "notes": "Coordinate with Cindy on exact time details for bride prep",
+            "reception_location": "Redbird DTLA",
+            "shoot_time": "8AM - 11PM",
+            "wedding_location": "Viviana DTLA",
         })
     })
 
@@ -74,7 +100,7 @@ describe("Data Adapter", () => {
         expect(packageModel).toEqual({
             "package_name": "Wedding Premier",
             "uuid": "654a66f1-055f-4525-906e-9334e28b1966",
-            "upcoming_shoot_date": "July 17, 2020",
+            "upcoming_shoot_date": "April 17, 2020",
             "balance_received": false,
             "balance_remaining": "4800.00",
             "discount_offered": "0.00",
@@ -136,7 +162,7 @@ describe("Data Adapter", () => {
             "package": {
                 "package_name": "Wedding Premier",
                 "uuid": "654a66f1-055f-4525-906e-9334e28b1966",
-                "upcoming_shoot_date": "July 17, 2020",
+                "upcoming_shoot_date": "April 17, 2020",
                 "balance_received": false,
                 "balance_remaining": "4800.00",
                 "discount_offered": "0.00",
@@ -158,20 +184,34 @@ describe("Data Adapter", () => {
                 engagement_included: false,
                 wedding_included: false
             },
-            "events": {
-                "Engagement": {
+            "events": [
+                {
                     "event_name": "Engagement",
                     "package_uuid": "654a66f1-055f-4525-906e-9334e28b1966",
-                    "shoot_date": "July 17, 2020",
-                    "uuid": "6607cce2-0d61-4fb9-8caa-058fc62c73ca"
+                    "shoot_date": "April 17, 2020",
+                    "uuid": "6607cce2-0d61-4fb9-8caa-058fc62c73ca",
+                    "blog_link": "http://google.com",
+                    "edit_image_deadline": "April 17, 2020",
+                    "gallery_link": "http://google.com",
+                    "notes": "Have clients bring extra flowers and a see through chair.",
+                    "shoot_location": "Los Angeles Poppy Fields",
+                    "shoot_time": "6AM - 11AM",
                 },
-                "Wedding": {
+                {
                     "event_name": "Wedding",
                     "package_uuid": "654a66f1-055f-4525-906e-9334e28b1966",
-                    "shoot_date": "April 17, 2020",
-                    "uuid": "6607cce2-0d61-4fb9-8caa-058fc62c73ca"
+                    "shoot_date": "August 17, 2020",
+                    "uuid": "6607cce2-0d61-4fb9-8caa-058fc62c73ca",
+                    "blog_link": "http://google.com",
+                    "coordinator_name": "Cindy, 111-111-1111",
+                    "edit_image_deadline": "April 17, 2020",
+                    "gallery_link": "http://google.com",
+                    "notes": "Coordinate with Cindy on exact time details for bride prep",
+                    "reception_location": "Redbird DTLA",
+                    "shoot_time": "8AM - 11PM",
+                    "wedding_location": "Viviana DTLA",
                 }
-            }
+            ]
         }])
     })
 
