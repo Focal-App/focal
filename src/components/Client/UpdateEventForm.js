@@ -60,8 +60,8 @@ const UpdateEventForm = ({ initialValues, setModalVisibility, handleSubmit, hand
     let convertedInitialValues = Object.assign({}, initialValues, {
         shoot_date: setDefaultDate(initialValues.shoot_date),
         edit_image_deadline: setDefaultDate(initialValues.edit_image_deadline),
-        gallery_link: undefined,
-        blog_link: undefined
+        gallery_link: initialValues.gallery_link ? initialValues.gallery_link : undefined,
+        blog_link: initialValues.blog_link ? initialValues.blog_link : undefined
     });
 
     return (
