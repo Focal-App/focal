@@ -63,7 +63,7 @@ describe("Data Adapter", () => {
             "event_name": "Engagement",
             "package_uuid": "654a66f1-055f-4525-906e-9334e28b1966",
             "shoot_date": "April 17, 2020",
-            "uuid": "6607cce2-0d61-4fb9-8caa-058fc62c73ca",
+            "uuid": "55555cce2-0d61-4fb9-8caa-058fc62c73ca",
             "blog_link": "http://google.com",
             "edit_image_deadline": "April 17, 2020",
             "gallery_link": "http://google.com",
@@ -189,7 +189,7 @@ describe("Data Adapter", () => {
                     "event_name": "Engagement",
                     "package_uuid": "654a66f1-055f-4525-906e-9334e28b1966",
                     "shoot_date": "April 17, 2020",
-                    "uuid": "6607cce2-0d61-4fb9-8caa-058fc62c73ca",
+                    "uuid": "55555cce2-0d61-4fb9-8caa-058fc62c73ca",
                     "blog_link": "http://google.com",
                     "edit_image_deadline": "April 17, 2020",
                     "gallery_link": "http://google.com",
@@ -243,7 +243,9 @@ describe("Data Adapter", () => {
             price: "1.00",
             zeroPrice: "0.00",
             text: "a 11 story thing",
-            isTrue: true
+            isTrue: true,
+            simpleDate: "2019-07-01",
+            formattedDate: "April 17, 2019"
         }
 
         expect(DataAdapter.toApiReadyClient(dataToSendToApi)).toEqual({
@@ -252,7 +254,9 @@ describe("Data Adapter", () => {
             price: 100,
             zeroPrice: 0,
             text: "a 11 story thing",
-            isTrue: true
+            isTrue: true,
+            simpleDate: "2019-07-01T07:00:00.000Z",
+            formattedDate: "2019-04-17T07:00:00.000Z"
         })
     })
 })

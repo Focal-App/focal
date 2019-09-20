@@ -75,7 +75,7 @@ const MockApiData = {
             "event_name": "Engagement",
             "package_uuid": "654a66f1-055f-4525-906e-9334e28b1966",
             "shoot_date": "2020-04-17T14:00:00Z",
-            "uuid": "6607cce2-0d61-4fb9-8caa-058fc62c73ca",
+            "uuid": "55555cce2-0d61-4fb9-8caa-058fc62c73ca",
             "blog_link": "http://google.com",
             "coordinator_name": null,
             "edit_image_deadline": "2020-04-17T14:00:00Z",

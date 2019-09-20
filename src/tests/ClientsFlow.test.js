@@ -5,6 +5,7 @@ import { render, cleanup, waitForElement, fireEvent } from '@testing-library/rea
 import MockAPIHandler from 'utilities/APIHandler/mockApiHandler';
 import Endpoints from "utilities/apiEndpoint";
 import MockApiData from "utilities/APIHandler/mockApiData";
+import { act } from 'react-dom/test-utils';
 
 describe('Clients Flow', () => {
     afterEach(() => {
@@ -42,11 +43,18 @@ describe('Clients Flow', () => {
             [getClientsUrl]: [clientsList],
             [Endpoints.getClient(client_uuid)]: [client]
         });
-        const { findByText, getByText, getAllByText } = render(
-            <MemoryRouter initialEntries={["/clients"]} initialIndex={0}>
-                <App apiHandler={apiHandler} authUser={authUser}/>
-            </MemoryRouter>
-        )
+
+        let component;
+
+        await act(async () => {
+            component = render(
+                <MemoryRouter initialEntries={["/clients"]} initialIndex={0}>
+                    <App apiHandler={apiHandler} authUser={authUser}/>
+                </MemoryRouter>
+            )
+        })
+
+        const { findByText, getByText, getAllByText } = component;
 
         await waitForElement(() =>
             findByText(/Sammy & David/i)
@@ -61,7 +69,9 @@ describe('Clients Flow', () => {
         getByText(/September 17, 2020/i)
         getByText(/Confirm Proposal & Retainer/i)
 
-        fireEvent.click(getAllByText("View")[0]);
+        await act(async () => {
+            fireEvent.click(getAllByText("View")[0]);
+        })
         
         await waitForElement(() =>
             findByText(/sammy lee/i)
@@ -73,11 +83,15 @@ describe('Clients Flow', () => {
         const clientsList = MockApiData.successData([]);
         const getClientsUrl = Endpoints.getClients(user_uuid)
         const apiHandler = new MockAPIHandler({ [getClientsUrl]: [clientsList] });
-        const { findByText } = render(
-            <MemoryRouter initialEntries={["/clients"]} initialIndex={0}>
-                <App apiHandler={apiHandler} authUser={authUser}/>
-            </MemoryRouter>
-        )
+        let component;
+        await act(async() => {
+            component = render(
+                <MemoryRouter initialEntries={["/clients"]} initialIndex={0}>
+                    <App apiHandler={apiHandler} authUser={authUser}/>
+                </MemoryRouter>
+            )
+        })
+        const { findByText } = component;
 
         await waitForElement(() =>
             findByText(/Doesn't look like you have any clients yet!/i)
@@ -88,11 +102,15 @@ describe('Clients Flow', () => {
         const failedData = MockApiData.errorData(["Issue fetching data"]);
         const getClientsUrl = Endpoints.getClients(user_uuid)
         const apiHandler = new MockAPIHandler({ [getClientsUrl]: [failedData] });
-        const { findByText } = render(
-            <MemoryRouter initialEntries={["/clients"]} initialIndex={0}>
-                <App apiHandler={apiHandler} authUser={authUser}/>
-            </MemoryRouter>
-        )
+        let component;
+        await act(async() => {
+            component = render(
+                <MemoryRouter initialEntries={["/clients"]} initialIndex={0}>
+                    <App apiHandler={apiHandler} authUser={authUser}/>
+                </MemoryRouter>
+            )
+        })
+        const { findByText } = component;
 
         await waitForElement(() =>
             findByText(/Issue fetching data/i)

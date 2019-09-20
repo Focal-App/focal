@@ -38,6 +38,25 @@
   cursor: pointer;
   &:hover {
     border: 1px solid $theme-color--dark;
+    color: $theme-color--dark;
     font-weight: 600;
+  }
+}
+
+.btn-warning {
+  color: $red-400;
+  border: 1px solid $red-400;
+  box-shadow: none;
+  background-color: white;
+  border-radius: 6px;
+  font-weight: 500;
+  font-size: 12px;
+  display: inline;
+  padding: 10px 15px;
+  cursor: pointer;
+  &:hover {
+    border: 1px solid $red-600;
+    color: $red-600;
+    font-weight: 500;
   }
 }

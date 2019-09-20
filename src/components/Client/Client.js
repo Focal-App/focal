@@ -13,7 +13,7 @@ const Client = ({ apiHandler, client_uuid }) => {
     const [loading, setLoading] = useState(false);
     const [clientData, setClient] = useState({});
     const [clientPackage, setPackage] = useState({})
-    const [clientEvents, setEvents] = useState({})
+    const [clientEvents, setEvents] = useState([])
 
     useEffect(() => {
         const fetchClient = async () => {
@@ -30,7 +30,7 @@ const Client = ({ apiHandler, client_uuid }) => {
             setLoading(false);
         }
         fetchClient();
-    }, [])
+    }, [client_uuid])
 
     return (
         <ClientPage loading={loading}>
