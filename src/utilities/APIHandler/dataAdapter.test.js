@@ -55,6 +55,39 @@ describe("Data Adapter", () => {
         })
     })
 
+    it("maps workflow API data to a WorkflowModel", () => {
+        const apiWorkflowData = MockApiData.workflowData()
+        const workflowModel = DataAdapter.toWorkflowModel(apiWorkflowData);
+
+        expect(workflowModel).toEqual({
+            order: 0,
+            uuid:"6f524831-fa75-42c8-9a7c-f8ecad3a721b",
+            workflow_name:"New Client Inquiry",
+            completed_tasks: 1,
+            incomplete_tasks: 2,
+            tasks: [
+                {
+                    category: "New Client Inquiry",
+                    is_completed: false,
+                    step: "Request More Information",
+                    uuid: "fe71fd1a-32a5-497c-b480-a510bf94bace"
+                },
+                {
+                    category: "New Client Inquiry",
+                    is_completed: true,
+                    step: "Request More Information",
+                    uuid: "fe71fd1a-32a5-497c-b480-a510bf94bace"
+                },
+                {
+                    category: "New Client Inquiry",
+                    is_completed: false,
+                    step: "Request More Information",
+                    uuid: "fe71fd1a-32a5-497c-b480-a510bf94bace"
+                },
+            ]
+        })
+    })
+
     it("maps Event API data to a EventModel", () => {
         let apiEventData = MockApiData.eventData()
         const eventModel = DataAdapter.toEventModel(apiEventData);
@@ -210,6 +243,35 @@ describe("Data Adapter", () => {
                     reception_location: "Redbird DTLA",
                     shoot_time: "8AM - 11PM",
                     wedding_location: "Viviana DTLA",
+                }
+            ],
+            workflows: [
+                {
+                    order: 0,
+                    uuid:"6f524831-fa75-42c8-9a7c-f8ecad3a721b",
+                    workflow_name:"New Client Inquiry",
+                    completed_tasks: 1,
+                    incomplete_tasks: 2,
+                    tasks: [
+                        {
+                            category: "New Client Inquiry",
+                            is_completed: false,
+                            step: "Request More Information",
+                            uuid: "fe71fd1a-32a5-497c-b480-a510bf94bace"
+                        },
+                        {
+                            category: "New Client Inquiry",
+                            is_completed: true,
+                            step: "Request More Information",
+                            uuid: "fe71fd1a-32a5-497c-b480-a510bf94bace"
+                        },
+                        {
+                            category: "New Client Inquiry",
+                            is_completed: false,
+                            step: "Request More Information",
+                            uuid: "fe71fd1a-32a5-497c-b480-a510bf94bace"
+                        },
+                    ]
                 }
             ]
         }])

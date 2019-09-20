@@ -7,6 +7,7 @@ import "./Client.scss";
 import ClientInformation from "./ClientInformation";
 import PackageInformation from "./PackageInformation";
 import EventInformation from "./EventInformation";
+import Workflows from "./Workflows";
 
 const Client = ({ apiHandler, client_uuid }) => {
     const [errors, setErrors] = useState(false);
@@ -14,6 +15,7 @@ const Client = ({ apiHandler, client_uuid }) => {
     const [clientData, setClient] = useState({});
     const [clientPackage, setPackage] = useState({})
     const [clientEvents, setEvents] = useState([])
+    const [clientWorkflows, setWorkflows] = useState([])
 
     useEffect(() => {
         const fetchClient = async () => {
@@ -24,6 +26,7 @@ const Client = ({ apiHandler, client_uuid }) => {
                 setClient(fullClient);
                 setPackage(fullClient.package)
                 setEvents(fullClient.events)
+                setWorkflows(fullClient.workflows)
             } else {
                 setErrors(errors);
             }
@@ -35,11 +38,11 @@ const Client = ({ apiHandler, client_uuid }) => {
     return (
         <ClientPage loading={loading}>
             {errors && <Error message={errors} />}
-            <section className="client-workflow--container">
-                <h1>Workflow</h1>
-                <section className="client-workflow">
-                </section>
-            </section>
+            <Workflows
+                workflows={clientWorkflows}
+                apiHandler={apiHandler}
+                setWorkflows={setWorkflows}
+            />
             <ClientInformation 
                 client={clientData.client} 
                 apiHandler={apiHandler} 
@@ -57,6 +60,7 @@ const Client = ({ apiHandler, client_uuid }) => {
                 setEvents={setEvents} 
                 eventPackage={clientPackage} 
             />
+            
         </ClientPage>
     )
 }

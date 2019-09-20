@@ -69,6 +69,21 @@ const MockApiData = {
         }
         return Object.assign(apiData, dataObject);
     },
+    workflowData: (dataObject) => {
+        let apiData = {
+            "order": 0,
+            "uuid":"6f524831-fa75-42c8-9a7c-f8ecad3a721b",
+            "workflow_name":"New Client Inquiry",
+            "completed_tasks": 1,
+            "incomplete_tasks": 2,
+            "tasks": [
+                MockApiData.taskData({ is_completed: false }),
+                MockApiData.taskData({ is_completed: true }),
+                MockApiData.taskData({ is_completed: false }),
+            ]
+        }
+        return Object.assign(apiData, dataObject);
+    },
     eventData: (dataObject) => {
         let apiData = {
             "client_uuid": "cc14121c-ff53-4edb-832b-8adda60cb372",
@@ -157,6 +172,7 @@ const MockApiData = {
                 "uuid": "fe71fd1a-32a5-497c-b480-a510bf94bace"
             },
             "package": MockApiData.packageData(),
+            "workflows": [MockApiData.workflowData()]
         };
         return Object.assign(apiData, dataObject);
     },

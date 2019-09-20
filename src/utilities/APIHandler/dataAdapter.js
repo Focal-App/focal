@@ -66,6 +66,18 @@ class DataAdapter {
         }
     }
 
+    static toWorkflowModel = (apiWorkflow) => {
+        const { order, uuid, workflow_name, completed_tasks, incomplete_tasks, tasks } = apiWorkflow;
+        return {
+            uuid,
+            order,
+            workflow_name,
+            completed_tasks,
+            incomplete_tasks,
+            tasks: tasks.map(task => this.toTaskModel(task))
+        }
+    }
+
     static toEventModel = (apiEvent, type = "event") => {
         if (apiEvent) {
             const { 
@@ -196,7 +208,8 @@ class DataAdapter {
             client: this.toClientModel(client),
             current_stage: this.toTaskModel(client.current_stage),
             package: this.toPackageModel(client.package),
-            events: (client.package && client.package.package_events) ? client.package.package_events.map(event => this.toEventModel(event)) : []
+            events: (client.package && client.package.package_events) ? client.package.package_events.map(event => this.toEventModel(event)) : [],
+            workflows: client.workflows.map(workflow => this.toWorkflowModel(workflow)).sort(workflow => workflow.order)
         }
 
         return data;

@@ -12,10 +12,32 @@ describe('Client', () => {
 
     const user_uuid = "1234";
 
-    it('renders client, package and events information', async () => {
+    it('renders client, package, events, and workflow information', async () => {
         const client = MockApiData.successData(
-            MockApiData.allClientData({ uuid: user_uuid })
+            MockApiData.allClientData({ 
+                uuid: user_uuid,
+                workflows: [
+                    MockApiData.workflowData({ 
+                        workflow_name: "New Client Inquiry",
+                        tasks: [
+                            MockApiData.taskData({ step: "request more information"  }),
+                            MockApiData.taskData({ step: "save client information"  }),
+                        ]
+                    }),
+                    MockApiData.workflowData({ 
+                        workflow_name: "Proposal & Retainer",
+                        tasks: [
+                            MockApiData.taskData({ step: "send proposal"  }),
+                            MockApiData.taskData({ step: "commit to proposal"  }),
+                            MockApiData.taskData({ step: "receive signed proposal & retainer"  }),
+                            MockApiData.taskData({ step: "receive retainer fee"  }),
+                        ]
+                    })
+                ]
+            })
         )
+
+        
         const apiHandler = new MockAPIHandler({ 
             [Endpoints.getClient(user_uuid)]: [client]
         });
@@ -47,5 +69,15 @@ describe('Client', () => {
         getByText(/8AM - 11PM/i)
         getByText(/Viviana DTLA/i)
         getByText(/Coordinate with Cindy on exact time details for bride prep/i)
+
+        getByText(/new client inquiry/i)
+        getByText(/request more information/i)
+        getByText(/save client information/i)
+
+        getAllByText(/proposal & retainer/i)
+        getByText(/send proposal/i)
+        getByText(/commit to proposal/i)
+        getByText(/receive signed proposal & retainer/i)
+        getByText(/receive retainer fee/i)
     })
 })

@@ -65,7 +65,7 @@ const EventModule = ({ event, apiHandler, setEvents, package_uuid }) => {
         shoot_location
     } = event;
     return (
-        <>
+        <div>
             {modalVisible && (
                 <Modal loading={loading} setModalVisibility={setModalVisibility} title="">
                     <FormContainer>
@@ -121,7 +121,7 @@ const EventModule = ({ event, apiHandler, setEvents, package_uuid }) => {
                     <h4 className="text">{notes}</h4>
                 </span>
             </section>
-        </>
+        </div>
     )
 }
 

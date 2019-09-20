@@ -2,11 +2,11 @@
 
 .client--container {
     display: grid;
-    grid-template-columns: repeat(3fr, 1fr);
-    grid-template-areas:    "workflow workflow workflow info"
-                            "workflow workflow workflow package"
-                            "workflow workflow workflow events"
-                            "workflow workflow workflow events";
+    grid-template-columns: 1fr 450px;
+    grid-template-areas:    "workflow info"
+                            "workflow package"
+                            "workflow events"
+                            "workflow events";
     grid-gap: 30px;
     max-width: $max-width;
     margin: 0 auto;
@@ -14,6 +14,7 @@
     h1 {
         text-align: left;
         margin-bottom: 10px;
+        font-size: 20px;
     }
 
     .multiline {
@@ -26,14 +27,50 @@
     width: 100%;
 }
 
-.client-workflow {
+.client-workflows {
     box-sizing: border-box;
-    background-color: white;
-    padding: 30px;
-    border-radius: 6px;
-    box-shadow: $box-shadow;
-    height: 500px;
-    min-width: 700px;
+
+    .client-page--header {
+        display: flex;
+        justify-content: space-between;
+        align-content: flex-end;
+
+        h1 {
+            margin-top: 24px;
+        }
+
+        h4 {
+            align-self: flex-end;
+            font-weight: 500;
+            font-size: 18px;
+        }
+    }
+
+    .workflow--container {
+        margin-bottom: 20px;
+    }
+
+    .task { 
+        display: grid;
+        grid-template-columns: 30px 1fr;
+        justify-items: start;
+        align-items: center;
+        grid-gap: 10px;
+        margin-bottom: 14px;
+    }
+
+    .task-label {
+        background-color: white;
+        justify-self: stretch;
+        padding: 8px 16px;
+        box-shadow: $box-shadow;
+        border-radius: 6px;
+
+        h3 {
+            text-align: left;
+            margin: 0px;
+        }
+    }
 }
 
 .client-information--container {
@@ -51,7 +88,7 @@
 .client-information--container,
 .client-package--container,
 .client-events--container {
-
+    width: 100%;
     .client-page--header {
         display: flex;
         justify-content: space-between;
@@ -191,5 +228,35 @@
 
     .checkmark--incomplete {
         color: $grey-500;
+    }
+}
+
+@media (max-width: 1180px) {
+    .client--container {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-areas:    "info package"
+                                "events events"
+                                "workflow workflow";
+    }
+
+    .client-events--container {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        grid-gap: 30px;
+    }
+}
+
+@media (max-width: 750px) {
+    .client--container {
+        display: grid;
+        grid-template-columns: 1fr;
+        grid-template-areas:    "info" 
+                                "package"
+                                "events"
+                                "workflow";
+    }
+    .client-events--container {
+        grid-template-columns: 1fr;
     }
 }
