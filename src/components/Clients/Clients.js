@@ -23,7 +23,7 @@ const Clients = ({ apiHandler, user_uuid, setClients, clients }) => {
         setLoading(false);
         }
         fetchClients();
-    }, [])
+    }, [user_uuid])
 
     return (
         <ClientsPage loading={loading}>

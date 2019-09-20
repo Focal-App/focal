@@ -25,6 +25,14 @@ class APIHandler {
         .catch(error => this.formatError(error));
     }
 
+    delete = async (endpoint) => {
+        return axios.delete(endpoint, {
+            withCredentials: true
+        })
+        .then(response => response.data)
+        .catch(error => this.formatError(error));
+    }
+
     formatError = (error) => {
         if (!error.response) {
             return { errors: error };

@@ -103,8 +103,29 @@
       .btn-primary  {
         justify-self: end;
       }
-
-  }
+    }
+    .btn-span--three {
+      border-top: 1px solid $grey-400;
+      padding-top: 20px;
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      justify-items: stretch;
+      grid-gap: 4px;
+      
+      .btn-warning {
+        grid-column: 1 / 2;
+        justify-content: stretch;
+      }
+      .btn-tertiary {
+        grid-column: 3 / 4;
+        justify-content: stretch;
+      }
+      .btn-primary {
+        grid-column: 4 / -1;
+        justify-content: stretch;
+        width: 100%;
+      }
+    }
 }
 
 

@@ -5,6 +5,7 @@ import { render, cleanup, waitForElement, fireEvent } from '@testing-library/rea
 import MockAPIHandler from 'utilities/APIHandler/mockApiHandler';
 import Endpoints from "utilities/apiEndpoint";
 import MockApiData from "utilities/APIHandler/mockApiData";
+import { act } from 'react-dom/test-utils';
 
 describe("New Client Flow", () => {
     afterEach(() => {
@@ -21,16 +22,24 @@ describe("New Client Flow", () => {
             [Endpoints.newClient]: [successfulNewClient], 
             [Endpoints.getClients(uuid)]: [clientsList] 
         });
-        
-        const { getByLabelText, getByText, findByText } = render(
-            <MemoryRouter initialEntries={["/clients/new", "/clients"]} initialIndex={0}>
-                <App apiHandler={apiHandler} authUser={authUser}/>
-            </MemoryRouter>
-        )
+        let component;
+
+        await act(async () => {
+            component = render(
+                <MemoryRouter initialEntries={["/clients/new", "/clients"]} initialIndex={0}>
+                    <App apiHandler={apiHandler} authUser={authUser}/>
+                </MemoryRouter>
+            )
+        })
+
+        const { getByLabelText, getByText, findByText } = component;
 
         const clientFirstName = getByLabelText("First Name");
         fireEvent.change(clientFirstName, { target: { value: "Sammy" } });
-        fireEvent.click(getByText("Submit"));
+
+        await act(async () => {
+            fireEvent.click(getByText("Submit"));
+        })
 
         await waitForElement(() => 
             findByText(/sammy/i)
@@ -42,16 +51,25 @@ describe("New Client Flow", () => {
         const apiHandler = new MockAPIHandler({ 
             [Endpoints.newClient]: [failedLoginData], 
         });
+
+        let component;
+
+        await act(async () => {
+            component = render(
+                <MemoryRouter initialEntries={["/clients/new"]} initialIndex={0}>
+                    <App apiHandler={apiHandler} authUser={authUser} />
+                </MemoryRouter>
+            )
+        })
         
-        const { getByLabelText, getByText, findByText } = render(
-            <MemoryRouter initialEntries={["/clients/new"]} initialIndex={0}>
-                <App apiHandler={apiHandler} authUser={authUser} />
-            </MemoryRouter>
-        )
+        const { getByLabelText, getByText, findByText } = component;
 
         const clientFirstName = getByLabelText("First Name");
         fireEvent.change(clientFirstName, { target: { value: "Sammy" } });
-        fireEvent.click(getByText("Submit"));
+        
+        await act(async () => {
+            fireEvent.click(getByText("Submit"));
+        })
 
         await waitForElement(() => 
             findByText(/client_name can't be blank/i)

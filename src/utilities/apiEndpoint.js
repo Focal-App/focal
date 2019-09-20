@@ -10,7 +10,9 @@ const Endpoints = {
   getClient: (client_uuid) => `${API_URL}/api/client/${client_uuid}/data`,
   updateClient: (client_uuid) => `${API_URL}/api/client/${client_uuid}`,
   updatePackage: (package_uuid) => `${API_URL}/api/package/${package_uuid}`,
-  createPackage: (client_uuid) => `${API_URL}/api/client/${client_uuid}/package `,
+  createPackage: (client_uuid) => `${API_URL}/api/client/${client_uuid}/package`,
+  updateEvent: (event_uuid) => `${API_URL}/api/event/${event_uuid}`,
+  createEvent: (package_uuid) => `${API_URL}/api/package/${package_uuid}/event`,
   newClient: `${API_URL}/api/client`,
   googleLogin: `${API_URL}/auth/google?scope=email%20profile`,
   logout: `${API_URL}/auth/signout`
