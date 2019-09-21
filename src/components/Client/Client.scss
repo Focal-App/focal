@@ -214,21 +214,6 @@
         display: flex;
         justify-content: space-between;
     }
-
-    .checkmark--small {
-        margin-right: 10px;
-        i {
-            font-size: 22px;
-        }
-    }
-
-    .checkmark--complete {
-        color: $green-400;
-    }
-
-    .checkmark--incomplete {
-        color: $grey-500;
-    }
 }
 
 @media (max-width: 1180px) {

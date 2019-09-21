@@ -1,11 +1,11 @@
 import React from "react";
-import { Checkbox } from "components/UI/FormParts";
+import Checkmark from "components/UI/Checkmark";
 
 const Workflows = ({ workflows, apiHandler, setWorkflows }) => {
     return (
         <section className="client-workflow--container">
             <section className="client-workflows">
-                {workflows.map(workflow => <Workflow workflow={workflow} />)}
+                {workflows.map(workflow => <Workflow key={workflow.uuid} workflow={workflow} />)}
             </section>
         </section>
     )
@@ -32,7 +32,7 @@ const Task = ({ task }) => {
     const { is_completed, uuid, step } = task
     return (
         <div key={uuid} className="task">
-            <input type="checkbox" checked={is_completed} />
+            <Checkmark size="large" completed={is_completed} />
             <div className="task-label">
                 <h3>{step}</h3>
             </div>

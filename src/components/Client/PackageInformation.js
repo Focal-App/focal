@@ -6,6 +6,7 @@ import DataAdapter from "utilities/APIHandler/dataAdapter";
 import Endpoints from "utilities/apiEndpoint";
 import Error from "components/UI/Error";
 import UpdatePackageForm from "./UpdatePackageForm";
+import Checkmark from "components/UI/Checkmark";
 
 const PackageInformation = ({ clientPackage, apiHandler, setPackage, client_uuid }) => {
     const [errors, setErrors] = useState(false);
@@ -27,9 +28,9 @@ const PackageInformation = ({ clientPackage, apiHandler, setPackage, client_uuid
         if (data) {
             setPackage(DataAdapter.toPackageModel(data));
             setSuccess(true);
-            setTimeout(() => { 
-                setModalVisibility(false); 
-                setSuccess(false) 
+            setTimeout(() => {
+                setModalVisibility(false);
+                setSuccess(false)
             }, 1000)
         } else {
             setErrors(errors);
@@ -39,13 +40,13 @@ const PackageInformation = ({ clientPackage, apiHandler, setPackage, client_uuid
     if (clientPackage) {
         const {
             package_name, proposal_signed, package_contents, package_price, balance_received,
-            retainer_price, retainer_paid_amount, retainer_paid, discount_offered, balance_remaining, 
+            retainer_price, retainer_paid_amount, retainer_paid, discount_offered, balance_remaining,
             wedding_included, engagement_included
         } = clientPackage;
 
         return (
             <section className="client-package--container">
-                 {modalVisible && (
+                {modalVisible && (
                     <Modal loading={loading} setModalVisibility={setModalVisibility} title="">
                         <FormContainer>
                             {errors && <Error message={errors} />}
@@ -76,7 +77,7 @@ const PackageInformation = ({ clientPackage, apiHandler, setPackage, client_uuid
                         <hr />
                         <h4>${balance_remaining}</h4>
                     </div>
-                    
+
                     <div className="cost-description">
                         <h6>Package Price</h6>
                         <h6>Discount</h6>
@@ -105,9 +106,7 @@ const PackageInformation = ({ clientPackage, apiHandler, setPackage, client_uuid
 
 const BooleanLine = ({ completed, label }) => (
     <div className="boolean-line">
-        <div className={`checkmark--small ${completed ? 'checkmark--complete' : 'checkmark--incomplete'}`}>
-            <i className="far fa-check-square"></i>
-        </div>
+        <Checkmark size="small" completed={completed} />
         <h4>{label}</h4>
     </div>
 )
