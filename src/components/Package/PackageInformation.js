@@ -1,12 +1,12 @@
 import React, { useState } from "react";
-import FormContainer from "components/UI/FormContainer";
-import Modal from "components/UI/Modal";
-import Success from "components/UI/Success";
-import DataAdapter from "utilities/APIHandler/dataAdapter";
-import Endpoints from "utilities/apiEndpoint";
-import Error from "components/UI/Error";
+import FormContainer from "UI/FormContainer";
+import Modal from "UI/Modal";
+import Success from "UI/Success";
+import DataAdapter from "utilities/api/dataAdapter";
+import Endpoints from "utilities/api/apiEndpoint";
+import Error from "UI/Error";
 import UpdatePackageForm from "./UpdatePackageForm";
-import Checkmark from "components/UI/Checkmark";
+import Checkmark from "UI/Checkmark";
 
 const PackageInformation = ({ clientPackage, apiHandler, setPackage, client_uuid }) => {
     const [errors, setErrors] = useState(false);
@@ -29,8 +29,8 @@ const PackageInformation = ({ clientPackage, apiHandler, setPackage, client_uuid
             setPackage(DataAdapter.toPackageModel(data));
             setSuccess(true);
             setTimeout(() => {
-                setModalVisibility(false);
                 setSuccess(false)
+                setModalVisibility(false);
             }, 1000)
         } else {
             setErrors(errors);

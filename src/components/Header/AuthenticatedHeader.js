@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import './Header.scss';
-import Endpoints from "utilities/apiEndpoint";
+import Endpoints from "utilities/api/apiEndpoint";
 
 const BasicHeader = (props) => (
     <header className="header--container">

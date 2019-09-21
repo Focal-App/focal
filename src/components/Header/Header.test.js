@@ -1,7 +1,7 @@
 import React from 'react';
 import AuthenticatedHeader from './AuthenticatedHeader';
 import { render, cleanup, fireEvent, waitForElement } from '@testing-library/react';
-import MockAPIHandler from 'utilities/APIHandler/mockApiHandler';
+import MockAPIHandler from 'utilities/api/mockApiHandler';
 
 describe('Header', () => {
     const mockApiHandler = new MockAPIHandler();

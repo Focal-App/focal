@@ -2,9 +2,9 @@ import React from 'react';
 import { App } from 'App';
 import { MemoryRouter } from "react-router-dom";
 import { render, cleanup, waitForElement, fireEvent } from '@testing-library/react';
-import MockAPIHandler from 'utilities/APIHandler/mockApiHandler';
-import Endpoints from "utilities/apiEndpoint";
-import MockApiData from "utilities/APIHandler/mockApiData";
+import MockAPIHandler from 'utilities/api/mockApiHandler';
+import Endpoints from "utilities/api/apiEndpoint";
+import MockApiData from "utilities/api/mockApiData";
 import { act } from 'react-dom/test-utils';
 
 describe('Client Info Flow', () => {

@@ -1,8 +1,8 @@
 import React from 'react';
 import { Formik, Field, Form, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
-import { DefaultText } from 'utilities/APIHandler/dataAdapter';
-import { Label } from "components/UI/FormParts";
+import DataAdapter, { DefaultText } from 'utilities/api/dataAdapter';
+import { Label } from "UI/FormParts";
 
 const ClientInformationSchema = Yup.object().shape({
     contacts: Yup.array().of(
@@ -27,9 +27,10 @@ const ClientInformationSchema = Yup.object().shape({
 });
 
 const UpdateClientForm = ({ initialValues, setModalVisibility, handleSubmit }) => {
+    const formReadyValues = DataAdapter.toFormReadyData(initialValues);
     return (
         <Formik
-            initialValues={initialValues}
+            initialValues={formReadyValues}
             validationSchema={ClientInformationSchema}
             onSubmit={(values, actions) => {
                 handleSubmit(values)

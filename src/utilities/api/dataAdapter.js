@@ -1,4 +1,4 @@
-import { formatDate, stringIsDate, formatToISOString } from "utilities/date";
+import { formatDate, stringIsDate, formatToISOString, formatDateToLocaleDate } from "utilities/date";
 import { convertPenniesToDollars, convertDollarsToPennies } from "utilities/price";
 
 export const DefaultText = {
@@ -244,29 +244,62 @@ class DataAdapter {
     }
 
     static toApiReadyClient = (values) => {
-        Object.keys(values).forEach(key => {
-            const value = values[key];
+        const apiReadyData = Object.assign({}, values);
+        Object.keys(apiReadyData).forEach(key => {
+            const value = apiReadyData[key];
+
+            if (Array.isArray(value)) {
+                return apiReadyData[key] = value.map(singleVaue => DataAdapter.toApiReadyClient(singleVaue))
+            }
+
             if (typeof value === 'object') {
-                DataAdapter.toApiReadyClient(value)
+                return apiReadyData[key] = DataAdapter.toApiReadyClient(value)
             }
+
             if (typeof value === 'boolean') {
-                return;
+                return apiReadyData[key] = value;
             }
+
             if (value === DefaultText.noContent || value === DefaultText.nothing) {
-                values[key] = null;
-                return;
+                return apiReadyData[key] = null;
             }
+
             if (Number(value) || value === "0.00") {
-                values[key] = convertDollarsToPennies(value);
-                return;
+                return apiReadyData[key] = convertDollarsToPennies(value);
             }
+            
             if (stringIsDate(value, "MMMM DD, YYYY") || stringIsDate(value, "YYYY-MM-DD")) {
-                values[key] = formatToISOString(value);
-                return;
+                return apiReadyData[key] = formatToISOString(value);
             }
         })
 
-        return values;
+        return apiReadyData;
+    }
+
+    static toFormReadyData = (values) => {
+        const dateType = ['shoot_date', 'edit_image_deadline']
+        const formReadyData = Object.assign({}, values);
+        Object.keys(formReadyData).forEach(key => {
+            const value = formReadyData[key];
+            
+            if (Array.isArray(value)) {
+                return formReadyData[key] = value.map(singleVaue => DataAdapter.toFormReadyData(singleVaue))
+            }
+
+            if (typeof value === 'object') {
+                return formReadyData[key] = DataAdapter.toFormReadyData(value)
+            }
+
+            if (dateType.includes(key) || stringIsDate(value, "MMMM DD, YYYY")) {
+                return formReadyData[key] = value === DefaultText.noContent ? "" : formatDateToLocaleDate(value)
+            }
+
+            if (value === DefaultText.noContent || value === DefaultText.nothing) {
+                return formReadyData[key] = undefined;
+            }
+        })
+
+        return formReadyData;
     }
 }
 

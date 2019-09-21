@@ -1,5 +1,5 @@
 import React from "react";
-import Loader from "components/UI/Loader";
+import Loader from "UI/Loader";
 import "./Modal.scss";
 
 const Modal = ({ setModalVisibility, children, title, loading }) => {

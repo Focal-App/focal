@@ -1,5 +1,5 @@
 import React from "react";
-import Page from "components/UI/Page";
+import Page from "UI/Page";
 
 const ClientPage = ({ loading, children }) => (
     <Page loading={loading} >

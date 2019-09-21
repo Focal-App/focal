@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from "react";
 import ClientPage from "./ClientPage";
-import Endpoints from "utilities/apiEndpoint";
-import Error from "components/UI/Error";
-import DataAdapter from "utilities/APIHandler/dataAdapter";
+import Endpoints from "utilities/api/apiEndpoint";
+import Error from "UI/Error";
+import DataAdapter from "utilities/api/dataAdapter";
 import "./Client.scss";
-import ClientInformation from "./ClientInformation";
-import PackageInformation from "./PackageInformation";
-import EventInformation from "./EventInformation";
-import Workflows from "./Workflows";
+import ClientInformation from "components/ClientInfo/ClientInformation";
+import PackageInformation from "components/Package/PackageInformation";
+import EventInformation from "components/Event/EventInformation";
+import Workflows from "../Workflow/Workflows";
 
 const Client = ({ apiHandler, client_uuid }) => {
     const [errors, setErrors] = useState(false);

@@ -1,7 +1,7 @@
 import React from "react";
 import UpdateClientForm from "./UpdateClientForm";
 import { cleanup, render, fireEvent } from "@testing-library/react";
-import { DefaultText } from "utilities/APIHandler/dataAdapter";
+import { DefaultText } from "utilities/api/dataAdapter";
 
 describe("Update Client Form", () => {
   afterEach(cleanup);
@@ -41,13 +41,13 @@ describe("Update Client Form", () => {
     expect(email.value).toBe("tammy@gmail.com");
 
     const phoneNumber = getByLabelText("Bride Phone Number");
-    expect(phoneNumber.value).toBe("-");
+    expect(phoneNumber.value).toBe("");
 
     const label = getByLabelText("Bride Label");
     expect(label.value).toBe("Bride");
 
     const bestTimeToContact = getByLabelText("Bride Best Time To Contact");
-    expect(bestTimeToContact.value).toBe("-");
+    expect(bestTimeToContact.value).toBe("");
 
     const privateNotes = getByLabelText("Private Notes");
     expect(privateNotes.value).toBe("Looking for a wedding and engagement package");

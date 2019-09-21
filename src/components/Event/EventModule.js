@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import DataAdapter from "utilities/APIHandler/dataAdapter";
-import FormContainer from "components/UI/FormContainer";
-import Modal from "components/UI/Modal";
-import Success from "components/UI/Success";
-import Endpoints from "utilities/apiEndpoint";
-import Error from "components/UI/Error";
+import DataAdapter from "utilities/api/dataAdapter";
+import FormContainer from "UI/FormContainer";
+import Modal from "UI/Modal";
+import Success from "UI/Success";
+import Endpoints from "utilities/api/apiEndpoint";
+import Error from "UI/Error";
 import UpdateEventForm from "./UpdateEventForm";
 
 const EventModule = ({ event, apiHandler, setEvents, package_uuid }) => {

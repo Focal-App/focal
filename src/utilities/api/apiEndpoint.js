@@ -13,6 +13,7 @@ const Endpoints = {
   createPackage: (client_uuid) => `${API_URL}/api/client/${client_uuid}/package`,
   updateEvent: (event_uuid) => `${API_URL}/api/event/${event_uuid}`,
   createEvent: (package_uuid) => `${API_URL}/api/package/${package_uuid}/event`,
+  updateWorkflow: (workflow_uuid) => `${API_URL}/api/workflow/${workflow_uuid}`,
   newClient: `${API_URL}/api/client`,
   googleLogin: `${API_URL}/auth/google?scope=email%20profile`,
   logout: `${API_URL}/auth/signout`

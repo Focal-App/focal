@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import UpdateClientForm from "./UpdateClientForm";
-import FormContainer from "components/UI/FormContainer";
-import Modal from "components/UI/Modal";
-import Success from "components/UI/Success";
-import DataAdapter, { DefaultText } from "utilities/APIHandler/dataAdapter";
-import Endpoints from "utilities/apiEndpoint";
-import Error from "components/UI/Error";
+import FormContainer from "UI/FormContainer";
+import Modal from "UI/Modal";
+import Success from "UI/Success";
+import DataAdapter, { DefaultText } from "utilities/api/dataAdapter";
+import Endpoints from "utilities/api/apiEndpoint";
+import Error from "UI/Error";
 
 const ClientInformation = ({ client, apiHandler, setClient }) => {
     const [errors, setErrors] = useState(false);

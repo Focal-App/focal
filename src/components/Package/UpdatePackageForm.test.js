@@ -1,7 +1,7 @@
 import React from "react";
 import UpdatePackageForm from "./UpdatePackageForm";
 import { cleanup, render, fireEvent } from "@testing-library/react";
-import { DefaultText } from "utilities/APIHandler/dataAdapter";
+import { DefaultText } from "utilities/api/dataAdapter";
 
 describe("Update Package Form", () => {
   afterEach(cleanup);

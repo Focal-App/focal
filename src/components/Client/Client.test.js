@@ -1,9 +1,9 @@
 import React from 'react';
 import Client from "./Client";
 import { render, cleanup, waitForElement, getAllByText } from '@testing-library/react';
-import MockAPIHandler from 'utilities/APIHandler/mockApiHandler';
-import Endpoints from "utilities/apiEndpoint";
-import MockApiData from "utilities/APIHandler/mockApiData";
+import MockAPIHandler from 'utilities/api/mockApiHandler';
+import Endpoints from "utilities/api/apiEndpoint";
+import MockApiData from "utilities/api/mockApiData";
 
 describe('Client', () => {
     afterEach(() => {
@@ -18,19 +18,21 @@ describe('Client', () => {
                 uuid: user_uuid,
                 workflows: [
                     MockApiData.workflowData({ 
+                        uuid: "5",
                         workflow_name: "New Client Inquiry",
                         tasks: [
-                            MockApiData.taskData({ step: "request more information"  }),
-                            MockApiData.taskData({ step: "save client information"  }),
+                            MockApiData.taskData({ step: "request more information", uuid: "7", }),
+                            MockApiData.taskData({ step: "save client information", uuid: "8", }),
                         ]
                     }),
                     MockApiData.workflowData({ 
+                        uuid: "6",
                         workflow_name: "Proposal & Retainer",
                         tasks: [
-                            MockApiData.taskData({ step: "send proposal"  }),
-                            MockApiData.taskData({ step: "commit to proposal"  }),
-                            MockApiData.taskData({ step: "receive signed proposal & retainer"  }),
-                            MockApiData.taskData({ step: "receive retainer fee"  }),
+                            MockApiData.taskData({ step: "send proposal", uuid: "9", }),
+                            MockApiData.taskData({ step: "commit to proposal", uuid: "10", }),
+                            MockApiData.taskData({ step: "receive signed proposal & retainer", uuid: "11", }),
+                            MockApiData.taskData({ step: "receive retainer fee", uuid: "12", }),
                         ]
                     })
                 ]

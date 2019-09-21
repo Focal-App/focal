@@ -1,4 +1,4 @@
-import MockAPIHandler from 'utilities/APIHandler/mockApiHandler';
+import MockAPIHandler from 'utilities/api/mockApiHandler';
 
 test('APIHandler can make a mock get call', async () => {
     const itemData = {

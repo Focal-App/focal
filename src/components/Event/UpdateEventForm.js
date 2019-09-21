@@ -1,73 +1,16 @@
 import React from 'react';
 import { Formik, Field, Form, ErrorMessage } from 'formik';
-import * as Yup from 'yup';
-import { Label } from "components/UI/FormParts";
-import { formatDateToLocaleDate } from "utilities/date";
-import { DefaultText } from 'utilities/APIHandler/dataAdapter';
-
-const BaseEventSchema = {
-    event_name: Yup.string()
-        .required('Event Name required'),
-    shoot_date: Yup.date()
-        .notRequired()
-        .nullable(),
-    blog_link: Yup.string()
-        .url()
-        .nullable()
-        .notRequired(),
-    gallery_link: Yup.string()
-        .url()
-        .nullable()
-        .notRequired(),
-    notes: Yup.string()
-        .nullable()
-        .notRequired(),
-    edit_image_deadline: Yup.date()
-        .nullable()
-        .notRequired(),
-    shoot_time: Yup.string()
-        .nullable()
-        .notRequired(),
-    shoot_location: Yup.string()
-        .nullable()
-        .notRequired(),
-}
-
-const EventSchema = Yup.object().shape({
-    ...BaseEventSchema, 
-    shoot_location: Yup.string()
-        .nullable()
-        .notRequired(),
-})
-
-const WeddingEventSchema = Yup.object().shape({
-    ...BaseEventSchema, 
-    reception_location: Yup.string()
-        .nullable()
-        .notRequired(),
-    wedding_location: Yup.string()
-        .nullable()
-        .notRequired(),
-    coordinator_name: Yup.string()
-        .nullable()
-        .notRequired(),
-})
+import { Label } from "UI/FormParts";
+import DataAdapter from 'utilities/api/dataAdapter';
+import { WeddingEventSchema, EventSchema } from "./FormEventSchema";
 
 const UpdateEventForm = ({ initialValues, setModalVisibility, handleSubmit, handleDelete }) => {
-    const setDefaultDate = (date) => {
-        return date === DefaultText.noContent ? "" : formatDateToLocaleDate(date)
-    }
-    let convertedInitialValues = Object.assign({}, initialValues, {
-        shoot_date: setDefaultDate(initialValues.shoot_date),
-        edit_image_deadline: setDefaultDate(initialValues.edit_image_deadline),
-        gallery_link: initialValues.gallery_link ? initialValues.gallery_link : undefined,
-        blog_link: initialValues.blog_link ? initialValues.blog_link : undefined
-    });
-
+    const formReadyValues = DataAdapter.toFormReadyData(initialValues);
+    const validationSchema = initialValues.event_name.match(/wedding/i) ? WeddingEventSchema : EventSchema;
     return (
         <Formik
-            initialValues={convertedInitialValues}
-            validationSchema={initialValues.event_name.match(/wedding/i) ? WeddingEventSchema : EventSchema}
+            initialValues={formReadyValues}
+            validationSchema={validationSchema}
             onSubmit={(values, actions) => {
                 handleSubmit(values)
             }}

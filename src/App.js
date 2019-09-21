@@ -5,7 +5,7 @@ import Client from "components/Client/Client";
 import AuthenticatedHeader from 'components/Header/AuthenticatedHeader';
 import NewClient from "components/NewClient/NewClient";
 import Login from 'components/Login/Login';
-import APIHandler from './utilities/APIHandler/apiHandler';
+import APIHandler from './utilities/api/apiHandler';
 import './App.scss';
 
 export const UnauthenticatedApp = (props) => {
