@@ -3,6 +3,7 @@
 .clients--container {
     max-width: $max-width;
     margin: 0 auto;
+    box-sizing: border-box;
 
     h1 {
         text-align: left;
@@ -36,7 +37,7 @@ table {
 
     tr:nth-child(even) {
         background-color: white;
-    }
+    }w
 
     .client--stage {
         font-weight: 700;
@@ -50,6 +51,17 @@ table {
     a {
         text-decoration: none;
         color: $theme-color--dark;
+
+        &:hover {
+            text-decoration: underline;
+        }
+    }
+
+    button {
+        color: $attention-red;
+        border: none;
+        font-size: 14px;
+        cursor: pointer;
 
         &:hover {
             text-decoration: underline;

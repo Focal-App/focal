@@ -14,8 +14,9 @@
 
 .header {
     margin: 0 auto;
-    padding: 18px;
+    padding: 18px 0px;
     max-width: $max-width;
+    box-sizing: border-box;
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     grid-template-areas: "logo navigation";
@@ -47,6 +48,13 @@
     }
 }
 
+.header-error {
+    position: absolute;
+    margin: 0 auto;
+    left: 45%;
+    margin-top: 42px;
+    font-size: 16px;
+}
 .avatar {
     cursor: pointer;
 

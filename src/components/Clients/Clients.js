@@ -25,11 +25,25 @@ const Clients = ({ apiHandler, user_uuid, setClients, clients }) => {
         fetchClients();
     }, [user_uuid])
 
+    const deleteClient = async (client_uuid) => {
+        setLoading(true);
+        const { data, errors} = await apiHandler.delete(Endpoints.deleteClient(client_uuid));
+        setLoading(false);
+        console.log({ data, errors })
+        if (data) {
+            const clientIndex = clients.findIndex(originalClient => originalClient.uuid === client_uuid);
+            clients.splice(clientIndex, 1);
+            setClients(Array.from(clients))
+        } else {
+            setErrors(errors)
+        }
+    }
+
     return (
         <ClientsPage loading={loading}>
             {errors && <Error message={errors} />}
             {clients.length > 0 
-                ? <ClientsTable clients={clients} />
+                ? <ClientsTable clients={clients} deleteClient={deleteClient} />
                 : <NoContent 
                     message="Doesn't look like you have any clients yet!" 
                     subtext="Add a new client to get started" />
@@ -38,7 +52,7 @@ const Clients = ({ apiHandler, user_uuid, setClients, clients }) => {
     )
 }
 
-const ClientsTable = ({ clients }) => {
+const ClientsTable = ({ clients, deleteClient }) => {
     const createClientsTable = (data) => {
         return data.map(allClientData => {
             const { 
@@ -65,6 +79,9 @@ const ClientsTable = ({ clients }) => {
                     <th>
                         <Link to={`/client/${uuid}`}>View</Link>
                     </th>
+                    <th>
+                        <button onClick={() => deleteClient(uuid)}>Delete</button>
+                    </th>
                 </tr>
             )
         })
@@ -78,6 +95,7 @@ const ClientsTable = ({ clients }) => {
                     <th>Package</th>
                     <th>Shoot Date</th>
                     <th>Stage</th>
+                    <th></th>
                     <th></th>
                 </tr>
                 {createClientsTable(clients)}

@@ -136,6 +136,8 @@ describe("Workflow Flow", () => {
     })
 
     it("renders a successful checkmark after hitting an incomplete todo", async () => {
+        const task_uuid = "7";
+
         const client = MockApiData.successData(
             MockApiData.allClientData({
                 uuid: client_uuid,
@@ -147,26 +149,18 @@ describe("Workflow Flow", () => {
                         workflow_name: "New Client Inquiry",
                         completed_tasks: 0,
                         tasks: [
-                            MockApiData.taskData({ step: "request more information", uuid: "7", is_completed: false }),
+                            MockApiData.taskData({ step: "request more information", uuid: task_uuid, is_completed: false }),
                             MockApiData.taskData({ step: "save client information", uuid: "8", is_completed: false }),
                         ]
                     })
                 ]
             })
         )
-        const updatedWorkflow = MockApiData.successData(MockApiData.workflowData({
-            uuid: workflow_uuid,
-            workflow_name: "New Client Inquiry",
-            completed_tasks: 1,
-            tasks: [
-                MockApiData.taskData({ step: "request more information", uuid: "7", is_completed: true }),
-                MockApiData.taskData({ step: "save client information", uuid: "8", is_completed: false }),
-            ]
-        }))
+        const updatedTask = MockApiData.successData(MockApiData.taskData({ step: "request more information", uuid: task_uuid, is_completed: true }))
 
         const apiHandler = new MockAPIHandler({
             [Endpoints.getClient(client_uuid)]: [client],
-            [Endpoints.updateWorkflow(workflow_uuid)]: [updatedWorkflow]
+            [Endpoints.updateTask(task_uuid)]: [updatedTask]
         });
 
         let component;
@@ -188,6 +182,10 @@ describe("Workflow Flow", () => {
 
         const checkmarks = getAllByTestId("todo-checkmark");
 
+        fireEvent.click(checkmarks[0]);
 
+        await waitForElement(() =>
+            findByText(/1 \/ 2 Tasks Completed/i)
+        )
     })
 })
