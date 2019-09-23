@@ -1,7 +1,7 @@
 import React from 'react';
 import { Formik, Field, Form, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
-import { Label } from "components/UI/FormParts";
+import { Label } from "UI/FormParts";
 
 const NewClient = Yup.object().shape({
     first_name: Yup.string()

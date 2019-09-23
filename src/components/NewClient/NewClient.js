@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import NewClientForm from "./NewClientForm";
 import { Redirect } from 'react-router';
-import Page from "components/UI/Page";
-import FormContainer from "components/UI/FormContainer";
-import Error from "components/UI/Error";
-import Endpoints from "utilities/apiEndpoint";
-import Success from "components/UI/Success";
+import Page from "UI/Page";
+import FormContainer from "UI/FormContainer";
+import Error from "UI/Error";
+import Endpoints from "utilities/api/apiEndpoint";
+import Success from "UI/Success";
 
 const NewClient = ({ apiHandler, user_uuid }) => {
     const [loading, setLoading] = useState(false);

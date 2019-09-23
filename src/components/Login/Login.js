@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { Redirect } from 'react-router';
-import Page from 'components/UI/Page';
+import Page from 'UI/Page';
 import './Login.scss';
-import Error from 'components/UI/Error';
-import DataAdapter from "utilities/APIHandler/dataAdapter";
-import Endpoints from "utilities/apiEndpoint";
+import Error from 'UI/Error';
+import DataAdapter from "utilities/api/dataAdapter";
+import Endpoints from "utilities/api/apiEndpoint";
 
 const Login = ({ apiHandler, setUser, match: { params: { uuid } } }) => {
     const [errors, setError] = useState(null)

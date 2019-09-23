@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
 import ClientsPage from "./ClientsPage";
-import Error from "components/UI/Error";
-import NoContent from "components/UI/NoContent";
+import Error from "UI/Error";
+import NoContent from "UI/NoContent";
 import { Link } from "react-router-dom";
-import Endpoints from "utilities/apiEndpoint";
-import DataAdapter, { DefaultText } from "utilities/APIHandler/dataAdapter";
+import Endpoints from "utilities/api/apiEndpoint";
+import DataAdapter, { DefaultText } from "utilities/api/dataAdapter";
 import "./ClientsPage.scss";
 
 const Clients = ({ apiHandler, user_uuid, setClients, clients }) => {

@@ -1,9 +1,9 @@
 import React from 'react';
 import Client from "./Client";
 import { render, cleanup, waitForElement, getAllByText } from '@testing-library/react';
-import MockAPIHandler from 'utilities/APIHandler/mockApiHandler';
-import Endpoints from "utilities/apiEndpoint";
-import MockApiData from "utilities/APIHandler/mockApiData";
+import MockAPIHandler from 'utilities/api/mockApiHandler';
+import Endpoints from "utilities/api/apiEndpoint";
+import MockApiData from "utilities/api/mockApiData";
 
 describe('Client', () => {
     afterEach(() => {
@@ -12,10 +12,34 @@ describe('Client', () => {
 
     const user_uuid = "1234";
 
-    it('renders client, package and events information', async () => {
+    it('renders client, package, events, and workflow information', async () => {
         const client = MockApiData.successData(
-            MockApiData.allClientData({ uuid: user_uuid })
+            MockApiData.allClientData({ 
+                uuid: user_uuid,
+                workflows: [
+                    MockApiData.workflowData({ 
+                        uuid: "5",
+                        workflow_name: "New Client Inquiry",
+                        tasks: [
+                            MockApiData.taskData({ step: "request more information", uuid: "7", }),
+                            MockApiData.taskData({ step: "save client information", uuid: "8", }),
+                        ]
+                    }),
+                    MockApiData.workflowData({ 
+                        uuid: "6",
+                        workflow_name: "Proposal & Retainer",
+                        tasks: [
+                            MockApiData.taskData({ step: "send proposal", uuid: "9", }),
+                            MockApiData.taskData({ step: "commit to proposal", uuid: "10", }),
+                            MockApiData.taskData({ step: "receive signed proposal & retainer", uuid: "11", }),
+                            MockApiData.taskData({ step: "receive retainer fee", uuid: "12", }),
+                        ]
+                    })
+                ]
+            })
         )
+
+        
         const apiHandler = new MockAPIHandler({ 
             [Endpoints.getClient(user_uuid)]: [client]
         });
@@ -47,5 +71,15 @@ describe('Client', () => {
         getByText(/8AM - 11PM/i)
         getByText(/Viviana DTLA/i)
         getByText(/Coordinate with Cindy on exact time details for bride prep/i)
+
+        getByText(/new client inquiry/i)
+        getByText(/request more information/i)
+        getByText(/save client information/i)
+
+        getAllByText(/proposal & retainer/i)
+        getByText(/send proposal/i)
+        getByText(/commit to proposal/i)
+        getByText(/receive signed proposal & retainer/i)
+        getByText(/receive retainer fee/i)
     })
 })

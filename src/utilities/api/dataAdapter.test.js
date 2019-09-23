@@ -1,5 +1,5 @@
-import DataAdapter from "utilities/APIHandler/dataAdapter";
-import MockApiData from "utilities/APIHandler/mockApiData";
+import DataAdapter from "utilities/api/dataAdapter";
+import MockApiData from "utilities/api/mockApiData";
 
 describe("Data Adapter", () => {
     it("maps user API object to a UserModel", () => {
@@ -52,6 +52,39 @@ describe("Data Adapter", () => {
             is_completed: false,
             step: "Request More Information",
             uuid: "fe71fd1a-32a5-497c-b480-a510bf94bace"
+        })
+    })
+
+    it("maps workflow API data to a WorkflowModel", () => {
+        const apiWorkflowData = MockApiData.workflowData()
+        const workflowModel = DataAdapter.toWorkflowModel(apiWorkflowData);
+
+        expect(workflowModel).toEqual({
+            order: 0,
+            uuid: "6f524831-fa75-42c8-9a7c-f8ecad3a721b",
+            workflow_name: "New Client Inquiry",
+            completed_tasks: 1,
+            incomplete_tasks: 2,
+            tasks: [
+                {
+                    category: "New Client Inquiry",
+                    is_completed: false,
+                    step: "Request More Information",
+                    uuid: "1"
+                },
+                {
+                    category: "New Client Inquiry",
+                    is_completed: true,
+                    step: "Request More Information",
+                    uuid: "2"
+                },
+                {
+                    category: "New Client Inquiry",
+                    is_completed: false,
+                    step: "Request More Information",
+                    uuid: "3"
+                },
+            ]
         })
     })
 
@@ -211,6 +244,35 @@ describe("Data Adapter", () => {
                     shoot_time: "8AM - 11PM",
                     wedding_location: "Viviana DTLA",
                 }
+            ],
+            workflows: [
+                {
+                    order: 0,
+                    uuid: "6f524831-fa75-42c8-9a7c-f8ecad3a721b",
+                    workflow_name: "New Client Inquiry",
+                    completed_tasks: 1,
+                    incomplete_tasks: 2,
+                    tasks: [
+                        {
+                            category: "New Client Inquiry",
+                            is_completed: false,
+                            step: "Request More Information",
+                            uuid: "1"
+                        },
+                        {
+                            category: "New Client Inquiry",
+                            is_completed: true,
+                            step: "Request More Information",
+                            uuid: "2"
+                        },
+                        {
+                            category: "New Client Inquiry",
+                            is_completed: false,
+                            step: "Request More Information",
+                            uuid: "3"
+                        },
+                    ]
+                }
             ]
         }])
     })
@@ -245,7 +307,29 @@ describe("Data Adapter", () => {
             text: "a 11 story thing",
             isTrue: true,
             simpleDate: "2019-07-01",
-            formattedDate: "April 17, 2019"
+            formattedDate: "April 17, 2019",
+            array: [
+                {
+                    firstName: "-",
+                    lastName: "",
+                    price: "1.00",
+                    zeroPrice: "0.00",
+                    text: "a 11 story thing",
+                    isTrue: true,
+                    simpleDate: "2019-07-01",
+                    formattedDate: "April 17, 2019",
+                }
+            ],
+            object: {
+                firstName: "-",
+                lastName: "",
+                price: "1.00",
+                zeroPrice: "0.00",
+                text: "a 11 story thing",
+                isTrue: true,
+                simpleDate: "2019-07-01",
+                formattedDate: "April 17, 2019",
+            }
         }
 
         expect(DataAdapter.toApiReadyClient(dataToSendToApi)).toEqual({
@@ -256,7 +340,148 @@ describe("Data Adapter", () => {
             text: "a 11 story thing",
             isTrue: true,
             simpleDate: "2019-07-01T07:00:00.000Z",
-            formattedDate: "2019-04-17T07:00:00.000Z"
+            formattedDate: "2019-04-17T07:00:00.000Z",
+            array: [
+                {
+                    firstName: null,
+                    lastName: null,
+                    price: 100,
+                    zeroPrice: 0,
+                    text: "a 11 story thing",
+                    isTrue: true,
+                    simpleDate: "2019-07-01T07:00:00.000Z",
+                    formattedDate: "2019-04-17T07:00:00.000Z",
+                }
+            ],
+            object: {
+                firstName: null,
+                lastName: null,
+                price: 100,
+                zeroPrice: 0,
+                text: "a 11 story thing",
+                isTrue: true,
+                simpleDate: "2019-07-01T07:00:00.000Z",
+                formattedDate: "2019-04-17T07:00:00.000Z",
+            }
+        })
+
+        expect(dataToSendToApi).toEqual({
+            firstName: "-",
+            lastName: "",
+            price: "1.00",
+            zeroPrice: "0.00",
+            text: "a 11 story thing",
+            isTrue: true,
+            simpleDate: "2019-07-01",
+            formattedDate: "April 17, 2019",
+            array: [
+                {
+                    firstName: "-",
+                    lastName: "",
+                    price: "1.00",
+                    zeroPrice: "0.00",
+                    text: "a 11 story thing",
+                    isTrue: true,
+                    simpleDate: "2019-07-01",
+                    formattedDate: "April 17, 2019",
+                }
+            ],
+            object: {
+                firstName: "-",
+                lastName: "",
+                price: "1.00",
+                zeroPrice: "0.00",
+                text: "a 11 story thing",
+                isTrue: true,
+                simpleDate: "2019-07-01",
+                formattedDate: "April 17, 2019",
+            }
+        })
+    })
+
+    it("prepares data for Forms", () => {
+        const dataForForms = {
+            firstName: "-",
+            lastName: "",
+            price: "1.00",
+            zeroPrice: "0.00",
+            text: "a 11 story thing",
+            isTrue: true,
+            formattedDate: "April 17, 2019",
+            array: [
+                {
+                    firstName: "-",
+                    lastName: "",
+                    price: "1.00",
+                    text: "a 11 story thing",
+                    isTrue: true,
+                    formattedDate: "April 17, 2019",
+                }
+            ],
+            object: {
+                firstName: "-",
+                lastName: "",
+                price: "1.00",
+                text: "a 11 story thing",
+                isTrue: true,
+                formattedDate: "April 17, 2019",
+            }
+        }
+
+        expect(DataAdapter.toFormReadyData(dataForForms)).toEqual({
+            firstName: undefined,
+            lastName: undefined,
+            price: "1.00",
+            zeroPrice: "0.00",
+            text: "a 11 story thing",
+            isTrue: true,
+            formattedDate: "2019-04-17",
+            array: [
+                {
+                    firstName: undefined,
+                    lastName: undefined,
+                    price: "1.00",
+                    text: "a 11 story thing",
+                    isTrue: true,
+                    formattedDate: "2019-04-17",
+                }
+            ],
+            object: {
+                firstName: undefined,
+                lastName: undefined,
+                price: "1.00",
+                text: "a 11 story thing",
+                isTrue: true,
+                formattedDate: "2019-04-17",
+            }
+        })
+
+        expect(dataForForms).toEqual({
+            firstName: "-",
+            lastName: "",
+            price: "1.00",
+            zeroPrice: "0.00",
+            text: "a 11 story thing",
+            isTrue: true,
+            formattedDate: "April 17, 2019",
+            array: [
+                {
+                    firstName: "-",
+                    lastName: "",
+                    price: "1.00",
+                    text: "a 11 story thing",
+                    isTrue: true,
+                    formattedDate: "April 17, 2019",
+                }
+            ],
+            object: {
+                firstName: "-",
+                lastName: "",
+                price: "1.00",
+                text: "a 11 story thing",
+                isTrue: true,
+                formattedDate: "April 17, 2019",
+            }
         })
     })
 })

@@ -1,7 +1,8 @@
 import React from 'react';
 import { Formik, Field, Form, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
-import { Label, Checkbox } from "components/UI/FormParts";
+import { Label, Checkbox } from "UI/FormParts";
+import DataAdapter from "utilities/api/dataAdapter";
 
 const ClientPackageSchema = Yup.object().shape({
     package_name: Yup.string()
@@ -33,9 +34,10 @@ const ClientPackageSchema = Yup.object().shape({
 
 
 const UpdatePackageForm = ({ initialValues, setModalVisibility, handleSubmit }) => {
+    const formReadyValues = DataAdapter.toFormReadyData(initialValues);
     return (
         <Formik
-            initialValues={initialValues}
+            initialValues={formReadyValues}
             validationSchema={ClientPackageSchema}
             onSubmit={(values, actions) => {
                 handleSubmit(values)

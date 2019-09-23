@@ -1,6 +1,6 @@
 import React from 'react';
 import './Page.scss';
-import Loader from 'components/UI/Loader';
+import Loader from 'UI/Loader';
 
 const Page = ({ background, children, loading }) => (
     <>

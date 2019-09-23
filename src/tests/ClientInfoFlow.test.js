@@ -2,9 +2,9 @@ import React from 'react';
 import { App } from 'App';
 import { MemoryRouter } from "react-router-dom";
 import { render, cleanup, waitForElement, fireEvent } from '@testing-library/react';
-import MockAPIHandler from 'utilities/APIHandler/mockApiHandler';
-import Endpoints from "utilities/apiEndpoint";
-import MockApiData from "utilities/APIHandler/mockApiData";
+import MockAPIHandler from 'utilities/api/mockApiHandler';
+import Endpoints from "utilities/api/apiEndpoint";
+import MockApiData from "utilities/api/mockApiData";
 import { act } from 'react-dom/test-utils';
 
 describe('Client Info Flow', () => {
@@ -55,14 +55,14 @@ describe('Client Info Flow', () => {
             )
         }) 
 
-        const { findByText, getByText, getAllByText, getByLabelText } = component;
+        const { findByText, getByText, getAllByText, getByLabelText, getByTestId } = component;
 
         await waitForElement(() =>
             findByText(/Natasha/i)
         )
 
         await act(async () => {
-            fireEvent.click(getAllByText("Edit")[0]);
+            fireEvent.click(getByTestId("edit-client-btn"));
         })
  
         await waitForElement(() =>

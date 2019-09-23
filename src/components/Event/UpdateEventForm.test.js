@@ -1,7 +1,7 @@
 import React from "react";
 import UpdateEventForm from "./UpdateEventForm";
 import { cleanup, render, fireEvent } from "@testing-library/react";
-import MockApiData from "utilities/APIHandler/mockApiData";
+import MockApiData from "utilities/api/mockApiData";
 
 describe("Update Event Form", () => {
   afterEach(cleanup);

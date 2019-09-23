@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import DataAdapter from "utilities/APIHandler/dataAdapter";
-import FormContainer from "components/UI/FormContainer";
-import Modal from "components/UI/Modal";
-import Success from "components/UI/Success";
-import Endpoints from "utilities/apiEndpoint";
-import Error from "components/UI/Error";
+import DataAdapter from "utilities/api/dataAdapter";
+import FormContainer from "UI/FormContainer";
+import Modal from "UI/Modal";
+import Success from "UI/Success";
+import Endpoints from "utilities/api/apiEndpoint";
+import Error from "UI/Error";
 import UpdateEventForm from "./UpdateEventForm";
 
 const EventModule = ({ event, apiHandler, setEvents, package_uuid }) => {
@@ -29,8 +29,8 @@ const EventModule = ({ event, apiHandler, setEvents, package_uuid }) => {
             setEvents(convertedData);
             setSuccess(true);
             setTimeout(() => {
+                setSuccess(false);
                 setModalVisibility(false);
-                setSuccess(false)
             }, 1000)
         } else {
             setErrors(errors);
@@ -65,7 +65,7 @@ const EventModule = ({ event, apiHandler, setEvents, package_uuid }) => {
         shoot_location
     } = event;
     return (
-        <>
+        <div>
             {modalVisible && (
                 <Modal loading={loading} setModalVisibility={setModalVisibility} title="">
                     <FormContainer>
@@ -84,7 +84,7 @@ const EventModule = ({ event, apiHandler, setEvents, package_uuid }) => {
             )}
             <div className="client-page--header">
                 <h1>{event_name} Event</h1>
-                <button className="btn-tertiary" onClick={() => setModalVisibility(true)}>Edit</button>
+                <button data-testid="edit-event-btn" className="btn-tertiary" onClick={() => setModalVisibility(true)}>Edit</button>
             </div>
             <section className="event-information">
                 <div>
@@ -121,7 +121,7 @@ const EventModule = ({ event, apiHandler, setEvents, package_uuid }) => {
                     <h4 className="text">{notes}</h4>
                 </span>
             </section>
-        </>
+        </div>
     )
 }
 

@@ -1,5 +1,5 @@
 import React from "react";
-import DataAdapter from "utilities/APIHandler/dataAdapter";
+import DataAdapter from "utilities/api/dataAdapter";
 import EventModule from "./EventModule";
 
 const EventInformation = ({ events, apiHandler, setEvents, eventPackage }) => {

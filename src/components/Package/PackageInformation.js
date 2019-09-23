@@ -1,13 +1,14 @@
 import React, { useState } from "react";
-import FormContainer from "components/UI/FormContainer";
-import Modal from "components/UI/Modal";
-import Success from "components/UI/Success";
-import DataAdapter from "utilities/APIHandler/dataAdapter";
-import Endpoints from "utilities/apiEndpoint";
-import Error from "components/UI/Error";
+import FormContainer from "UI/FormContainer";
+import Modal from "UI/Modal";
+import Success from "UI/Success";
+import DataAdapter from "utilities/api/dataAdapter";
+import Endpoints from "utilities/api/apiEndpoint";
+import Error from "UI/Error";
 import UpdatePackageForm from "./UpdatePackageForm";
+import Checkmark from "UI/Checkmark";
 
-const PackageInformation = ({ clientPackage, apiHandler, setPackage, client_uuid }) => {
+const PackageInformation = ({ clientPackage, apiHandler, setPackage, client_uuid, setRefetchWorkflow }) => {
     const [errors, setErrors] = useState(false);
     const [loading, setLoading] = useState(false);
     const [modalVisible, setModalVisibility] = useState(false);
@@ -17,7 +18,7 @@ const PackageInformation = ({ clientPackage, apiHandler, setPackage, client_uuid
         setLoading(true);
         const transformedValues = DataAdapter.toApiReadyClient(values);
         let response;
-        if (transformedValues.hasOwnProperty('uuid')) {
+        if (transformedValues.hasOwnProperty('uuid') && transformedValues.uuid) {
             response = await apiHandler.put(Endpoints.updatePackage(clientPackage.uuid), transformedValues);
         } else {
             response = await apiHandler.post(Endpoints.createPackage(client_uuid), transformedValues);
@@ -27,9 +28,10 @@ const PackageInformation = ({ clientPackage, apiHandler, setPackage, client_uuid
         if (data) {
             setPackage(DataAdapter.toPackageModel(data));
             setSuccess(true);
-            setTimeout(() => { 
-                setModalVisibility(false); 
-                setSuccess(false) 
+            setTimeout(() => {
+                setSuccess(false);
+                setRefetchWorkflow(true);
+                setModalVisibility(false);
             }, 1000)
         } else {
             setErrors(errors);
@@ -39,13 +41,13 @@ const PackageInformation = ({ clientPackage, apiHandler, setPackage, client_uuid
     if (clientPackage) {
         const {
             package_name, proposal_signed, package_contents, package_price, balance_received,
-            retainer_price, retainer_paid_amount, retainer_paid, discount_offered, balance_remaining, 
+            retainer_price, retainer_paid_amount, retainer_paid, discount_offered, balance_remaining,
             wedding_included, engagement_included
         } = clientPackage;
 
         return (
             <section className="client-package--container">
-                 {modalVisible && (
+                {modalVisible && (
                     <Modal loading={loading} setModalVisibility={setModalVisibility} title="">
                         <FormContainer>
                             {errors && <Error message={errors} />}
@@ -61,7 +63,7 @@ const PackageInformation = ({ clientPackage, apiHandler, setPackage, client_uuid
                 )}
                 <div className="client-page--header">
                     <h1>Package</h1>
-                    <button className="btn-tertiary" onClick={() => setModalVisibility(true)}>Edit</button>
+                    <button data-testid="edit-package-btn" className="btn-tertiary" onClick={() => setModalVisibility(true)}>Edit</button>
                 </div>
                 <section className="package-information">
                     <h2>{package_name}</h2>
@@ -76,7 +78,7 @@ const PackageInformation = ({ clientPackage, apiHandler, setPackage, client_uuid
                         <hr />
                         <h4>${balance_remaining}</h4>
                     </div>
-                    
+
                     <div className="cost-description">
                         <h6>Package Price</h6>
                         <h6>Discount</h6>
@@ -105,9 +107,7 @@ const PackageInformation = ({ clientPackage, apiHandler, setPackage, client_uuid
 
 const BooleanLine = ({ completed, label }) => (
     <div className="boolean-line">
-        <div className={`checkmark--small ${completed ? 'checkmark--complete' : 'checkmark--incomplete'}`}>
-            <i className="far fa-check-square"></i>
-        </div>
+        <Checkmark size="small" completed={completed} />
         <h4>{label}</h4>
     </div>
 )
