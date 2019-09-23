@@ -102,7 +102,7 @@
     .client-page--header {
         display: flex;
         justify-content: space-between;
-        align-items: end;
+        align-items: flex-end;
 
         .btn-tertiary {
             align-self: flex-end;
@@ -183,12 +183,12 @@
 
     .cost-line {
         grid-column: 1 / 2;
-        justify-self: end;
+        justify-self: flex-end;
         margin-right: 20px;
         margin-bottom: 10px;
         display: grid;
         grid-template-columns: 1fr;
-        justify-items: end;
+        justify-items: flex-end;
         align-items: flex-end;
 
         h4 {
@@ -203,7 +203,7 @@
         margin: 0px !important;
         display: grid;
         grid-template-columns: 1fr;
-        justify-items: end;
+        justify-items: flex-end;
         align-items: flex-end;
 
         h6 {

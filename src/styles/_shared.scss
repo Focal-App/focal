@@ -49,6 +49,7 @@ $blue-400: rgb(69, 140, 199);
 $blue-500: #466D98;
 $blue-600: rgb(54, 91, 131);
 $blue-700: rgb(64, 96, 131);
+$blue-900: rgb(77, 91, 105);
 
 $purple-1000: #19216C;
 $purple-900: #2D3A8C;
@@ -92,6 +93,7 @@ $theme-color: $blue-500;
 $theme-color--light: $blue-300;
 $theme-color--dark: $blue-600;
 $theme-color--darker: $blue-700;
+$theme-color--darkest: $blue-900;
 $theme-color--med-light: $blue-400;
 $theme-color--gradient: linear-gradient(30deg, $theme-color--light, $theme-color);
 $blue-gradient-med:  linear-gradient(5deg,  rgb(142, 182, 218), $theme-color--med-light);
