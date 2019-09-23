@@ -34,7 +34,7 @@ class DataAdapter {
                 uuid
             }
         }
-        return {
+        const initialEmptyContact = {
             first_name: DefaultText.noContent,
             last_name: DefaultText.noContent,
             email: DefaultText.noContent,
@@ -42,6 +42,7 @@ class DataAdapter {
             label: DefaultText.noContent,
             best_time_to_contact: DefaultText.noContent,
         }
+        return initialEmptyContact;
     }
 
     static toClientModel = (apiClient) => {
@@ -122,7 +123,7 @@ class DataAdapter {
             }
         }
         if (type === "event") {
-            return {
+            const initialEmptyEngagementEvent = {
                 event_name: "Engagement",
                 shoot_date: DefaultText.noContent,
                 blog_link: DefaultText.noContent,
@@ -132,8 +133,9 @@ class DataAdapter {
                 shoot_time: DefaultText.noContent,
                 shoot_location: DefaultText.noContent,
             }
+            return initialEmptyEngagementEvent;
         } else {
-            return {
+            const initialEmptyWeddingEvent = {
                 event_name: "Wedding",
                 shoot_date: DefaultText.noContent,
                 blog_link: DefaultText.noContent,
@@ -145,6 +147,7 @@ class DataAdapter {
                 wedding_location: DefaultText.noContent,
                 coordinator_name: DefaultText.noContent,
             }
+            return initialEmptyWeddingEvent;
         }
     }
 
@@ -185,7 +188,7 @@ class DataAdapter {
             }
         }
 
-        return {
+        const initialEmptyPackage = {
             package_events: [],
             package_name: DefaultText.nothing,
             upcoming_shoot_date: DefaultText.noContent,
@@ -201,6 +204,7 @@ class DataAdapter {
             wedding_included: false,
             engagement_included: false
         }
+        return initialEmptyPackage;
     }
 
     static toFullClientDataModel = (client) => {

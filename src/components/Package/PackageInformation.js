@@ -8,7 +8,7 @@ import Error from "UI/Error";
 import UpdatePackageForm from "./UpdatePackageForm";
 import Checkmark from "UI/Checkmark";
 
-const PackageInformation = ({ clientPackage, apiHandler, setPackage, client_uuid }) => {
+const PackageInformation = ({ clientPackage, apiHandler, setPackage, client_uuid, setRefetchWorkflow }) => {
     const [errors, setErrors] = useState(false);
     const [loading, setLoading] = useState(false);
     const [modalVisible, setModalVisibility] = useState(false);
@@ -18,7 +18,7 @@ const PackageInformation = ({ clientPackage, apiHandler, setPackage, client_uuid
         setLoading(true);
         const transformedValues = DataAdapter.toApiReadyClient(values);
         let response;
-        if (transformedValues.hasOwnProperty('uuid')) {
+        if (transformedValues.hasOwnProperty('uuid') && transformedValues.uuid) {
             response = await apiHandler.put(Endpoints.updatePackage(clientPackage.uuid), transformedValues);
         } else {
             response = await apiHandler.post(Endpoints.createPackage(client_uuid), transformedValues);
@@ -29,7 +29,8 @@ const PackageInformation = ({ clientPackage, apiHandler, setPackage, client_uuid
             setPackage(DataAdapter.toPackageModel(data));
             setSuccess(true);
             setTimeout(() => {
-                setSuccess(false)
+                setSuccess(false);
+                setRefetchWorkflow(true);
                 setModalVisibility(false);
             }, 1000)
         } else {
@@ -62,7 +63,7 @@ const PackageInformation = ({ clientPackage, apiHandler, setPackage, client_uuid
                 )}
                 <div className="client-page--header">
                     <h1>Package</h1>
-                    <button className="btn-tertiary" onClick={() => setModalVisibility(true)}>Edit</button>
+                    <button data-testid="edit-package-btn" className="btn-tertiary" onClick={() => setModalVisibility(true)}>Edit</button>
                 </div>
                 <section className="package-information">
                     <h2>{package_name}</h2>

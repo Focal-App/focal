@@ -29,8 +29,8 @@ const EventModule = ({ event, apiHandler, setEvents, package_uuid }) => {
             setEvents(convertedData);
             setSuccess(true);
             setTimeout(() => {
+                setSuccess(false);
                 setModalVisibility(false);
-                setSuccess(false)
             }, 1000)
         } else {
             setErrors(errors);
@@ -84,7 +84,7 @@ const EventModule = ({ event, apiHandler, setEvents, package_uuid }) => {
             )}
             <div className="client-page--header">
                 <h1>{event_name} Event</h1>
-                <button className="btn-tertiary" onClick={() => setModalVisibility(true)}>Edit</button>
+                <button data-testid="edit-event-btn" className="btn-tertiary" onClick={() => setModalVisibility(true)}>Edit</button>
             </div>
             <section className="event-information">
                 <div>

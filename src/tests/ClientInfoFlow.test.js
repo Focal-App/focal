@@ -55,14 +55,14 @@ describe('Client Info Flow', () => {
             )
         }) 
 
-        const { findByText, getByText, getAllByText, getByLabelText } = component;
+        const { findByText, getByText, getAllByText, getByLabelText, getByTestId } = component;
 
         await waitForElement(() =>
             findByText(/Natasha/i)
         )
 
         await act(async () => {
-            fireEvent.click(getAllByText("Edit")[0]);
+            fireEvent.click(getByTestId("edit-client-btn"));
         })
  
         await waitForElement(() =>

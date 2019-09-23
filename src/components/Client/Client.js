@@ -13,9 +13,10 @@ const Client = ({ apiHandler, client_uuid }) => {
     const [errors, setErrors] = useState(false);
     const [loading, setLoading] = useState(false);
     const [clientData, setClient] = useState({});
-    const [clientPackage, setPackage] = useState({})
-    const [clientEvents, setEvents] = useState([])
-    const [clientWorkflows, setWorkflows] = useState([])
+    const [clientPackage, setPackage] = useState({});
+    const [clientEvents, setEvents] = useState([]);
+    const [clientWorkflows, setWorkflows] = useState([]);
+    const [refetchWorkflow, setRefetchWorkflow] = useState(false);
 
     useEffect(() => {
         const fetchClient = async () => {
@@ -32,8 +33,23 @@ const Client = ({ apiHandler, client_uuid }) => {
             }
             setLoading(false);
         }
+       
         fetchClient();
-    }, [client_uuid])
+    }, [client_uuid, apiHandler])
+
+    const fetchWorkflows = async () => {
+        setRefetchWorkflow(false)
+        setLoading(true);
+        const { data, errors } = await apiHandler.get(Endpoints.getWorkflows(client_uuid));
+        if (data) {
+            const workflows = data.map(workflow => DataAdapter.toWorkflowModel(workflow));
+            setWorkflows(workflows)
+        } else {
+            setErrors(errors);
+        }
+        setLoading(false);
+    }
+    refetchWorkflow && fetchWorkflows();
 
     return (
         <ClientPage loading={loading}>
@@ -53,6 +69,7 @@ const Client = ({ apiHandler, client_uuid }) => {
                 apiHandler={apiHandler} 
                 setPackage={setPackage} 
                 client_uuid={client_uuid} 
+                setRefetchWorkflow={setRefetchWorkflow}
             />
             <EventInformation 
                 events={clientEvents} 

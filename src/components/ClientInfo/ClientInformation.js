@@ -50,7 +50,7 @@ const ClientInformation = ({ client, apiHandler, setClient }) => {
                 )}
                 <div className="client-page--header">
                     <h1>Client Information</h1>
-                    <button className="btn-tertiary" onClick={() => setModalVisibility(true)}>Edit</button>
+                    <button data-testid="edit-client-btn" className="btn-tertiary" onClick={() => setModalVisibility(true)}>Edit</button>
                 </div>
                 <section className="client-information">
                     {contacts[0] && <ContactColumn contact={contacts[0]} defaultLable="Client" />}
