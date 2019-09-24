@@ -4,14 +4,14 @@ import { Label } from "UI/FormParts";
 import DataAdapter from 'utilities/api/dataAdapter';
 import { WeddingEventSchema, EventSchema } from "./FormEventSchema";
 
-const UpdateEventForm = ({ initialValues, setModalVisibility, handleSubmit, handleDelete }) => {
+const UpdateEventForm = ({ initialValues, setModalVisibility, handleSubmit, handleDelete, newEvent }) => {
     const formReadyValues = DataAdapter.toFormReadyData(initialValues);
     const validationSchema = initialValues.event_name.match(/wedding/i) ? WeddingEventSchema : EventSchema;
     return (
         <Formik
             initialValues={formReadyValues}
             validationSchema={validationSchema}
-            onSubmit={(values, actions) => {
+            onSubmit={(values) => {
                 handleSubmit(values)
             }}
             render={({
@@ -22,8 +22,11 @@ const UpdateEventForm = ({ initialValues, setModalVisibility, handleSubmit, hand
 
                         <Label label={`Event Name`} name={'event_name'} />
                         <Field component="select" name={'event_name'} id={'event_name'} placeholder="Engagement">
-                            <option value="Engagement">Engagement</option>
-                            <option value="Wedding">Wedding</option>
+                            {
+                                initialValues.event_name.match(/wedding/i)
+                                    ? <option value="Wedding">Wedding</option>
+                                    : <option value="Engagement">Engagement</option>
+                            }
                         </Field>
                         <ErrorMessage className='field-error' name={'event_name'} component="div" />
 
@@ -35,28 +38,10 @@ const UpdateEventForm = ({ initialValues, setModalVisibility, handleSubmit, hand
                         <Field type="text" name={'shoot_time'} id={'shoot_time'} />
                         <ErrorMessage className='field-error' name={'shoot_time'} component="div" />
 
-                        {initialValues.shoot_location ? (
-                            <>
-                                <Label label={`Shoot Location`} name={'shoot_location'} />
-                                <Field type="text" name={'shoot_location'} id={'shoot_location'} />
-                                <ErrorMessage className='field-error' name={'shoot_location'} component="div" />
-                            </>
-                        )
-                            : (
-                                <>
-                                    <Label label={`Ceremony Location`} name={'wedding_location'} />
-                                    <Field type="text" name={'wedding_location'} id={'wedding_location'} />
-                                    <ErrorMessage className='field-error' name={'wedding_location'} component="div" />
-
-                                    <Label label={`Reception Location`} name={'reception_location'} />
-                                    <Field type="text" name={'reception_location'} id={'reception_location'} />
-                                    <ErrorMessage className='field-error' name={'reception_location'} component="div" />
-
-                                    <Label label={`Coordinator Name`} name={'coordinator_name'} />
-                                    <Field type="text" name={'coordinator_name'} id={'coordinator_name'} />
-                                    <ErrorMessage className='field-error' name={'coordinator_name'} component="div" />
-                                </>
-                            )
+                        {
+                            initialValues.shoot_location
+                            ? <AdditionalDefaultEventFields />
+                            : <AdditionalWeddingEventFields />
                         }
 
                         <hr />
@@ -87,7 +72,7 @@ const UpdateEventForm = ({ initialValues, setModalVisibility, handleSubmit, hand
                                 Cancel
                             </button>
                             <button type="submit" className="btn-primary" disabled={isSubmitting}>
-                                Update Event
+                                {newEvent ? 'Create Event' : 'Update Event'}
                             </button>
                         </div>
                     </Form>
@@ -98,3 +83,27 @@ const UpdateEventForm = ({ initialValues, setModalVisibility, handleSubmit, hand
 };
 
 export default UpdateEventForm;
+
+const AdditionalDefaultEventFields = () => (
+    <>
+        <Label label={`Shoot Location`} name={'shoot_location'} />
+        <Field type="text" name={'shoot_location'} id={'shoot_location'} />
+        <ErrorMessage className='field-error' name={'shoot_location'} component="div" />
+    </>
+)
+
+const AdditionalWeddingEventFields = () => (
+    <>
+        <Label label={`Ceremony Location`} name={'wedding_location'} />
+        <Field type="text" name={'wedding_location'} id={'wedding_location'} />
+        <ErrorMessage className='field-error' name={'wedding_location'} component="div" />
+
+        <Label label={`Reception Location`} name={'reception_location'} />
+        <Field type="text" name={'reception_location'} id={'reception_location'} />
+        <ErrorMessage className='field-error' name={'reception_location'} component="div" />
+
+        <Label label={`Coordinator Name`} name={'coordinator_name'} />
+        <Field type="text" name={'coordinator_name'} id={'coordinator_name'} />
+        <ErrorMessage className='field-error' name={'coordinator_name'} component="div" />
+    </>
+)

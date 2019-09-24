@@ -3,10 +3,7 @@
 .client--container {
     display: grid;
     grid-template-columns: 1fr 450px;
-    grid-template-areas:    "workflow info"
-                            "workflow package"
-                            "workflow events"
-                            "workflow events";
+    grid-template-areas:    "workflow modules";
     grid-gap: 30px;
     max-width: $max-width;
     margin: 0 auto;
@@ -16,10 +13,10 @@
         margin-bottom: 10px;
         font-size: 20px;
     }
+}
 
-    .multiline {
-        white-space: pre-line;
-    }
+.multiline {
+    white-space: pre-line;
 }
 
 .client-workflow--container {
@@ -83,22 +80,18 @@
     }
 }
 
-.client-information--container {
-    grid-area: info;
-}
-
-.client-package--container  {
-    grid-area: package;
-}
-
-.client-events--container  {
-    grid-area: events;
+.client-modules--container {
+    grid-area: modules;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 430px 580px auto;
 }
 
 .client-information--container,
 .client-package--container,
 .client-events--container {
     width: 100%;
+    max-height: 400px;
     .client-page--header {
         display: flex;
         justify-content: space-between;
@@ -227,13 +220,38 @@
     }
 }
 
-@media (max-width: 1180px) {
+.event-information--suggested {
+    color: $grey-800;
+    box-sizing: border-box;
+    border-radius: 6px;
+    box-shadow: none;
+    justify-self: stretch;
+    margin-bottom: 30px;
+    button {
+        justify-self: stretch;
+        width: 100%;
+        padding: 20px;
+        background-color: $blue-300;
+        font-weight: 600;
+        font-size: 16px;
+        color: white;
+        border: 1px solid $blue-300;
+        box-shadow: $box-shadow;
+        &:hover {
+            font-weight: 700;
+            color: white;
+            border: 1px solid $blue-300;
+            background-color: $blue-350;
+        }
+    }
+}
+
+@media (max-width: 800px) {
     .client--container {
         display: grid;
-        grid-template-columns: repeat(2, 1fr);
-        grid-template-areas:    "info package"
-                                "events events"
-                                "workflow workflow";
+        grid-template-columns: 1fr;
+        grid-template-areas:    "modules"
+                                "workflow";
     }
 
     .client-events--container {
@@ -244,14 +262,6 @@
 }
 
 @media (max-width: 750px) {
-    .client--container {
-        display: grid;
-        grid-template-columns: 1fr;
-        grid-template-areas:    "info" 
-                                "package"
-                                "events"
-                                "workflow";
-    }
     .client-events--container {
         grid-template-columns: 1fr;
     }

@@ -91,7 +91,12 @@ const ContactForm = ({ contact, contactIndex, defaultLabel }) => {
             <ErrorMessage className='field-error' name={lastName} component="div" />
 
             <Label label={`${contactLabel} Label`} name={label} />
-            <Field type="text" name={label} id={label} placeholder="E.g. Groom, Bride, Partner" />
+            <Field component="select" name={label} id={label} placeholder={defaultLabel}>
+                    <option value="Client">Client</option>
+                    <option value="Partner">Partner</option>
+                    <option value="Bride">Bride</option>
+                    <option value="Groom">Groom</option>
+            </Field>
             <ErrorMessage className='field-error' name={label} component="div" />
 
             <Label label={`${contactLabel} Best Time To Contact`} name={bestTimeToContact} />

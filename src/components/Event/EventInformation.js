@@ -10,25 +10,26 @@ const EventInformation = ({ events, apiHandler, setEvents, eventPackage }) => {
     }
 
     if (events && events.length >= 1) {
-        events.forEach(event => eventsToRender.push(event))
+        events.forEach(event => eventsToRender.push({ event, newEvent: false }))
     }
     if (eventPackage.engagement_included && !eventAlreadyExists(events, /engagement/i)) {
         const intialEventData = DataAdapter.toEventModel(null, "event");
-        eventsToRender.push(intialEventData)
+        eventsToRender.push({ event: intialEventData, newEvent: true })
     }
     if (eventPackage.wedding_included && !eventAlreadyExists(events, /wedding/i)) {
         const intialWeddingEventData = DataAdapter.toEventModel(null, "wedding");
-        eventsToRender.push(intialWeddingEventData)
+        eventsToRender.push({ event: intialWeddingEventData, newEvent: true })
     }
 
     return (
         <section className="client-events--container">
-            {eventsToRender.map(event => <EventModule
+            {eventsToRender.map(({ event, newEvent }) => <EventModule
                 key={event.uuid ? event.uuid : event.event_name}
                 event={event}
                 apiHandler={apiHandler}
                 setEvents={setEvents}
                 package_uuid={eventPackage.uuid}
+                newEvent={newEvent}
             />)}
         </section>
     )

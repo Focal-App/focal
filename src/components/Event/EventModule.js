@@ -7,7 +7,7 @@ import Endpoints from "utilities/api/apiEndpoint";
 import Error from "UI/Error";
 import UpdateEventForm from "./UpdateEventForm";
 
-const EventModule = ({ event, apiHandler, setEvents, package_uuid }) => {
+const EventModule = ({ event, apiHandler, setEvents, package_uuid, newEvent = false }) => {
     const [errors, setErrors] = useState(false);
     const [loading, setLoading] = useState(false);
     const [modalVisible, setModalVisibility] = useState(false);
@@ -54,16 +54,6 @@ const EventModule = ({ event, apiHandler, setEvents, package_uuid }) => {
         }
     }
 
-    const {
-        blog_link,
-        edit_image_deadline,
-        event_name,
-        gallery_link,
-        notes,
-        shoot_date,
-        shoot_time,
-        shoot_location
-    } = event;
     return (
         <div>
             {modalVisible && (
@@ -75,18 +65,50 @@ const EventModule = ({ event, apiHandler, setEvents, package_uuid }) => {
                             : <UpdateEventForm
                                 initialValues={event}
                                 setModalVisibility={setModalVisibility}
-                                handleSubmit={handleSubmit} 
+                                handleSubmit={handleSubmit}
                                 handleDelete={handleDelete}
-                            />
+                                newEvent={newEvent} />
                         }
                     </FormContainer>
                 </Modal>
             )}
+
+            {
+                newEvent
+                    ? <NewSuggestedEvent setModalVisibility={setModalVisibility} event_name={event.event_name} />
+                    : <ExistingEvent setModalVisibility={setModalVisibility} event={event} />
+            }
+        </div>
+    )
+}
+
+export default EventModule;
+
+const NewSuggestedEvent = ({ event_name, setModalVisibility }) => (
+    <section className={`event-information--suggested`}>
+        <button data-testid="edit-event-btn" className="btn-tertiary" onClick={() => setModalVisibility(true)}>Create {event_name} Event</button>
+    </section>
+)
+
+const ExistingEvent = ({ event, setModalVisibility }) => {
+    const {
+        blog_link,
+        edit_image_deadline,
+        event_name,
+        gallery_link,
+        notes,
+        shoot_date,
+        shoot_time,
+        shoot_location
+    } = event;
+    return (
+        <>
             <div className="client-page--header">
                 <h1>{event_name} Event</h1>
                 <button data-testid="edit-event-btn" className="btn-tertiary" onClick={() => setModalVisibility(true)}>Edit</button>
             </div>
-            <section className="event-information">
+
+            <section className={`event-information`}>
                 <div>
                     <h6 className="label">{event_name} Shoot Date</h6>
                     <h4 className="text">{shoot_date}</h4>
@@ -121,11 +143,9 @@ const EventModule = ({ event, apiHandler, setEvents, package_uuid }) => {
                     <h4 className="text multiline">{notes}</h4>
                 </span>
             </section>
-        </div>
+        </>
     )
 }
-
-export default EventModule;
 
 const WeddingEventInfo = ({ event }) => {
     const {

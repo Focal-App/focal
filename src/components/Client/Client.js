@@ -34,7 +34,7 @@ const Client = ({ apiHandler, client_uuid }) => {
             }
             setLoading(false);
         }
-       
+
         fetchClient();
     }, [client_uuid, apiHandler])
 
@@ -74,26 +74,28 @@ const Client = ({ apiHandler, client_uuid }) => {
                 apiHandler={apiHandler}
                 setWorkflows={setWorkflows}
             />
-            <ClientInformation 
-                client={clientData.client} 
-                apiHandler={apiHandler} 
-                setClient={setClient} 
-            />
-            <PackageInformation 
-                clientPackage={clientPackage} 
-                apiHandler={apiHandler} 
-                setPackage={setPackage} 
-                client_uuid={client_uuid} 
-                setRefetchWorkflow={setRefetchWorkflow}
-                setRefetchEvents={setRefetchEvents}
-            />
-            <EventInformation 
-                events={clientEvents} 
-                apiHandler={apiHandler} 
-                setEvents={setEvents} 
-                eventPackage={clientPackage} 
-            />
-            
+            <section className='client-modules--container'>
+                <ClientInformation
+                    client={clientData.client}
+                    apiHandler={apiHandler}
+                    setClient={setClient}
+                />
+                <PackageInformation
+                    clientPackage={clientPackage}
+                    apiHandler={apiHandler}
+                    setPackage={setPackage}
+                    client_uuid={client_uuid}
+                    setRefetchWorkflow={setRefetchWorkflow}
+                    setRefetchEvents={setRefetchEvents}
+                />
+                <EventInformation
+                    events={clientEvents}
+                    apiHandler={apiHandler}
+                    setEvents={setEvents}
+                    eventPackage={clientPackage}
+                />
+            </section>
+
         </ClientPage>
     )
 }
