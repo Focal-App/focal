@@ -3,6 +3,7 @@ import DataAdapter from "utilities/api/dataAdapter";
 import Endpoints from "utilities/api/apiEndpoint";
 import UpdateEventForm from "./UpdateEventForm";
 import ModalForm from "UI/ModalForm";
+import InfoWithLabel from "UI/InfoWithLabel";
 
 const EventModule = ({ event, apiHandler, setEvents, package_uuid, newEvent = false }) => {
     const [errors, setErrors] = useState(false);
@@ -106,38 +107,17 @@ const ExistingEvent = ({ event, setModalVisibility }) => {
 
             <section className={`event-information`}>
                 <div>
-                    <h6 className="label">{event_name} Shoot Date</h6>
-                    <h4 className="text">{shoot_date}</h4>
-
-                    <h6 className="label">{event_name} Shoot Time</h6>
-                    <h4 className="text">{shoot_time}</h4>
-
-                    {shoot_location && (
-                        <>
-                            <h6 className="label">{event_name} Shoot Location</h6>
-                            <h4 className="text">{shoot_location}</h4>
-                        </>
-                    )}
+                    <InfoWithLabel label={`${event_name} Shoot Date`} text={shoot_date} />
+                    <InfoWithLabel label={`${event_name} Shoot Time`} text={shoot_time} />
+                    {shoot_location && <InfoWithLabel label={`${event_name} Shoot Location`} text={shoot_location} />}
                 </div>
                 {event_name.match(/wedding/i) && <WeddingEventInfo event={event} />}
                 <hr />
-                <div>
-                    <h6 className="label">{event_name} Gallery Link</h6>
-                    <h4 className="text">{gallery_link}</h4>
-                </div>
-                <div>
-                    <h6 className="label">{event_name} Blog Link</h6>
-                    <h4 className="text">{blog_link}</h4>
-                </div>
-                <div>
-                    <h6 className="label">{event_name} Images Edit Deadline</h6>
-                    <h4 className="text">{edit_image_deadline}</h4>
-                </div>
+                <InfoWithLabel label={`${event_name} Gallery Link`} text={gallery_link} />
+                <InfoWithLabel label={`${event_name} Blog Link`} text={blog_link} />
+                <InfoWithLabel label={`${event_name} Images Edit Deadline`} text={edit_image_deadline} />
                 <hr />
-                <span>
-                    <h6 className="label">{event_name} Notes</h6>
-                    <h4 className="text multiline">{notes}</h4>
-                </span>
+                <InfoWithLabel label={`${event_name} Notes`} text={notes} span={true} />
             </section>
         </>
     )
@@ -152,14 +132,9 @@ const WeddingEventInfo = ({ event }) => {
     } = event;
     return (
         <div>
-            <h6 className="label">Ceremony Location</h6>
-            <h4 className="text">{wedding_location}</h4>
-
-            <h6 className="label">Reception Location</h6>
-            <h4 className="text">{reception_location}</h4>
-
-            <h6 className="label">{event_name} Coordinator</h6>
-            <h4 className="text">{coordinator_name}</h4>
+            <InfoWithLabel label={`Ceremony Location`} text={wedding_location} />
+            <InfoWithLabel label={`Reception Location`} text={reception_location} />
+            <InfoWithLabel label={`${event_name} Coordinator`} text={coordinator_name} />
         </div>
     )
 }
