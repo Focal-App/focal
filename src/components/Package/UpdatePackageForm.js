@@ -13,7 +13,7 @@ const ClientPackageSchema = Yup.object().shape({
         .notRequired(),
     package_price: Yup.number()
         .notRequired()
-        .moreThan(0, "Package Price must be at least 1"),
+        .moreThan(0.99, "Package Price must be at least 1"),
     retainer_price: Yup.string()
         .notRequired(),
     retainer_paid_amount: Yup.string()

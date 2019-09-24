@@ -74,6 +74,15 @@ describe("Update Package Form", () => {
     await findByText('Package Name required');
   });
 
+  it("package price must be more than 1", async () => {
+    const { getByLabelText, findByText } = render(formComponent);
+
+    const packagePrice = getByLabelText("Package Price");
+    fireEvent.change(packagePrice, { target: { value: "0.99" } });
+    fireEvent.blur(packagePrice);
+    await findByText('Package Price must be at least 1');
+  });
+
   it("cannot submit if package name is empty", async () => {
     const { getByText, findByText } = render(formComponent);
 
