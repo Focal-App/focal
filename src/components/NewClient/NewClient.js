@@ -7,7 +7,7 @@ import Error from "UI/Error";
 import Endpoints from "utilities/api/apiEndpoint";
 import Success from "UI/Success";
 
-const NewClient = ({ apiHandler, user_uuid }) => {
+const NewClient = ({ apiHandler }) => {
     const [loading, setLoading] = useState(false);
     const [success, setSuccess] = useState(false);
     const [redirect, setRedirect] = useState(false)

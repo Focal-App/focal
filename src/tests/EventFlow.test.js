@@ -141,4 +141,52 @@ describe('Event Creation & Update Flow', () => {
         getByText(/4pm - 8pm/i)
         getByText(/Reminder to review the clients attire for a beach shoot/i)
     })
+
+    it(`renders error banner in modal after failed event update`, async () => {
+        const event1_uuid = "2222";
+        const client = MockApiData.successfulClient({ 
+            uuid: client_uuid, 
+            contacts: [MockApiData.contactData({ first_name: "Natasha" })],
+            package: MockApiData.packageData({ 
+                uuid: package_uuid,
+                package_events: [MockApiData.eventData({ 
+                    uuid: event1_uuid, 
+                    package_uuid: package_uuid 
+                })] 
+            })
+        })
+        const failedEventUpdate = MockApiData.errorData([ "Failed event update"])
+        const apiHandler = new MockAPIHandler({ 
+            [Endpoints.getClient(client_uuid)]: [client],
+            [Endpoints.updateEvent(event1_uuid)]: [failedEventUpdate],
+        });
+        let component;
+
+        await act(async () => {
+            component = render(
+                <MemoryRouter initialEntries={[`/client/${client_uuid}`]} initialIndex={0}>
+                    <App apiHandler={apiHandler} authUser={authUser}/>
+                </MemoryRouter>
+            )
+        })
+        const { findByText, getByText, getAllByText } = component;
+
+        await waitForElement(() =>
+            findByText(/Natasha Lee/i)
+        )
+
+        await act(async () => {
+            fireEvent.click(getAllByText("Edit")[2]);
+        })
+        
+        await waitForElement(() =>
+            findByText(/update event/i)
+        )
+
+        await act(async () => {
+            fireEvent.click(getByText("Update Event"));
+        })
+
+        findByText(/Failed event update/i)
+    })
 })
