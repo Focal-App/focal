@@ -18,7 +18,8 @@ describe("Workflow Flow", () => {
     const authUser = { uuid: user_uuid, avatar: "avatar-image-link" };
     const package_uuid = "1111";
 
-    it("renders closeout, engagement and wedding workflow after creating a new package with engagement and wedding toggled as included", async () => {
+    it(`renders closeout, engagement and wedding workflow after 
+    creating a new package with engagement and wedding toggled as included`, async () => {
         const client = MockApiData.successfulClient({
             uuid: client_uuid,
             contacts: [MockApiData.contactData({ first_name: "Natasha" })],
@@ -135,7 +136,9 @@ describe("Workflow Flow", () => {
         getByText(/edit wedding images/i)
     })
 
-    it("renders a successful checkmark after hitting an incomplete todo", async () => {
+    it("renders a successful checkmark after hitting an incomplete todo on Client Page", async () => {
+        const task_uuid = "7";
+
         const client = MockApiData.successData(
             MockApiData.allClientData({
                 uuid: client_uuid,
@@ -147,26 +150,18 @@ describe("Workflow Flow", () => {
                         workflow_name: "New Client Inquiry",
                         completed_tasks: 0,
                         tasks: [
-                            MockApiData.taskData({ step: "request more information", uuid: "7", is_completed: false }),
+                            MockApiData.taskData({ step: "request more information", uuid: task_uuid, is_completed: false }),
                             MockApiData.taskData({ step: "save client information", uuid: "8", is_completed: false }),
                         ]
                     })
                 ]
             })
         )
-        const updatedWorkflow = MockApiData.successData(MockApiData.workflowData({
-            uuid: workflow_uuid,
-            workflow_name: "New Client Inquiry",
-            completed_tasks: 1,
-            tasks: [
-                MockApiData.taskData({ step: "request more information", uuid: "7", is_completed: true }),
-                MockApiData.taskData({ step: "save client information", uuid: "8", is_completed: false }),
-            ]
-        }))
+        const updatedTask = MockApiData.successData(MockApiData.taskData({ step: "request more information", uuid: task_uuid, is_completed: true }))
 
         const apiHandler = new MockAPIHandler({
             [Endpoints.getClient(client_uuid)]: [client],
-            [Endpoints.updateWorkflow(workflow_uuid)]: [updatedWorkflow]
+            [Endpoints.updateTask(task_uuid)]: [updatedTask]
         });
 
         let component;
@@ -178,7 +173,7 @@ describe("Workflow Flow", () => {
                 </MemoryRouter>
             )
         })
-        const { findByText, getByText, getAllByText, getAllByTestId } = component;
+        const { findByText, getByText, getAllByTestId } = component;
 
         await waitForElement(() =>
             findByText(/New Client Inquiry/i)
@@ -188,6 +183,68 @@ describe("Workflow Flow", () => {
 
         const checkmarks = getAllByTestId("todo-checkmark");
 
+        fireEvent.click(checkmarks[0]);
 
+        await waitForElement(() =>
+            findByText(/1 \/ 2 Tasks Completed/i)
+        )
+    })
+
+    it("renders next incomplete todo after hitting an todo checkmark on Clients Page", async () => {
+        const task_uuid = "7";
+
+        const clientsList = MockApiData.successData([
+            MockApiData.partialClientData({ 
+                uuid: client_uuid,
+                current_stage: MockApiData.taskData({ 
+                    step: "request more information", 
+                    is_completed: false,
+                    uuid: task_uuid
+                })
+            })
+        ])
+        const updatedTask = MockApiData.successData(
+            MockApiData.taskData({ 
+                step: "request more information", 
+                uuid: task_uuid, 
+                is_completed: true 
+            })
+        )
+        const secondClientsList = MockApiData.successData([
+            MockApiData.partialClientData({ 
+                uuid: client_uuid,
+                current_stage: MockApiData.taskData({ 
+                    step: "send proposal", 
+                    is_completed: false,
+                    uuid: task_uuid
+                })
+            })
+        ])
+
+        const apiHandler = new MockAPIHandler({
+            [Endpoints.getClients(user_uuid)]: [clientsList, secondClientsList],
+            [Endpoints.updateTask(task_uuid)]: [updatedTask]
+        });
+
+        let component;
+
+        await act(async () => {
+            component = render(
+                <MemoryRouter initialEntries={[`/clients`]} initialIndex={0}>
+                    <App apiHandler={apiHandler} authUser={authUser} />
+                </MemoryRouter>
+            )
+        })
+        const { findByText, getByTestId } = component;
+
+        await waitForElement(() =>
+            findByText(/request more information/i)
+        )
+
+        fireEvent.click(getByTestId("todo-checkmark"));
+
+        await waitForElement(() =>
+            findByText(/send proposal/i)
+        )
     })
 })

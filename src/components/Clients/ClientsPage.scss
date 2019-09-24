@@ -3,10 +3,11 @@
 .clients--container {
     max-width: $max-width;
     margin: 0 auto;
+    box-sizing: border-box;
 
     h1 {
         text-align: left;
-        color: $theme-color--darker;
+        color: $grey-700;
         margin-bottom: 10px;
     }
     
@@ -22,6 +23,7 @@ table {
         padding: 16px;
         font-weight: 400;
         color: $grey-800;
+        width: auto;
     }
 
     tr:first-child {
@@ -54,5 +56,35 @@ table {
         &:hover {
             text-decoration: underline;
         }
+    }
+
+    button {
+        color: $red-400;
+        border: none;
+        font-size: 14px;
+        cursor: pointer;
+        background-color: rgba(0, 255, 0, 0);
+
+        &:hover {
+            text-decoration: underline;
+        }
+    }
+}
+
+.clients--task { 
+    align-self: center;
+    display: grid;
+    grid-template-columns: 30px 1fr;
+    justify-items: start;
+    align-items: center;
+    grid-gap: 10px;
+    cursor: pointer;
+}
+
+.clients--task-completed {
+    text-decoration: line-through $green-400;
+    .client--category,
+    .client--stage {
+        color: $green-600 !important;
     }
 }
