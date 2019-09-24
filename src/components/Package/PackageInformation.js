@@ -1,12 +1,9 @@
 import React, { useState } from "react";
-import FormContainer from "UI/FormContainer";
-import Modal from "UI/Modal";
-import Success from "UI/Success";
 import DataAdapter from "utilities/api/dataAdapter";
 import Endpoints from "utilities/api/apiEndpoint";
-import Error from "UI/Error";
 import UpdatePackageForm from "./UpdatePackageForm";
 import { Included } from "UI/Checkmark";
+import ModalForm from "UI/ModalForm";
 
 const PackageInformation = ({ clientPackage, apiHandler, setPackage, client_uuid, setRefetchWorkflow, setRefetchEvents }) => {
     const [errors, setErrors] = useState(false);
@@ -48,20 +45,18 @@ const PackageInformation = ({ clientPackage, apiHandler, setPackage, client_uuid
 
         return (
             <section className="client-package--container">
-                {modalVisible && (
-                    <Modal loading={loading} setModalVisibility={setModalVisibility} title="">
-                        <FormContainer>
-                            {errors && <Error message={errors} />}
-                            {success
-                                ? <Success text="Success!" />
-                                : <UpdatePackageForm
-                                    initialValues={clientPackage}
-                                    setModalVisibility={setModalVisibility}
-                                    handleSubmit={handleSubmit} />
-                            }
-                        </FormContainer>
-                    </Modal>
-                )}
+                <ModalForm
+                    isLoading={loading}
+                    isVisible={modalVisible}
+                    setModalVisibility={setModalVisibility}
+                    errors={errors}
+                    success={success}
+                >
+                    <UpdatePackageForm
+                        initialValues={clientPackage}
+                        setModalVisibility={setModalVisibility}
+                        handleSubmit={handleSubmit} />
+                </ModalForm>
                 <div className="client-page--header">
                     <h1>Package</h1>
                     <button data-testid="edit-package-btn" className="btn-tertiary" onClick={() => setModalVisibility(true)}>Edit</button>

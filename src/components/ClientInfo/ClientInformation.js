@@ -1,11 +1,9 @@
 import React, { useState } from "react";
 import UpdateClientForm from "./UpdateClientForm";
-import FormContainer from "UI/FormContainer";
-import Modal from "UI/Modal";
-import Success from "UI/Success";
 import DataAdapter, { DefaultText } from "utilities/api/dataAdapter";
 import Endpoints from "utilities/api/apiEndpoint";
-import Error from "UI/Error";
+import ModalForm from "UI/ModalForm";
+
 
 const ClientInformation = ({ client, apiHandler, setClient }) => {
     const [errors, setErrors] = useState(false);
@@ -21,9 +19,9 @@ const ClientInformation = ({ client, apiHandler, setClient }) => {
         if (data) {
             setClient(DataAdapter.toFullClientDataModel(data));
             setSuccess(true);
-            setTimeout(() => { 
-                setModalVisibility(false); 
-                setSuccess(false) 
+            setTimeout(() => {
+                setModalVisibility(false);
+                setSuccess(false)
             }, 1000)
         } else {
             setErrors(errors);
@@ -34,20 +32,18 @@ const ClientInformation = ({ client, apiHandler, setClient }) => {
         const { contacts, private_notes } = client;
         return (
             <section className="client-information--container">
-                {modalVisible && (
-                    <Modal loading={loading} setModalVisibility={setModalVisibility} title="">
-                        <FormContainer>
-                            {errors && <Error message={errors} />}
-                            {success
-                                ? <Success text="Success!" />
-                                : <UpdateClientForm
-                                    initialValues={client}
-                                    setModalVisibility={setModalVisibility}
-                                    handleSubmit={handleSubmit} />
-                            }
-                        </FormContainer>
-                    </Modal>
-                )}
+                <ModalForm
+                    isLoading={loading}
+                    isVisible={modalVisible}
+                    setModalVisibility={setModalVisibility}
+                    errors={errors}
+                    success={success}
+                >
+                    <UpdateClientForm
+                        initialValues={client}
+                        setModalVisibility={setModalVisibility}
+                        handleSubmit={handleSubmit} />
+                </ModalForm>
                 <div className="client-page--header">
                     <h1>Client Information</h1>
                     <button data-testid="edit-client-btn" className="btn-tertiary" onClick={() => setModalVisibility(true)}>Edit</button>
@@ -58,7 +54,7 @@ const ClientInformation = ({ client, apiHandler, setClient }) => {
                     <hr />
                     <span>
                         <h6 className="label">Private Notes</h6>
-                        <h4 className="text">{private_notes}</h4>
+                        <h4 className="text multiline">{private_notes}</h4>
                     </span>
                 </section>
             </section>

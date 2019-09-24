@@ -1,11 +1,8 @@
 import React, { useState } from "react";
 import DataAdapter from "utilities/api/dataAdapter";
-import FormContainer from "UI/FormContainer";
-import Modal from "UI/Modal";
-import Success from "UI/Success";
 import Endpoints from "utilities/api/apiEndpoint";
-import Error from "UI/Error";
 import UpdateEventForm from "./UpdateEventForm";
+import ModalForm from "UI/ModalForm";
 
 const EventModule = ({ event, apiHandler, setEvents, package_uuid, newEvent = false }) => {
     const [errors, setErrors] = useState(false);
@@ -17,7 +14,7 @@ const EventModule = ({ event, apiHandler, setEvents, package_uuid, newEvent = fa
         setLoading(true);
         const transformedValues = DataAdapter.toApiReadyClient(values);
         let response;
-        if (transformedValues.hasOwnProperty('uuid')) {
+        if (transformedValues.hasOwnProperty('uuid') && transformedValues.uuid) {
             response = await apiHandler.put(Endpoints.updateEvent(event.uuid), transformedValues);
         } else {
             response = await apiHandler.post(Endpoints.createEvent(package_uuid), transformedValues);
@@ -56,22 +53,21 @@ const EventModule = ({ event, apiHandler, setEvents, package_uuid, newEvent = fa
 
     return (
         <div>
-            {modalVisible && (
-                <Modal loading={loading} setModalVisibility={setModalVisibility} title="">
-                    <FormContainer>
-                        {errors && <Error message={errors} />}
-                        {success
-                            ? <Success text="Success!" />
-                            : <UpdateEventForm
-                                initialValues={event}
-                                setModalVisibility={setModalVisibility}
-                                handleSubmit={handleSubmit}
-                                handleDelete={handleDelete}
-                                newEvent={newEvent} />
-                        }
-                    </FormContainer>
-                </Modal>
-            )}
+            <ModalForm
+                isLoading={loading}
+                isVisible={modalVisible}
+                setModalVisibility={setModalVisibility}
+                errors={errors}
+                success={success}
+            >
+                <UpdateEventForm
+                    initialValues={event}
+                    setModalVisibility={setModalVisibility}
+                    handleSubmit={handleSubmit}
+                    handleDelete={handleDelete}
+                    newEvent={newEvent} 
+                />
+            </ModalForm>
 
             {
                 newEvent
