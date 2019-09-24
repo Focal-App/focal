@@ -8,7 +8,7 @@ import Error from "UI/Error";
 import UpdatePackageForm from "./UpdatePackageForm";
 import Checkmark from "UI/Checkmark";
 
-const PackageInformation = ({ clientPackage, apiHandler, setPackage, client_uuid, setRefetchWorkflow }) => {
+const PackageInformation = ({ clientPackage, apiHandler, setPackage, client_uuid, setRefetchWorkflow, setRefetchEvents }) => {
     const [errors, setErrors] = useState(false);
     const [loading, setLoading] = useState(false);
     const [modalVisible, setModalVisibility] = useState(false);
@@ -31,6 +31,7 @@ const PackageInformation = ({ clientPackage, apiHandler, setPackage, client_uuid
             setTimeout(() => {
                 setSuccess(false);
                 setRefetchWorkflow(true);
+                setRefetchEvents(true);
                 setModalVisibility(false);
             }, 1000)
         } else {

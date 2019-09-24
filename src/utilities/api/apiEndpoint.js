@@ -14,6 +14,7 @@ const Endpoints = {
   createPackage: (client_uuid) => `${API_URL}/api/clients/${client_uuid}/packages`,
   updateEvent: (event_uuid) => `${API_URL}/api/events/${event_uuid}`,
   createEvent: (package_uuid) => `${API_URL}/api/packages/${package_uuid}/events`,
+  getEvents: (package_uuid) => `${API_URL}/api/packages/${package_uuid}/events`,
   updateWorkflow: (workflow_uuid) => `${API_URL}/api/workflows/${workflow_uuid}`,
   updateTask: (task_uuid) => `${API_URL}/api/tasks/${task_uuid}`,
   getWorkflows: (client_uuid) => `${API_URL}/api/clients/${client_uuid}/workflows`,

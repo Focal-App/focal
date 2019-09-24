@@ -17,6 +17,7 @@ const Client = ({ apiHandler, client_uuid }) => {
     const [clientEvents, setEvents] = useState([]);
     const [clientWorkflows, setWorkflows] = useState([]);
     const [refetchWorkflow, setRefetchWorkflow] = useState(false);
+    const [refetchEvents, setRefetchEvents] = useState(false);
 
     useEffect(() => {
         const fetchClient = async () => {
@@ -51,6 +52,20 @@ const Client = ({ apiHandler, client_uuid }) => {
     }
     refetchWorkflow && fetchWorkflows();
 
+    const fetchEvents = async () => {
+        setRefetchEvents(false)
+        setLoading(true);
+        const { data, errors } = await apiHandler.get(Endpoints.getEvents(clientPackage.uuid));
+        if (data) {
+            const events = data.map(event => DataAdapter.toEventModel(event));
+            setEvents(events)
+        } else {
+            setErrors(errors);
+        }
+        setLoading(false);
+    }
+    refetchEvents && fetchEvents();
+
     return (
         <ClientPage loading={loading}>
             {errors && <Error message={errors} />}
@@ -70,6 +85,7 @@ const Client = ({ apiHandler, client_uuid }) => {
                 setPackage={setPackage} 
                 client_uuid={client_uuid} 
                 setRefetchWorkflow={setRefetchWorkflow}
+                setRefetchEvents={setRefetchEvents}
             />
             <EventInformation 
                 events={clientEvents} 

@@ -118,7 +118,7 @@ const EventModule = ({ event, apiHandler, setEvents, package_uuid }) => {
                 <hr />
                 <span>
                     <h6 className="label">{event_name} Notes</h6>
-                    <h4 className="text">{notes}</h4>
+                    <h4 className="text multiline">{notes}</h4>
                 </span>
             </section>
         </div>
