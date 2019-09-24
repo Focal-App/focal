@@ -6,7 +6,7 @@ import DataAdapter from "utilities/api/dataAdapter";
 import Endpoints from "utilities/api/apiEndpoint";
 import Error from "UI/Error";
 import UpdatePackageForm from "./UpdatePackageForm";
-import Checkmark from "UI/Checkmark";
+import { Included } from "UI/Checkmark";
 
 const PackageInformation = ({ clientPackage, apiHandler, setPackage, client_uuid, setRefetchWorkflow, setRefetchEvents }) => {
     const [errors, setErrors] = useState(false);
@@ -108,7 +108,7 @@ const PackageInformation = ({ clientPackage, apiHandler, setPackage, client_uuid
 
 const BooleanLine = ({ completed, label }) => (
     <div className="boolean-line">
-        <Checkmark size="small" completed={completed} />
+        <Included size="small" completed={completed} />
         <h4>{label}</h4>
     </div>
 )

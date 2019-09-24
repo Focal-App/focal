@@ -76,11 +76,11 @@ const UpdatePackageForm = ({ initialValues, setModalVisibility, handleSubmit }) 
                         <ErrorMessage className='field-error' name={'balance_remaining'} component="div" />
 
                         <section className="package-update--checks">
-                            <Field type="checkbox" component={Checkbox} label={`Includes Engagement Event`} name={'engagement_included'} id={'engagement_included'} />
-                            <ErrorMessage className='field-error' name={'engagement_included'} component="div" />
-
                             <Field type="checkbox" component={Checkbox} label={`Includes Wedding Event`} name={'wedding_included'} id={'wedding_included'} />
                             <ErrorMessage className='field-error' name={'wedding_included'} component="div" />
+
+                            <Field type="checkbox" component={Checkbox} label={`Includes Engagement Event`} name={'engagement_included'} id={'engagement_included'} />
+                            <ErrorMessage className='field-error' name={'engagement_included'} component="div" />
 
                             <hr />
 

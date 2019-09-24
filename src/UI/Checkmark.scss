@@ -29,3 +29,13 @@
 .checkmark-icon--incomplete {
     color: $grey-500;
 }
+
+.included-icons {
+    width: 20px;
+    i {
+        font-size: 20px;
+    }
+    .fa-check {
+        font-size: 17px;
+    }
+}

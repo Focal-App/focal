@@ -83,15 +83,15 @@
 .client-modules--container {
     grid-area: modules;
     display: grid;
+    grid-gap: 30px;
     grid-template-columns: 1fr;
-    grid-template-rows: 430px 580px auto;
+    grid-template-rows: minmax(min-content, 400px) minmax(min-content, auto) 1fr;
 }
 
 .client-information--container,
 .client-package--container,
 .client-events--container {
     width: 100%;
-    max-height: 400px;
     .client-page--header {
         display: flex;
         justify-content: space-between;
