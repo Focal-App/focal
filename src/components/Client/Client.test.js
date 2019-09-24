@@ -1,6 +1,6 @@
 import React from 'react';
 import Client from "./Client";
-import { render, cleanup, waitForElement, getAllByText } from '@testing-library/react';
+import { render, cleanup, waitForElement } from '@testing-library/react';
 import MockAPIHandler from 'utilities/api/mockApiHandler';
 import Endpoints from "utilities/api/apiEndpoint";
 import MockApiData from "utilities/api/mockApiData";
@@ -81,5 +81,29 @@ describe('Client', () => {
         getByText(/commit to proposal/i)
         getByText(/receive signed proposal & retainer/i)
         getByText(/receive retainer fee/i)
+    })
+
+    it('renders error banner if client cannot be found', async () => {
+        const errorFetchingClient = MockApiData.errorData("400 Bad Request")
+        
+        const apiHandler = new MockAPIHandler({ 
+            [Endpoints.getClient(user_uuid)]: [errorFetchingClient]
+        });
+        const { findAllByText, getByText, queryByText } = render(<Client apiHandler={apiHandler} client_uuid={user_uuid} />)
+
+        await waitForElement(() =>
+            findAllByText(/400 Bad Request/i)
+        )
+
+        getByText(/could not find client/i)
+
+        const packageComponent = queryByText(/package/i)
+        expect(packageComponent).toBeNull();
+
+        const clientInfoComponent = queryByText(/client information/i)
+        expect(clientInfoComponent).toBeNull();
+
+        const workflowComponent = queryByText(/new client inquiry/i)
+        expect(workflowComponent).toBeNull();
     })
 })

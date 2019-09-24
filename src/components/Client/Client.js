@@ -8,6 +8,7 @@ import ClientInformation from "components/ClientInfo/ClientInformation";
 import PackageInformation from "components/Package/PackageInformation";
 import EventInformation from "components/Event/EventInformation";
 import Workflows from "../Workflow/Workflows";
+import NoContent from "UI/NoContent";
 
 const Client = ({ apiHandler, client_uuid }) => {
     const [errors, setErrors] = useState(false);
@@ -69,32 +70,41 @@ const Client = ({ apiHandler, client_uuid }) => {
     return (
         <ClientPage loading={loading}>
             {errors && <Error message={errors} />}
-            <Workflows
-                workflows={clientWorkflows}
-                apiHandler={apiHandler}
-                setWorkflows={setWorkflows}
-            />
-            <section className='client-modules--container'>
-                <ClientInformation
-                    client={clientData.client}
-                    apiHandler={apiHandler}
-                    setClient={setClient}
-                />
-                <PackageInformation
-                    clientPackage={clientPackage}
-                    apiHandler={apiHandler}
-                    setPackage={setPackage}
-                    client_uuid={client_uuid}
-                    setRefetchWorkflow={setRefetchWorkflow}
-                    setRefetchEvents={setRefetchEvents}
-                />
-                <EventInformation
-                    events={clientEvents}
-                    apiHandler={apiHandler}
-                    setEvents={setEvents}
-                    eventPackage={clientPackage}
-                />
-            </section>
+            {
+                clientData.client
+                    ? (
+                        <>
+                            <Workflows
+                                workflows={clientWorkflows}
+                                apiHandler={apiHandler}
+                                setWorkflows={setWorkflows}
+                            />
+                            <section className='client-modules--container'>
+                                <ClientInformation
+                                    client={clientData.client}
+                                    apiHandler={apiHandler}
+                                    setClient={setClient}
+                                />
+                                <PackageInformation
+                                    clientPackage={clientPackage}
+                                    apiHandler={apiHandler}
+                                    setPackage={setPackage}
+                                    client_uuid={client_uuid}
+                                    setRefetchWorkflow={setRefetchWorkflow}
+                                    setRefetchEvents={setRefetchEvents}
+                                />
+                                <EventInformation
+                                    events={clientEvents}
+                                    apiHandler={apiHandler}
+                                    setEvents={setEvents}
+                                    eventPackage={clientPackage}
+                                />
+                            </section>
+                        </>
+                    ) 
+                    : <NoContent message="Could not find client" subtext="Please verify the client uuid or navigate from the clients page" />
+            }
+
 
         </ClientPage>
     )
