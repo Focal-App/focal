@@ -8,6 +8,7 @@ import ClientInformation from "components/ClientInfo/ClientInformation";
 import PackageInformation from "components/Package/PackageInformation";
 import EventInformation from "components/Event/EventInformation";
 import Workflows from "../Workflow/Workflows";
+import NoContent from "UI/NoContent";
 
 const Client = ({ apiHandler, client_uuid }) => {
     const [errors, setErrors] = useState(false);
@@ -17,6 +18,7 @@ const Client = ({ apiHandler, client_uuid }) => {
     const [clientEvents, setEvents] = useState([]);
     const [clientWorkflows, setWorkflows] = useState([]);
     const [refetchWorkflow, setRefetchWorkflow] = useState(false);
+    const [refetchEvents, setRefetchEvents] = useState(false);
 
     useEffect(() => {
         const fetchClient = async () => {
@@ -33,7 +35,7 @@ const Client = ({ apiHandler, client_uuid }) => {
             }
             setLoading(false);
         }
-       
+
         fetchClient();
     }, [client_uuid, apiHandler])
 
@@ -51,33 +53,59 @@ const Client = ({ apiHandler, client_uuid }) => {
     }
     refetchWorkflow && fetchWorkflows();
 
+    const fetchEvents = async () => {
+        setRefetchEvents(false)
+        setLoading(true);
+        const { data, errors } = await apiHandler.get(Endpoints.getEvents(clientPackage.uuid));
+        if (data) {
+            const events = data.map(event => DataAdapter.toEventModel(event));
+            setEvents(events)
+        } else {
+            setErrors(errors);
+        }
+        setLoading(false);
+    }
+    refetchEvents && fetchEvents();
+
     return (
         <ClientPage loading={loading}>
             {errors && <Error message={errors} />}
-            <Workflows
-                workflows={clientWorkflows}
-                apiHandler={apiHandler}
-                setWorkflows={setWorkflows}
-            />
-            <ClientInformation 
-                client={clientData.client} 
-                apiHandler={apiHandler} 
-                setClient={setClient} 
-            />
-            <PackageInformation 
-                clientPackage={clientPackage} 
-                apiHandler={apiHandler} 
-                setPackage={setPackage} 
-                client_uuid={client_uuid} 
-                setRefetchWorkflow={setRefetchWorkflow}
-            />
-            <EventInformation 
-                events={clientEvents} 
-                apiHandler={apiHandler} 
-                setEvents={setEvents} 
-                eventPackage={clientPackage} 
-            />
-            
+            {
+                clientData.client
+                    ? (
+                        <>
+                            <Workflows
+                                workflows={clientWorkflows}
+                                apiHandler={apiHandler}
+                                setWorkflows={setWorkflows}
+                            />
+                            <section className='client-modules--container'>
+                                <ClientInformation
+                                    client={clientData.client}
+                                    apiHandler={apiHandler}
+                                    setClient={setClient}
+                                />
+                                <PackageInformation
+                                    clientPackage={clientPackage}
+                                    apiHandler={apiHandler}
+                                    setPackage={setPackage}
+                                    client_uuid={client_uuid}
+                                    setRefetchWorkflow={setRefetchWorkflow}
+                                    setRefetchEvents={setRefetchEvents}
+                                />
+                                <EventInformation
+                                    events={clientEvents}
+                                    apiHandler={apiHandler}
+                                    setEvents={setEvents}
+                                    eventPackage={clientPackage}
+                                />
+                            </section>
+                        </>
+                    ) 
+                    : <NoContent message="Could not find client" subtext="Please verify the client uuid or navigate from the clients page" />
+            }
+
+
         </ClientPage>
     )
 }

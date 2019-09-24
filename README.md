@@ -1,68 +1,72 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+![Imgur](https://i.imgur.com/zKCEzXz.png)
+# [Focal](https://focal--app.herokuapp.com)
+Focal is a workflow and client management tool for wedding photographers. It aims to help photographers consolidate clients information (personal info, photography packages, shoot events, and private notes) and tie it to a set of workflow tasks. 
 
-## Available Scripts
+Future features would include integrating third-party services like Google Gmail, Google Calendar or Stripe to reduce context switching for the users. For example, the app would be able to send emails, update their calendars, or send invoices directly from the workflow tasks. 
 
-In the project directory, you can run:
+The project is built in React and works with a [Elixir/Phoenix API](https://github.com/Focal-App/focal-api). Other dependencies include `react-testing-library`, `formik`, `date-fns`, `axios`, `sass`, `react-router`, `moment`, `jest`.
+Note that the project is hosted on Heroku free-plan which has slow spin-up times -- Please give it a few seconds to load.
 
-### `npm start`
+### Features
+* Google Authentication
+* Create & Update Client Information
+* Create & Update Client Packages
+* Create & Update Client Events
+* Auto Generated Workflows Tied to Client Packages with Todo-style Task Completion.
+* All Clients View with a List of the Current Task for All Clients
 
-Runs the app in the development mode.<br>
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+### Feature Walkthroughs
+* [Creating New Client](https://youtu.be/S4hFWrvEMEs)
+* [Updating Client Information](https://youtu.be/jgDKFMmitg8)
+* [Creating Client Packages](https://youtu.be/uYYPxFlE4j8)
+* [Updating Client Packages to Create Workflows and Create Events](https://youtu.be/t_G9iKNXW-8)
+* [Updating Client Packages to Remove Events and Workflows](https://youtu.be/ajFJoyFmCwM)
+* [Toggling Task Completion in Client Workflows](https://youtu.be/-RgP7XEnLcc)
 
-The page will reload if you make edits.<br>
-You will also see any lint errors in the console.
+## Local Development
+### Setup
+```
+git clone https://github.com/Focal-App/focal.git
+cd focal
+npm install
+npm start // in one terminal
+npm test // in a second terminal
+```
+### Deploying Master
+```
+git push heroku master --force
+```
 
-### `npm test`
+### Deploying Non-Master branch
+```
+git push origin/<branch name>:master --force
+```
+## Technical Highlights 
+### DataAdapter class
+The DataAdapter class acts as a boundary between the data received from the API and the data shape the rest of the frontend codebase relies on. By wrapping incoming API data with our DataAdapters, any changes to the API data shape can be handled in one place as opposed to updating the changes throughout the codebase.
 
-Launches the test runner in the interactive watch mode.<br>
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+#### Functionality Includes:
+#### 1. Predictable Data Shapes for the frontend
+#### 2. Transform API values to formatted values
+It can set formatted default values for null or un-renderable API values that the frontend can render with. For example:
+```
+// Null values are turned to dashes to signify no content
+null → "-"
 
-### `npm run build`
+// ISOStrings are converted to formatted dates
+"2019-04-17T07:00:00.000Z" → "April 17, 2019"
 
-Builds the app for production to the `build` folder.<br>
-It correctly bundles React in production mode and optimizes the build for the best performance.
+// Penny integers are converted to price strings
+1000 → "10.00"
+```
+These formatted values allow the frontend codebase to immediately render values without checking the validity of the value (no more `event_name ? event_name : "-"` validity checks in react components).
 
-The build is minified and the filenames include the hashes.<br>
-Your app is ready to be deployed!
+#### 3. Prepare data for the API (reverses the formatted value changes)
+#### 4. Prepare data for forms 
+For example, dates need to be a specific date format to render correctly in the input date elements.
+#### 5. Generate empty data modules
+For example, when passing in no existing event object to `DataAdapter.toEventModel()`, it will generate a default event data object with no UUID. This is then used to pass into a create event form to make sure the form data shape is what the API expects. 
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### MockApiHandler class 
 
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
-
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `npm run build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+### Behavioral Level Tests

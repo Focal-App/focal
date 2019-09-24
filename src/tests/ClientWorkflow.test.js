@@ -241,7 +241,9 @@ describe("Workflow Flow", () => {
             findByText(/request more information/i)
         )
 
-        fireEvent.click(getByTestId("todo-checkmark"));
+        await act(async () => {
+            fireEvent.click(getByTestId("todo-checkmark"));
+        })
 
         await waitForElement(() =>
             findByText(/send proposal/i)

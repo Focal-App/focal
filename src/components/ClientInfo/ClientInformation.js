@@ -1,11 +1,9 @@
 import React, { useState } from "react";
 import UpdateClientForm from "./UpdateClientForm";
-import FormContainer from "UI/FormContainer";
-import Modal from "UI/Modal";
-import Success from "UI/Success";
 import DataAdapter, { DefaultText } from "utilities/api/dataAdapter";
 import Endpoints from "utilities/api/apiEndpoint";
-import Error from "UI/Error";
+import ModalForm from "UI/ModalForm";
+import InfoWithLabel from "UI/InfoWithLabel";
 
 const ClientInformation = ({ client, apiHandler, setClient }) => {
     const [errors, setErrors] = useState(false);
@@ -21,9 +19,9 @@ const ClientInformation = ({ client, apiHandler, setClient }) => {
         if (data) {
             setClient(DataAdapter.toFullClientDataModel(data));
             setSuccess(true);
-            setTimeout(() => { 
-                setModalVisibility(false); 
-                setSuccess(false) 
+            setTimeout(() => {
+                setModalVisibility(false);
+                setSuccess(false)
             }, 1000)
         } else {
             setErrors(errors);
@@ -34,32 +32,27 @@ const ClientInformation = ({ client, apiHandler, setClient }) => {
         const { contacts, private_notes } = client;
         return (
             <section className="client-information--container">
-                {modalVisible && (
-                    <Modal loading={loading} setModalVisibility={setModalVisibility} title="">
-                        <FormContainer>
-                            {errors && <Error message={errors} />}
-                            {success
-                                ? <Success text="Success!" />
-                                : <UpdateClientForm
-                                    initialValues={client}
-                                    setModalVisibility={setModalVisibility}
-                                    handleSubmit={handleSubmit} />
-                            }
-                        </FormContainer>
-                    </Modal>
-                )}
+                <ModalForm
+                    isLoading={loading}
+                    isVisible={modalVisible}
+                    setModalVisibility={setModalVisibility}
+                    errors={errors}
+                    success={success}
+                >
+                    <UpdateClientForm
+                        initialValues={client}
+                        setModalVisibility={setModalVisibility}
+                        handleSubmit={handleSubmit} />
+                </ModalForm>
                 <div className="client-page--header">
                     <h1>Client Information</h1>
                     <button data-testid="edit-client-btn" className="btn-tertiary" onClick={() => setModalVisibility(true)}>Edit</button>
                 </div>
                 <section className="client-information">
-                    {contacts[0] && <ContactColumn contact={contacts[0]} defaultLable="Client" />}
-                    {contacts[1] && <ContactColumn contact={contacts[1]} defaultLable="Partner" />}
+                    {contacts[0] && <ContactColumn contact={contacts[0]} defaultLabel="Client" />}
+                    {contacts[1] && <ContactColumn contact={contacts[1]} defaultLabel="Partner" />}
                     <hr />
-                    <span>
-                        <h6 className="label">Private Notes</h6>
-                        <h4 className="text">{private_notes}</h4>
-                    </span>
+                    <InfoWithLabel label={`Private Notes`} text={private_notes} span={true} />
                 </section>
             </section>
         )
@@ -73,17 +66,10 @@ const ContactColumn = ({ contact, defaultLabel }) => {
     const containerLabel = label !== DefaultText.noContent ? label : defaultLabel;
     return (
         <section className="client-information--column">
-            <h6 className="label">{containerLabel} Name</h6>
-            <h4 className="text">{first_name} {last_name !== DefaultText.noContent && last_name}</h4>
-
-            <h6 className="label">{containerLabel} Phone Number</h6>
-            <h4 className="text">{phone_number}</h4>
-
-            <h6 className="label">{containerLabel} Email</h6>
-            <h4 className="text">{email}</h4>
-
-            <h6 className="label">{containerLabel} Best Time To Call</h6>
-            <h4 className="text">{best_time_to_contact}</h4>
+            <InfoWithLabel label={`${containerLabel} Name`} text={`${first_name} ${last_name !== DefaultText.noContent ? last_name : ''}`} />
+            <InfoWithLabel label={`${containerLabel} Phone Number`} text={phone_number} />
+            <InfoWithLabel label={`${containerLabel} Email`} text={email} />
+            <InfoWithLabel label={`${containerLabel} Best Time To Call`} text={best_time_to_contact} />
         </section>
     )
 }

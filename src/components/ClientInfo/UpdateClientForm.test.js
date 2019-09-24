@@ -70,6 +70,15 @@ describe("Update Client Form", () => {
     await findByText('First Name required');
   });
 
+  it("email must be formatted correctly", async () => {
+    const { getByLabelText, findByText } = render(formComponent);
+
+    const email = getByLabelText("Bride Email");
+    fireEvent.change(email, { target: { value: "bride@mail" } });
+    fireEvent.blur(email);
+    await findByText('Invalid email');
+  });
+
   it("can submit when no validation errors", async () => {
     const { getByText, queryByText } = render(formComponent);
 

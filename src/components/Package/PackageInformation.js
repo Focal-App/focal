@@ -1,14 +1,11 @@
 import React, { useState } from "react";
-import FormContainer from "UI/FormContainer";
-import Modal from "UI/Modal";
-import Success from "UI/Success";
 import DataAdapter from "utilities/api/dataAdapter";
 import Endpoints from "utilities/api/apiEndpoint";
-import Error from "UI/Error";
 import UpdatePackageForm from "./UpdatePackageForm";
-import Checkmark from "UI/Checkmark";
+import { Included } from "UI/Checkmark";
+import ModalForm from "UI/ModalForm";
 
-const PackageInformation = ({ clientPackage, apiHandler, setPackage, client_uuid, setRefetchWorkflow }) => {
+const PackageInformation = ({ clientPackage, apiHandler, setPackage, client_uuid, setRefetchWorkflow, setRefetchEvents }) => {
     const [errors, setErrors] = useState(false);
     const [loading, setLoading] = useState(false);
     const [modalVisible, setModalVisibility] = useState(false);
@@ -31,6 +28,7 @@ const PackageInformation = ({ clientPackage, apiHandler, setPackage, client_uuid
             setTimeout(() => {
                 setSuccess(false);
                 setRefetchWorkflow(true);
+                setRefetchEvents(true);
                 setModalVisibility(false);
             }, 1000)
         } else {
@@ -47,20 +45,18 @@ const PackageInformation = ({ clientPackage, apiHandler, setPackage, client_uuid
 
         return (
             <section className="client-package--container">
-                {modalVisible && (
-                    <Modal loading={loading} setModalVisibility={setModalVisibility} title="">
-                        <FormContainer>
-                            {errors && <Error message={errors} />}
-                            {success
-                                ? <Success text="Success!" />
-                                : <UpdatePackageForm
-                                    initialValues={clientPackage}
-                                    setModalVisibility={setModalVisibility}
-                                    handleSubmit={handleSubmit} />
-                            }
-                        </FormContainer>
-                    </Modal>
-                )}
+                <ModalForm
+                    isLoading={loading}
+                    isVisible={modalVisible}
+                    setModalVisibility={setModalVisibility}
+                    errors={errors}
+                    success={success}
+                >
+                    <UpdatePackageForm
+                        initialValues={clientPackage}
+                        setModalVisibility={setModalVisibility}
+                        handleSubmit={handleSubmit} />
+                </ModalForm>
                 <div className="client-page--header">
                     <h1>Package</h1>
                     <button data-testid="edit-package-btn" className="btn-tertiary" onClick={() => setModalVisibility(true)}>Edit</button>
@@ -68,9 +64,7 @@ const PackageInformation = ({ clientPackage, apiHandler, setPackage, client_uuid
                 <section className="package-information">
                     <h2>{package_name}</h2>
                     <h4 className="multiline">{package_contents}</h4>
-
                     <hr />
-
                     <div className="cost-line">
                         <h4>${package_price}</h4>
                         <h4>${discount_offered}</h4>
@@ -78,7 +72,6 @@ const PackageInformation = ({ clientPackage, apiHandler, setPackage, client_uuid
                         <hr />
                         <h4>${balance_remaining}</h4>
                     </div>
-
                     <div className="cost-description">
                         <h6>Package Price</h6>
                         <h6>Discount</h6>
@@ -86,14 +79,10 @@ const PackageInformation = ({ clientPackage, apiHandler, setPackage, client_uuid
                         <div />
                         <h6>Remaining Balance</h6>
                     </div>
-
                     <hr />
-
                     <BooleanLine completed={wedding_included} label={"Includes Wedding"} />
                     <BooleanLine completed={engagement_included} label={"Includes Engagement"} />
-
                     <hr />
-
                     <BooleanLine completed={retainer_paid} label={"Retainer Paid"} />
                     <BooleanLine completed={proposal_signed} label={"Proposal Signed"} />
                     <BooleanLine completed={balance_received} label={"Balance Received"} />
@@ -107,7 +96,7 @@ const PackageInformation = ({ clientPackage, apiHandler, setPackage, client_uuid
 
 const BooleanLine = ({ completed, label }) => (
     <div className="boolean-line">
-        <Checkmark size="small" completed={completed} />
+        <Included size="small" completed={completed} />
         <h4>{label}</h4>
     </div>
 )

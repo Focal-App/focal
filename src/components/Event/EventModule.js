@@ -1,13 +1,11 @@
 import React, { useState } from "react";
 import DataAdapter from "utilities/api/dataAdapter";
-import FormContainer from "UI/FormContainer";
-import Modal from "UI/Modal";
-import Success from "UI/Success";
 import Endpoints from "utilities/api/apiEndpoint";
-import Error from "UI/Error";
 import UpdateEventForm from "./UpdateEventForm";
+import ModalForm from "UI/ModalForm";
+import InfoWithLabel from "UI/InfoWithLabel";
 
-const EventModule = ({ event, apiHandler, setEvents, package_uuid }) => {
+const EventModule = ({ event, apiHandler, setEvents, package_uuid, newEvent = false }) => {
     const [errors, setErrors] = useState(false);
     const [loading, setLoading] = useState(false);
     const [modalVisible, setModalVisibility] = useState(false);
@@ -17,7 +15,7 @@ const EventModule = ({ event, apiHandler, setEvents, package_uuid }) => {
         setLoading(true);
         const transformedValues = DataAdapter.toApiReadyClient(values);
         let response;
-        if (transformedValues.hasOwnProperty('uuid')) {
+        if (transformedValues.hasOwnProperty('uuid') && transformedValues.uuid) {
             response = await apiHandler.put(Endpoints.updateEvent(event.uuid), transformedValues);
         } else {
             response = await apiHandler.post(Endpoints.createEvent(package_uuid), transformedValues);
@@ -54,6 +52,42 @@ const EventModule = ({ event, apiHandler, setEvents, package_uuid }) => {
         }
     }
 
+    return (
+        <div>
+            <ModalForm
+                isLoading={loading}
+                isVisible={modalVisible}
+                setModalVisibility={setModalVisibility}
+                errors={errors}
+                success={success}
+            >
+                <UpdateEventForm
+                    initialValues={event}
+                    setModalVisibility={setModalVisibility}
+                    handleSubmit={handleSubmit}
+                    handleDelete={handleDelete}
+                    newEvent={newEvent} 
+                />
+            </ModalForm>
+
+            {
+                newEvent
+                    ? <NewSuggestedEvent setModalVisibility={setModalVisibility} event_name={event.event_name} />
+                    : <ExistingEvent setModalVisibility={setModalVisibility} event={event} />
+            }
+        </div>
+    )
+}
+
+export default EventModule;
+
+const NewSuggestedEvent = ({ event_name, setModalVisibility }) => (
+    <section className={`event-information--suggested`}>
+        <button data-testid="edit-event-btn" className="btn-tertiary" onClick={() => setModalVisibility(true)}>Create {event_name} Event</button>
+    </section>
+)
+
+const ExistingEvent = ({ event, setModalVisibility }) => {
     const {
         blog_link,
         edit_image_deadline,
@@ -65,67 +99,29 @@ const EventModule = ({ event, apiHandler, setEvents, package_uuid }) => {
         shoot_location
     } = event;
     return (
-        <div>
-            {modalVisible && (
-                <Modal loading={loading} setModalVisibility={setModalVisibility} title="">
-                    <FormContainer>
-                        {errors && <Error message={errors} />}
-                        {success
-                            ? <Success text="Success!" />
-                            : <UpdateEventForm
-                                initialValues={event}
-                                setModalVisibility={setModalVisibility}
-                                handleSubmit={handleSubmit} 
-                                handleDelete={handleDelete}
-                            />
-                        }
-                    </FormContainer>
-                </Modal>
-            )}
+        <>
             <div className="client-page--header">
                 <h1>{event_name} Event</h1>
                 <button data-testid="edit-event-btn" className="btn-tertiary" onClick={() => setModalVisibility(true)}>Edit</button>
             </div>
-            <section className="event-information">
+
+            <section className={`event-information`}>
                 <div>
-                    <h6 className="label">{event_name} Shoot Date</h6>
-                    <h4 className="text">{shoot_date}</h4>
-
-                    <h6 className="label">{event_name} Shoot Time</h6>
-                    <h4 className="text">{shoot_time}</h4>
-
-                    {shoot_location && (
-                        <>
-                            <h6 className="label">{event_name} Shoot Location</h6>
-                            <h4 className="text">{shoot_location}</h4>
-                        </>
-                    )}
+                    <InfoWithLabel label={`${event_name} Shoot Date`} text={shoot_date} />
+                    <InfoWithLabel label={`${event_name} Shoot Time`} text={shoot_time} />
+                    {shoot_location && <InfoWithLabel label={`${event_name} Shoot Location`} text={shoot_location} />}
                 </div>
                 {event_name.match(/wedding/i) && <WeddingEventInfo event={event} />}
                 <hr />
-                <div>
-                    <h6 className="label">{event_name} Gallery Link</h6>
-                    <h4 className="text">{gallery_link}</h4>
-                </div>
-                <div>
-                    <h6 className="label">{event_name} Blog Link</h6>
-                    <h4 className="text">{blog_link}</h4>
-                </div>
-                <div>
-                    <h6 className="label">{event_name} Images Edit Deadline</h6>
-                    <h4 className="text">{edit_image_deadline}</h4>
-                </div>
+                <InfoWithLabel label={`${event_name} Gallery Link`} text={gallery_link} />
+                <InfoWithLabel label={`${event_name} Blog Link`} text={blog_link} />
+                <InfoWithLabel label={`${event_name} Images Edit Deadline`} text={edit_image_deadline} />
                 <hr />
-                <span>
-                    <h6 className="label">{event_name} Notes</h6>
-                    <h4 className="text">{notes}</h4>
-                </span>
+                <InfoWithLabel label={`${event_name} Notes`} text={notes} span={true} />
             </section>
-        </div>
+        </>
     )
 }
-
-export default EventModule;
 
 const WeddingEventInfo = ({ event }) => {
     const {
@@ -136,14 +132,9 @@ const WeddingEventInfo = ({ event }) => {
     } = event;
     return (
         <div>
-            <h6 className="label">Ceremony Location</h6>
-            <h4 className="text">{wedding_location}</h4>
-
-            <h6 className="label">Reception Location</h6>
-            <h4 className="text">{reception_location}</h4>
-
-            <h6 className="label">{event_name} Coordinator</h6>
-            <h4 className="text">{coordinator_name}</h4>
+            <InfoWithLabel label={`Ceremony Location`} text={wedding_location} />
+            <InfoWithLabel label={`Reception Location`} text={reception_location} />
+            <InfoWithLabel label={`${event_name} Coordinator`} text={coordinator_name} />
         </div>
     )
 }
