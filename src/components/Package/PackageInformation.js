@@ -64,9 +64,7 @@ const PackageInformation = ({ clientPackage, apiHandler, setPackage, client_uuid
                 <section className="package-information">
                     <h2>{package_name}</h2>
                     <h4 className="multiline">{package_contents}</h4>
-
                     <hr />
-
                     <div className="cost-line">
                         <h4>${package_price}</h4>
                         <h4>${discount_offered}</h4>
@@ -74,7 +72,6 @@ const PackageInformation = ({ clientPackage, apiHandler, setPackage, client_uuid
                         <hr />
                         <h4>${balance_remaining}</h4>
                     </div>
-
                     <div className="cost-description">
                         <h6>Package Price</h6>
                         <h6>Discount</h6>
@@ -82,14 +79,10 @@ const PackageInformation = ({ clientPackage, apiHandler, setPackage, client_uuid
                         <div />
                         <h6>Remaining Balance</h6>
                     </div>
-
                     <hr />
-
                     <BooleanLine completed={wedding_included} label={"Includes Wedding"} />
                     <BooleanLine completed={engagement_included} label={"Includes Engagement"} />
-
                     <hr />
-
                     <BooleanLine completed={retainer_paid} label={"Retainer Paid"} />
                     <BooleanLine completed={proposal_signed} label={"Proposal Signed"} />
                     <BooleanLine completed={balance_received} label={"Balance Received"} />

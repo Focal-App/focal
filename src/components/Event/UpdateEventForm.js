@@ -1,6 +1,6 @@
 import React from 'react';
-import { Formik, Field, Form, ErrorMessage } from 'formik';
-import { Label } from "UI/FormParts";
+import { Formik, Form } from 'formik';
+import { FieldWithError, DropdownFieldWithError } from "UI/FormParts";
 import DataAdapter from 'utilities/api/dataAdapter';
 import { WeddingEventSchema, EventSchema } from "./FormEventSchema";
 
@@ -20,50 +20,27 @@ const UpdateEventForm = ({ initialValues, setModalVisibility, handleSubmit, hand
                     <Form className="update-client-information--container">
                         <h3>Event</h3>
 
-                        <Label label={`Event Name`} name={'event_name'} />
-                        <Field component="select" name={'event_name'} id={'event_name'} placeholder="Engagement">
+                        <DropdownFieldWithError label={`Event Name`} name={'event_name'} >
                             {
                                 initialValues.event_name.match(/wedding/i)
                                     ? <option value="Wedding">Wedding</option>
                                     : <option value="Engagement">Engagement</option>
                             }
-                        </Field>
-                        <ErrorMessage className='field-error' name={'event_name'} component="div" />
+                        </DropdownFieldWithError>
 
-                        <Label label={`Shoot Date`} name={'shoot_date'} />
-                        <Field type="date" name={'shoot_date'} id={'shoot_date'} />
-                        <ErrorMessage className='field-error' name={'shoot_date'} component="div" />
-
-                        <Label label={`Shoot Time`} name={'shoot_time'} />
-                        <Field type="text" name={'shoot_time'} id={'shoot_time'} />
-                        <ErrorMessage className='field-error' name={'shoot_time'} component="div" />
-
+                        <FieldWithError label={`Shoot Date`} name={'shoot_date'} type="date" />
+                        <FieldWithError label={`Shoot Time`} name={'shoot_time'} type="text" />
                         {
                             initialValues.shoot_location
-                            ? <AdditionalDefaultEventFields />
-                            : <AdditionalWeddingEventFields />
+                                ? <AdditionalDefaultEventFields />
+                                : <AdditionalWeddingEventFields />
                         }
-
                         <hr />
-
-                        <Label label={`Edit Image Deadline`} name={'edit_image_deadline'} />
-                        <Field type="date" name={'edit_image_deadline'} id={'edit_image_deadline'} />
-                        <ErrorMessage className='field-error' name={'edit_image_deadline'} component="div" />
-
-                        <Label label={`Gallery Link`} name={'gallery_link'} />
-                        <Field type="text" name={'gallery_link'} id={'gallery_link'} />
-                        <ErrorMessage className='field-error' name={'gallery_link'} component="div" />
-
-                        <Label label={`Blog Link`} name={'blog_link'} />
-                        <Field type="text" name={'blog_link'} id={'blog_link'} />
-                        <ErrorMessage className='field-error' name={'blog_link'} component="div" />
-
+                        <FieldWithError label={`Edit Image Deadline`} name={'edit_image_deadline'} type="date" />
+                        <FieldWithError label={`Gallery Link`} name={'gallery_link'} type="text" />
+                        <FieldWithError label={`Blog Link`} name={'blog_link'} type="text" />
                         <hr />
-
-                        <Label label={`Notes`} name={'notes'} />
-                        <Field type="text" component="textarea" name={'notes'} id={'notes'} />
-                        <ErrorMessage className='field-error' name={'notes'} component="div" />
-
+                        <FieldWithError label={`Notes`} name={'notes'} type="text" component="textarea" />
                         <div className="btn-span--three">
                             <button className="btn-warning" onClick={() => handleDelete()}>
                                 Delete
@@ -85,25 +62,13 @@ const UpdateEventForm = ({ initialValues, setModalVisibility, handleSubmit, hand
 export default UpdateEventForm;
 
 const AdditionalDefaultEventFields = () => (
-    <>
-        <Label label={`Shoot Location`} name={'shoot_location'} />
-        <Field type="text" name={'shoot_location'} id={'shoot_location'} />
-        <ErrorMessage className='field-error' name={'shoot_location'} component="div" />
-    </>
+    <FieldWithError label={`Shoot Location`} name={'shoot_location'} type="text" />
 )
 
 const AdditionalWeddingEventFields = () => (
     <>
-        <Label label={`Ceremony Location`} name={'wedding_location'} />
-        <Field type="text" name={'wedding_location'} id={'wedding_location'} />
-        <ErrorMessage className='field-error' name={'wedding_location'} component="div" />
-
-        <Label label={`Reception Location`} name={'reception_location'} />
-        <Field type="text" name={'reception_location'} id={'reception_location'} />
-        <ErrorMessage className='field-error' name={'reception_location'} component="div" />
-
-        <Label label={`Coordinator Name`} name={'coordinator_name'} />
-        <Field type="text" name={'coordinator_name'} id={'coordinator_name'} />
-        <ErrorMessage className='field-error' name={'coordinator_name'} component="div" />
+        <FieldWithError label={`Ceremony Location`} name={'wedding_location'} type="text" />
+        <FieldWithError label={`Reception Location`} name={'reception_location'} type="text" />
+        <FieldWithError label={`Coordinator Name`} name={'coordinator_name'} type="text" />
     </>
 )

@@ -1,8 +1,8 @@
 import React from 'react';
-import { Formik, Field, Form, ErrorMessage } from 'formik';
+import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
 import DataAdapter, { DefaultText } from 'utilities/api/dataAdapter';
-import { Label } from "UI/FormParts";
+import { FieldWithError, DropdownFieldWithError } from "UI/FormParts";
 
 const ClientInformationSchema = Yup.object().shape({
     contacts: Yup.array().of(
@@ -43,17 +43,13 @@ const UpdateClientForm = ({ initialValues, setModalVisibility, handleSubmit }) =
                     <Form className="update-client-information--container">
                         <ContactForm contact={initialValues.contacts[0]} contactIndex={0} defaultLabel={"Client"} />
                         <ContactForm contact={initialValues.contacts[1]} contactIndex={1} defaultLabel={"Partner"} />
-
                         <h3>Private Notes</h3>
-
-                        <Label label="Private Notes" name="private_notes" />
-                        <Field
-                            name="private_notes"
+                        <FieldWithError
+                            label={`Private Notes`}
+                            name={'private_notes'}
+                            type="text"
                             component="textarea"
-                            id="private_notes"
-                            placeholder="Add your private notes for this client..."
-                        />
-                        <ErrorMessage className='field-error' name="private_notes" component="div" />
+                            placeholder="Add your private notes for this client..." />
 
                         <div className="btn-span">
                             <button className="btn-tertiary" onClick={() => setModalVisibility(false)}>
@@ -82,34 +78,19 @@ const ContactForm = ({ contact, contactIndex, defaultLabel }) => {
     return (
         <>
             <h3>{contactLabel} Information</h3>
-            <Label label={`${contactLabel} First Name`} name={firstName} />
-            <Field type="text" name={firstName} id={firstName} />
-            <ErrorMessage className='field-error' name={firstName} component="div" />
+            <FieldWithError label={`${contactLabel} First Name`} name={firstName} type="text" />
+            <FieldWithError label={`${contactLabel} Last Name`} name={lastName} type="text" />
 
-            <Label label={`${contactLabel} Last Name`} name={lastName} />
-            <Field type="text" name={lastName} id={lastName} />
-            <ErrorMessage className='field-error' name={lastName} component="div" />
+            <DropdownFieldWithError label={`${contactLabel} Label`} name={label} placeholder={defaultLabel} >
+                <option value="Client">Client</option>
+                <option value="Partner">Partner</option>
+                <option value="Bride">Bride</option>
+                <option value="Groom">Groom</option>
+            </DropdownFieldWithError>
 
-            <Label label={`${contactLabel} Label`} name={label} />
-            <Field component="select" name={label} id={label} placeholder={defaultLabel}>
-                    <option value="Client">Client</option>
-                    <option value="Partner">Partner</option>
-                    <option value="Bride">Bride</option>
-                    <option value="Groom">Groom</option>
-            </Field>
-            <ErrorMessage className='field-error' name={label} component="div" />
-
-            <Label label={`${contactLabel} Best Time To Contact`} name={bestTimeToContact} />
-            <Field type="text" name={bestTimeToContact} id={bestTimeToContact} />
-            <ErrorMessage className='field-error' name={bestTimeToContact} component="div" />
-
-            <Label label={`${contactLabel} Email`} name={email} />
-            <Field type="email" name={email} id={email} />
-            <ErrorMessage className='field-error' name={email} component="div" />
-
-            <Label label={`${contactLabel} Phone Number`} name={phoneNumber} />
-            <Field type="tel" name={phoneNumber} id={phoneNumber} />
-            <ErrorMessage className='field-error' name={phoneNumber} component="div" />
+            <FieldWithError label={`${contactLabel} Best Time To Contact`} name={bestTimeToContact} type="text" />
+            <FieldWithError label={`${contactLabel} Email`} name={email} type="email" />
+            <FieldWithError label={`${contactLabel} Phone Number`} name={phoneNumber} type="tel" />
         </>
     )
 }

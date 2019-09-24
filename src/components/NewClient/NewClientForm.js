@@ -1,7 +1,7 @@
 import React from 'react';
-import { Formik, Field, Form, ErrorMessage } from 'formik';
+import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
-import { Label } from "UI/FormParts";
+import { FieldWithError, DropdownFieldWithError } from "UI/FormParts";
 
 const NewClient = Yup.object().shape({
     first_name: Yup.string()
@@ -30,7 +30,7 @@ const NewClientForm = ({ onSubmit }) => {
                 email: '',
                 phone_number: '',
                 private_notes: '',
-                label: '',
+                label: 'Client',
                 best_time_to_contact: ''
             }}
             validationSchema={NewClient}
@@ -40,45 +40,31 @@ const NewClientForm = ({ onSubmit }) => {
             render={({
                 isSubmitting,
             }) => (
-                <Form>
-                    <Label label="First Name" name="first_name" />
-                    <Field type="text" name="first_name" id="first_name" />
-                    <ErrorMessage className='field-error' name="first_name" component="div" />
+                    <Form>
 
-                    <Label label="Last Name" name="last_name" />
-                    <Field type="text" name="last_name" id="last_name" />
-                    <ErrorMessage className='field-error' name="last_name" component="div" />
+                        <FieldWithError label={`First Name`} name={"first_name"} type="text" />
+                        <FieldWithError label={`Last Name`} name={"last_name"} type="text" />
+                        <DropdownFieldWithError label={`Label`} name={'label'} >
+                            <option value="Client">Client</option>
+                            <option value="Partner">Partner</option>
+                            <option value="Bride">Bride</option>
+                            <option value="Groom">Groom</option>
+                        </DropdownFieldWithError>
+                        <FieldWithError label={`Best Time To Contact`} name={"best_time_to_contact"} type="text" />
+                        <FieldWithError label={`Email`} name={"email"} type="text" />
+                        <FieldWithError label={`Phone Number`} name={"phone_number"} type="tel" />
+                        <FieldWithError
+                            label={`Private Notes`}
+                            name={'private_notes'}
+                            type="text"
+                            component="textarea"
+                            placeholder="Add your private notes for this client..." />
 
-                    <Label label="Client Type" name="label" />
-                    <Field type="text" name="label" id="label" placeholder="E.g. Groom, Bride, Partner" />
-                    <ErrorMessage className='field-error' name="label" component="div" />
-
-                    <Label label="Best Time To Contact" name="best_time_to_contact" />
-                    <Field type="text" name="best_time_to_contact" id="best_time_to_contact" />
-                    <ErrorMessage className='field-error' name="best_time_to_contact" component="div" />
-
-                    <Label label="Email" name="email" />
-                    <Field type="email" name="email" id="email" />
-                    <ErrorMessage className='field-error' name="email" component="div" />
-
-                    <Label label="Phone Number" name="phone_number" />
-                    <Field type="tel" name="phone_number" id="phone_number" />
-                    <ErrorMessage className='field-error' name="phone_number" component="div" />
-
-                    <Label label="Private Notes" name="private_notes" />
-                    <Field
-                        name="private_notes"
-                        component="textarea"
-                        id="private_notes"
-                        placeholder="Add your private notes for this client..."
-                    />
-                    <ErrorMessage className='field-error' name="private_notes" component="div" />
-
-                    <button type="submit" className="btn-primary" disabled={isSubmitting}>
-                        Submit
-                    </button>
-                </Form>
-            )}
+                        <button type="submit" className="btn-primary" disabled={isSubmitting}>
+                            Submit
+                        </button>
+                    </Form>
+                )}
         />
     );
 };

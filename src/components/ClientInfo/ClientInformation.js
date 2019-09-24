@@ -49,8 +49,8 @@ const ClientInformation = ({ client, apiHandler, setClient }) => {
                     <button data-testid="edit-client-btn" className="btn-tertiary" onClick={() => setModalVisibility(true)}>Edit</button>
                 </div>
                 <section className="client-information">
-                    {contacts[0] && <ContactColumn contact={contacts[0]} defaultLable="Client" />}
-                    {contacts[1] && <ContactColumn contact={contacts[1]} defaultLable="Partner" />}
+                    {contacts[0] && <ContactColumn contact={contacts[0]} defaultLabel="Client" />}
+                    {contacts[1] && <ContactColumn contact={contacts[1]} defaultLabel="Partner" />}
                     <hr />
                     <InfoWithLabel label={`Private Notes`} text={private_notes} span={true} />
                 </section>
@@ -66,7 +66,7 @@ const ContactColumn = ({ contact, defaultLabel }) => {
     const containerLabel = label !== DefaultText.noContent ? label : defaultLabel;
     return (
         <section className="client-information--column">
-            <InfoWithLabel label={`${containerLabel} Name`} text={`${first_name} ${last_name !== DefaultText.noContent && last_name}`} />
+            <InfoWithLabel label={`${containerLabel} Name`} text={`${first_name} ${last_name !== DefaultText.noContent ? last_name : ''}`} />
             <InfoWithLabel label={`${containerLabel} Phone Number`} text={phone_number} />
             <InfoWithLabel label={`${containerLabel} Email`} text={email} />
             <InfoWithLabel label={`${containerLabel} Best Time To Call`} text={best_time_to_contact} />
