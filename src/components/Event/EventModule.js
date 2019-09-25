@@ -12,6 +12,7 @@ const EventModule = ({ event, apiHandler, setEvents, package_uuid, newEvent = fa
     const [success, setSuccess] = useState(false);
 
     const handleSubmit = async (values) => {
+        setErrors(false);
         setLoading(true);
         const transformedValues = DataAdapter.toApiReadyClient(values);
         let response;

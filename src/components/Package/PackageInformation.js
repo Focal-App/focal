@@ -12,6 +12,7 @@ const PackageInformation = ({ clientPackage, apiHandler, setPackage, client_uuid
     const [success, setSuccess] = useState(false);
 
     const handleSubmit = async (values) => {
+        setErrors(false);
         setLoading(true);
         const transformedValues = DataAdapter.toApiReadyClient(values);
         let response;

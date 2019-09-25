@@ -12,6 +12,7 @@ const ClientInformation = ({ client, apiHandler, setClient }) => {
     const [success, setSuccess] = useState(false);
 
     const handleSubmit = async (values) => {
+        setErrors(false);
         setLoading(true);
         const transformedValues = DataAdapter.toApiReadyClient(values);
         const { data, errors } = await apiHandler.put(Endpoints.updateClient(client.uuid), transformedValues);
