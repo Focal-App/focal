@@ -308,6 +308,7 @@ describe("Data Adapter", () => {
             isTrue: true,
             simpleDate: "2019-07-01",
             formattedDate: "April 17, 2019",
+            undefined: undefined,
             array: [
                 {
                     firstName: "-",
@@ -341,6 +342,7 @@ describe("Data Adapter", () => {
             isTrue: true,
             simpleDate: "2019-07-01T07:00:00.000Z",
             formattedDate: "2019-04-17T07:00:00.000Z",
+            undefined: null,
             array: [
                 {
                     firstName: null,

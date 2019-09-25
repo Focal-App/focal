@@ -2,6 +2,7 @@ import React from 'react';
 import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
 import { FieldWithError, DropdownFieldWithError } from "UI/FormParts";
+import DataAdapter from "utilities/api/dataAdapter";
 
 const NewClient = Yup.object().shape({
     first_name: Yup.string()
@@ -22,17 +23,18 @@ const NewClient = Yup.object().shape({
 });
 
 const NewClientForm = ({ onSubmit }) => {
+    const formReadyValues = DataAdapter.toFormReadyData({
+        first_name: '',
+        last_name: '',
+        email: '',
+        phone_number: '',
+        private_notes: '',
+        label: 'Client',
+        best_time_to_contact: ''
+    });
     return (
         <Formik
-            initialValues={{
-                first_name: '',
-                last_name: '',
-                email: '',
-                phone_number: '',
-                private_notes: '',
-                label: 'Client',
-                best_time_to_contact: ''
-            }}
+            initialValues={formReadyValues}
             validationSchema={NewClient}
             onSubmit={(values, actions) => {
                 onSubmit(values)
