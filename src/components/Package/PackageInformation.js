@@ -85,8 +85,8 @@ const PackageInformation = ({ clientPackage, apiHandler, setPackage, client_uuid
                     <BooleanLine completed={wedding_included} label={"Includes Wedding"} />
                     <BooleanLine completed={engagement_included} label={"Includes Engagement"} />
                     <hr />
-                    <BooleanLine completed={retainer_paid} label={"Retainer Paid"} />
                     <BooleanLine completed={proposal_signed} label={"Proposal Signed"} />
+                    <BooleanLine completed={retainer_paid} label={"Retainer Paid"} />
                     <BooleanLine completed={balance_received} label={"Balance Received"} />
                 </section>
             </section>

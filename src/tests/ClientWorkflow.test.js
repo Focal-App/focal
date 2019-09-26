@@ -183,7 +183,9 @@ describe("Workflow Flow", () => {
 
         const checkmarks = getAllByTestId("todo-checkmark");
 
-        fireEvent.click(checkmarks[0]);
+        await act(async () => {
+            fireEvent.click(checkmarks[0]);
+        })
 
         await waitForElement(() =>
             findByText(/1 \/ 2 Tasks Completed/i)

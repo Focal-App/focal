@@ -301,7 +301,7 @@ class DataAdapter {
             }
 
             if (value === DefaultText.noContent || value === DefaultText.nothing) {
-                return formReadyData[key] = undefined;
+                return formReadyData[key] = '';
             }
         })
 

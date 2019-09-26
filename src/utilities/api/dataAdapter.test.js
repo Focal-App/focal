@@ -431,8 +431,8 @@ describe("Data Adapter", () => {
         }
 
         expect(DataAdapter.toFormReadyData(dataForForms)).toEqual({
-            firstName: undefined,
-            lastName: undefined,
+            firstName: '',
+            lastName: '',
             price: "1.00",
             zeroPrice: "0.00",
             text: "a 11 story thing",
@@ -440,8 +440,8 @@ describe("Data Adapter", () => {
             formattedDate: "2019-04-17",
             array: [
                 {
-                    firstName: undefined,
-                    lastName: undefined,
+                    firstName: '',
+                    lastName: '',
                     price: "1.00",
                     text: "a 11 story thing",
                     isTrue: true,
@@ -449,8 +449,8 @@ describe("Data Adapter", () => {
                 }
             ],
             object: {
-                firstName: undefined,
-                lastName: undefined,
+                firstName: '',
+                lastName: '',
                 price: "1.00",
                 text: "a 11 story thing",
                 isTrue: true,
