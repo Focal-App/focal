@@ -47,11 +47,12 @@ class DataAdapter {
 
     static toClientModel = (apiClient) => {
         const { contacts, private_notes, uuid } = apiClient;
-        if (contacts && contacts.length === 1) {
-            contacts.push(this.toContactModel());
-        }
+        let convertedContacts = contacts.map((contact) => this.toContactModel(contact));
+        if (convertedContacts && convertedContacts.length === 1) {
+            convertedContacts.push(this.toContactModel());
+        } 
         return {
-            contacts: contacts.map((contact) => this.toContactModel(contact)),
+            contacts: convertedContacts,
             private_notes: this.setValidValue(private_notes),
             uuid
         }
@@ -247,6 +248,7 @@ class DataAdapter {
         return apiUserClients.map(client => this.toPartialClientDataModel(client));
     }
 
+    // TODO: rename to toApiReadyData
     static toApiReadyClient = (values) => {
         const apiReadyData = Object.assign({}, values);
         Object.keys(apiReadyData).forEach(key => {
@@ -264,7 +266,7 @@ class DataAdapter {
                 return apiReadyData[key] = value;
             }
 
-            if (value === DefaultText.noContent || value === DefaultText.nothing) {
+            if (value === DefaultText.noContent || value === DefaultText.nothing || value === undefined) {
                 return apiReadyData[key] = null;
             }
 
@@ -299,7 +301,7 @@ class DataAdapter {
             }
 
             if (value === DefaultText.noContent || value === DefaultText.nothing) {
-                return formReadyData[key] = undefined;
+                return formReadyData[key] = '';
             }
         })
 

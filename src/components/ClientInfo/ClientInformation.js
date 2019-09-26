@@ -4,6 +4,7 @@ import DataAdapter, { DefaultText } from "utilities/api/dataAdapter";
 import Endpoints from "utilities/api/apiEndpoint";
 import ModalForm from "UI/ModalForm";
 import InfoWithLabel from "UI/InfoWithLabel";
+import "./ClientInformation.scss";
 
 const ClientInformation = ({ client, apiHandler, setClient }) => {
     const [errors, setErrors] = useState(false);
@@ -12,6 +13,7 @@ const ClientInformation = ({ client, apiHandler, setClient }) => {
     const [success, setSuccess] = useState(false);
 
     const handleSubmit = async (values) => {
+        setErrors(false);
         setLoading(true);
         const transformedValues = DataAdapter.toApiReadyClient(values);
         const { data, errors } = await apiHandler.put(Endpoints.updateClient(client.uuid), transformedValues);
@@ -64,9 +66,10 @@ const ClientInformation = ({ client, apiHandler, setClient }) => {
 const ContactColumn = ({ contact, defaultLabel }) => {
     const { first_name, last_name, email, phone_number, best_time_to_contact, label } = contact;
     const containerLabel = label !== DefaultText.noContent ? label : defaultLabel;
+    const fullName = `${first_name} ${last_name !== DefaultText.noContent ? last_name : ''}`;
     return (
         <section className="client-information--column">
-            <InfoWithLabel label={`${containerLabel} Name`} text={`${first_name} ${last_name !== DefaultText.noContent ? last_name : ''}`} />
+            <InfoWithLabel label={`${containerLabel} Name`} text={fullName} />
             <InfoWithLabel label={`${containerLabel} Phone Number`} text={phone_number} />
             <InfoWithLabel label={`${containerLabel} Email`} text={email} />
             <InfoWithLabel label={`${containerLabel} Best Time To Call`} text={best_time_to_contact} />

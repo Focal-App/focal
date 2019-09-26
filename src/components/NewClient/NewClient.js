@@ -6,6 +6,7 @@ import FormContainer from "UI/FormContainer";
 import Error from "UI/Error";
 import Endpoints from "utilities/api/apiEndpoint";
 import Success from "UI/Success";
+import DataAdapter from "utilities/api/dataAdapter";
 
 const NewClient = ({ apiHandler }) => {
     const [loading, setLoading] = useState(false);
@@ -16,7 +17,8 @@ const NewClient = ({ apiHandler }) => {
     const onSubmit = async (values) => {
         setLoading(true)
         const newClientData = { contacts: [values], private_notes: values.private_notes };
-        const { data, errors } = await apiHandler.post(Endpoints.newClient, newClientData);
+        const transformedValues = DataAdapter.toApiReadyClient(newClientData);
+        const { data, errors } = await apiHandler.post(Endpoints.newClient, transformedValues);
         setLoading(false)
         if (data) {
             setSuccess(true)

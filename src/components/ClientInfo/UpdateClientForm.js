@@ -1,7 +1,7 @@
 import React from 'react';
 import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
-import DataAdapter, { DefaultText } from 'utilities/api/dataAdapter';
+import DataAdapter from 'utilities/api/dataAdapter';
 import { FieldWithError, DropdownFieldWithError } from "UI/FormParts";
 
 const ClientInformationSchema = Yup.object().shape({
@@ -32,17 +32,15 @@ const UpdateClientForm = ({ initialValues, setModalVisibility, handleSubmit }) =
         <Formik
             initialValues={formReadyValues}
             validationSchema={ClientInformationSchema}
-            onSubmit={(values, actions) => {
+            onSubmit={(values) => {
                 handleSubmit(values)
             }}
             render={({
-                isSubmitting,
-                errors,
-                values
+                isSubmitting
             }) => (
                     <Form className="update-client-information--container">
-                        <ContactForm contact={initialValues.contacts[0]} contactIndex={0} defaultLabel={"Client"} />
-                        <ContactForm contact={initialValues.contacts[1]} contactIndex={1} defaultLabel={"Partner"} />
+                        <ContactForm contact={formReadyValues.contacts[0]} contactIndex={0} defaultLabel={"Client"} />
+                        <ContactForm contact={formReadyValues.contacts[1]} contactIndex={1} defaultLabel={"Partner"} />
                         <h3>Private Notes</h3>
                         <FieldWithError
                             label={`Private Notes`}
@@ -67,7 +65,7 @@ const UpdateClientForm = ({ initialValues, setModalVisibility, handleSubmit }) =
 };
 
 const ContactForm = ({ contact, contactIndex, defaultLabel }) => {
-    const contactLabel = contact.label === DefaultText.noContent ? defaultLabel : contact.label;
+    const contactLabel = !contact.label ? defaultLabel : contact.label;
     const contacts = `contacts[${contactIndex}]`
     const firstName = `${contacts}.first_name`
     const lastName = `${contacts}.last_name`

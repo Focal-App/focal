@@ -308,6 +308,7 @@ describe("Data Adapter", () => {
             isTrue: true,
             simpleDate: "2019-07-01",
             formattedDate: "April 17, 2019",
+            undefined: undefined,
             array: [
                 {
                     firstName: "-",
@@ -341,6 +342,7 @@ describe("Data Adapter", () => {
             isTrue: true,
             simpleDate: "2019-07-01T07:00:00.000Z",
             formattedDate: "2019-04-17T07:00:00.000Z",
+            undefined: null,
             array: [
                 {
                     firstName: null,
@@ -429,8 +431,8 @@ describe("Data Adapter", () => {
         }
 
         expect(DataAdapter.toFormReadyData(dataForForms)).toEqual({
-            firstName: undefined,
-            lastName: undefined,
+            firstName: '',
+            lastName: '',
             price: "1.00",
             zeroPrice: "0.00",
             text: "a 11 story thing",
@@ -438,8 +440,8 @@ describe("Data Adapter", () => {
             formattedDate: "2019-04-17",
             array: [
                 {
-                    firstName: undefined,
-                    lastName: undefined,
+                    firstName: '',
+                    lastName: '',
                     price: "1.00",
                     text: "a 11 story thing",
                     isTrue: true,
@@ -447,8 +449,8 @@ describe("Data Adapter", () => {
                 }
             ],
             object: {
-                firstName: undefined,
-                lastName: undefined,
+                firstName: '',
+                lastName: '',
                 price: "1.00",
                 text: "a 11 story thing",
                 isTrue: true,

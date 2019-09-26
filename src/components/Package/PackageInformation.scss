@@ -1,0 +1,67 @@
+@import 'styles/_shared.scss';
+
+.package-information  {
+    @include info-module;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 10px;
+    justify-items: start;
+    align-items: start;
+    text-align: left;
+
+    h2 {
+        grid-column: 1 / -1;
+        margin-top: 0px;
+        margin-bottom: 0px;
+    }
+
+    h4 {
+        grid-column: 1 / -1;
+        margin-bottom: 5px;
+    }
+
+    .cost-line {
+        grid-column: 1 / 2;
+        justify-self: flex-end;
+        margin-right: 20px;
+        margin-bottom: 10px;
+        display: grid;
+        grid-template-columns: 1fr;
+        justify-items: flex-end;
+        align-items: flex-end;
+
+        h4 {
+            margin-bottom: 0px;
+            font-size: $h4;
+            height: 20px;
+        }
+    }
+
+    .cost-description {
+        grid-column: 2 / -1;
+        margin: 0px !important;
+        display: grid;
+        grid-template-columns: 1fr;
+        justify-items: flex-end;
+        align-items: flex-end;
+
+        h6 {
+            text-align: left;
+            height: 20px;
+            font-size: $h5;
+            font-weight: 400;
+            justify-self: start;
+            margin-top: 1px;
+        }
+
+        h6:last-child {
+            margin-top: 20px;
+        }
+    }
+
+    .boolean-line {
+        grid-column: 1 / -1;
+        display: flex;
+        justify-content: space-between;
+    }
+}

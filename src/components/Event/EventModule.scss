@@ -1,0 +1,33 @@
+@import 'styles/_shared.scss';
+
+.event-information {
+    @include info-module;
+    @include two-column-grid;
+    margin-bottom: 30px;
+}
+
+.event-information--suggested {
+    color: $grey-800;
+    box-sizing: border-box;
+    border-radius: 6px;
+    box-shadow: none;
+    justify-self: stretch;
+    margin-bottom: 30px;
+    button {
+        justify-self: stretch;
+        width: 100%;
+        padding: 20px;
+        background-color: $blue-300;
+        font-weight: 600;
+        font-size: 16px;
+        color: white;
+        border: 1px solid $blue-300;
+        box-shadow: $box-shadow;
+        &:hover {
+            font-weight: 700;
+            color: white;
+            border: 1px solid $blue-300;
+            background-color: $blue-350;
+        }
+    }
+}

@@ -76,6 +76,9 @@ describe('Clients Flow', () => {
         await waitForElement(() =>
             findByText(/sammy lee/i)
         )
+        getByText(/client information/i)
+        getAllByText(/package/i)
+        getAllByText(/new client inquiry/i)
     })
 
 

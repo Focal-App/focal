@@ -1,0 +1,33 @@
+@import 'styles/_shared.scss';
+
+.task { 
+    display: grid;
+    grid-template-columns: 30px 1fr;
+    justify-items: start;
+    align-items: center;
+    grid-gap: 10px;
+    margin-bottom: 14px;
+}
+
+.task-label {
+    background-color: white;
+    justify-self: stretch;
+    padding: 8px 16px;
+    box-shadow: $box-shadow;
+    border-radius: 6px;
+
+    h3 {
+        text-align: left;
+        margin: 0px;
+    }
+}
+
+.task-label--complete {
+    h3 {
+        color: $grey-600;
+    }
+}
+
+.checkmark-container {
+    cursor: pointer;
+}

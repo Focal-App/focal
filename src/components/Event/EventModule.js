@@ -4,6 +4,7 @@ import Endpoints from "utilities/api/apiEndpoint";
 import UpdateEventForm from "./UpdateEventForm";
 import ModalForm from "UI/ModalForm";
 import InfoWithLabel from "UI/InfoWithLabel";
+import "./EventModule.scss";
 
 const EventModule = ({ event, apiHandler, setEvents, package_uuid, newEvent = false }) => {
     const [errors, setErrors] = useState(false);
@@ -12,6 +13,7 @@ const EventModule = ({ event, apiHandler, setEvents, package_uuid, newEvent = fa
     const [success, setSuccess] = useState(false);
 
     const handleSubmit = async (values) => {
+        setErrors(false);
         setLoading(true);
         const transformedValues = DataAdapter.toApiReadyClient(values);
         let response;

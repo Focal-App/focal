@@ -4,6 +4,7 @@ import Endpoints from "utilities/api/apiEndpoint";
 import UpdatePackageForm from "./UpdatePackageForm";
 import { Included } from "UI/Checkmark";
 import ModalForm from "UI/ModalForm";
+import "./PackageInformation.scss";
 
 const PackageInformation = ({ clientPackage, apiHandler, setPackage, client_uuid, setRefetchWorkflow, setRefetchEvents }) => {
     const [errors, setErrors] = useState(false);
@@ -12,6 +13,7 @@ const PackageInformation = ({ clientPackage, apiHandler, setPackage, client_uuid
     const [success, setSuccess] = useState(false);
 
     const handleSubmit = async (values) => {
+        setErrors(false);
         setLoading(true);
         const transformedValues = DataAdapter.toApiReadyClient(values);
         let response;
@@ -83,8 +85,8 @@ const PackageInformation = ({ clientPackage, apiHandler, setPackage, client_uuid
                     <BooleanLine completed={wedding_included} label={"Includes Wedding"} />
                     <BooleanLine completed={engagement_included} label={"Includes Engagement"} />
                     <hr />
-                    <BooleanLine completed={retainer_paid} label={"Retainer Paid"} />
                     <BooleanLine completed={proposal_signed} label={"Proposal Signed"} />
+                    <BooleanLine completed={retainer_paid} label={"Retainer Paid"} />
                     <BooleanLine completed={balance_received} label={"Balance Received"} />
                 </section>
             </section>

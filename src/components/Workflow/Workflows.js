@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Error from "UI/Error";
 import Task from "components/Workflow/Task";
+import "./Workflow.scss";
 
 const Workflows = ({ workflows, apiHandler, setWorkflows }) => {
     const updateTask = (workflow_uuid, task) => {

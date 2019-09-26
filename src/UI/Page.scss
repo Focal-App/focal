@@ -3,10 +3,9 @@
 .page {
     @include page;
     box-sizing: border-box;
-    max-width: 100vw;
     overflow-y: hidden;
     padding-bottom: 100px;
-    color: $grey-700
+    color: $grey-700;
 }
 
 .page--theme {
