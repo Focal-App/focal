@@ -131,3 +131,55 @@ PAGE
     min-height: 100vh;
     padding: 30px;
 }
+
+/*
+==========================
+INFO MODULES
+==========================
+*/
+@mixin info-module {
+    color: $grey-800;
+    box-sizing: border-box;
+    background-color: white;
+    padding: 30px;
+    border-radius: 6px;
+    box-shadow: $box-shadow;
+
+    h6 {
+        font-size: 14px;
+        font-weight: 400;
+        margin: 0px;
+    }
+
+    h4 {
+        font-size: 16px;
+        font-weight: 700;
+        margin: 0px 0px 14px 0px;
+    }
+
+    hr {
+        grid-column: 1 / -1;
+        width: 100%;
+        border-top: 1px solid $grey-200;
+        margin-bottom: 10px;
+    }
+
+    span {
+        grid-column: 1 / -1;
+    }
+}
+
+@mixin two-column-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 10px;
+    justify-items: start;
+    align-items: start;
+    text-align: left;
+}
+
+@mixin info-module-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+}

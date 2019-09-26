@@ -3,6 +3,7 @@ import Checkmark from "UI/Checkmark";
 import DataAdapter from "utilities/api/dataAdapter";
 import Endpoints from "utilities/api/apiEndpoint";
 import Loader from "UI/Loader";
+import "./Task.scss";
 
 const Task = ({ task, setErrors, apiHandler, updateTask, workflow_uuid }) => {
     const [loading, setLoading] = useState(false);

@@ -4,6 +4,7 @@ import Endpoints from "utilities/api/apiEndpoint";
 import UpdatePackageForm from "./UpdatePackageForm";
 import { Included } from "UI/Checkmark";
 import ModalForm from "UI/ModalForm";
+import "./PackageInformation.scss";
 
 const PackageInformation = ({ clientPackage, apiHandler, setPackage, client_uuid, setRefetchWorkflow, setRefetchEvents }) => {
     const [errors, setErrors] = useState(false);

@@ -1,0 +1,6 @@
+@import 'styles/_shared.scss';
+
+.client-information {
+    @include info-module;
+    @include two-column-grid;
+}

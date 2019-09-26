@@ -79,6 +79,11 @@ table {
     align-items: center;
     grid-gap: 10px;
     cursor: pointer;
+    .task-label {
+        background-color: transparent;
+        box-shadow: none;
+        padding-left: 0px;
+    }
 }
 
 .clients--task-completed {
