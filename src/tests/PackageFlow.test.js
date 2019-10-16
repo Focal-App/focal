@@ -86,7 +86,7 @@ describe('Package Flow', () => {
         await waitForElement(() =>
             findByText(/wedding classic/i)
         )
-        getByText(/10000.00/i)
+        getByText(/10,000.00/i)
         getByText(/10 Hours of Photographic Coverage/i)
     })
 
