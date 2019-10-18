@@ -5,9 +5,10 @@ export const convertPenniesToDollars = (pennies) => {
         return `0.${pennies}`;
     } else if (pennies >= 100) {
         let insertionIndex = pennies.toString().length - 2;
-        let convertedMoney = pennies.toString().split("")
-        convertedMoney.splice(insertionIndex, 0, '.')
-        return convertedMoney.join("");
+        let convertedMoney = pennies.toString().split("");
+        convertedMoney.splice(insertionIndex, 0, '.');
+
+        return parseInt(convertedMoney.join("")).toLocaleString() + '.' + convertedMoney.slice(-2).join("");
     }
 }
 

@@ -56,7 +56,7 @@ describe('Client', () => {
 
         getByText(/wedding premier/i)
         getByText(/Eight Hours of Photographic Coverage/i)
-        getAllByText(/4800.00/i)
+        getAllByText(/4,800.00/i)
 
         getByText(/engagement event/i)
         getAllByText(/April 17, 2020/i)

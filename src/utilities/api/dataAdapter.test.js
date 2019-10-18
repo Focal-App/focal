@@ -135,7 +135,7 @@ describe("Data Adapter", () => {
             uuid: "654a66f1-055f-4525-906e-9334e28b1966",
             upcoming_shoot_date: "April 17, 2020",
             balance_received: false,
-            balance_remaining: "4800.00",
+            balance_remaining: "4,800.00",
             discount_offered: "0.00",
             package_contents: `
                 Up To Eight Hours of Photographic Coverage
@@ -147,11 +147,11 @@ describe("Data Adapter", () => {
                 Private Online Gallery of All Images for Friends and Family
                 
                 Five Hundred+ Digital Negatives on a Custom USB Drive`,
-            package_price: "4800.00",
+            package_price: "4,800.00",
             proposal_signed: false,
             retainer_paid: false,
             retainer_paid_amount: "0.00",
-            retainer_price: "1000.00",
+            retainer_price: "1,000.00",
             engagement_included: false,
             wedding_included: false
         })
@@ -197,7 +197,7 @@ describe("Data Adapter", () => {
                 uuid: "654a66f1-055f-4525-906e-9334e28b1966",
                 upcoming_shoot_date: "April 17, 2020",
                 balance_received: false,
-                balance_remaining: "4800.00",
+                balance_remaining: "4,800.00",
                 discount_offered: "0.00",
                 package_contents: `
                 Up To Eight Hours of Photographic Coverage
@@ -209,11 +209,11 @@ describe("Data Adapter", () => {
                 Private Online Gallery of All Images for Friends and Family
                 
                 Five Hundred+ Digital Negatives on a Custom USB Drive`,
-                package_price: "4800.00",
+                package_price: "4,800.00",
                 proposal_signed: false,
                 retainer_paid: false,
                 retainer_paid_amount: "0.00",
-                retainer_price: "1000.00",
+                retainer_price: "1,000.00",
                 engagement_included: false,
                 wedding_included: false
             },
@@ -406,6 +406,7 @@ describe("Data Adapter", () => {
             firstName: "-",
             lastName: "",
             price: "1.00",
+            longerPrice: "4,000.00",
             zeroPrice: "0.00",
             text: "a 11 story thing",
             isTrue: true,
@@ -434,6 +435,7 @@ describe("Data Adapter", () => {
             firstName: '',
             lastName: '',
             price: "1.00",
+            longerPrice: "4000.00",
             zeroPrice: "0.00",
             text: "a 11 story thing",
             isTrue: true,
@@ -462,6 +464,7 @@ describe("Data Adapter", () => {
             firstName: "-",
             lastName: "",
             price: "1.00",
+            longerPrice: "4,000.00",
             zeroPrice: "0.00",
             text: "a 11 story thing",
             isTrue: true,
