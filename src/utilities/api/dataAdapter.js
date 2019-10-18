@@ -287,6 +287,7 @@ class DataAdapter {
         const formReadyData = Object.assign({}, values);
         Object.keys(formReadyData).forEach(key => {
             const value = formReadyData[key];
+            const reg = /^[+-]?[0-9]{1,3}(?:,?[0-9]{3})*(?:\.[0-9]{2})?$/g;
             
             if (Array.isArray(value)) {
                 return formReadyData[key] = value.map(singleVaue => DataAdapter.toFormReadyData(singleVaue))
@@ -302,6 +303,10 @@ class DataAdapter {
 
             if (value === DefaultText.noContent || value === DefaultText.nothing) {
                 return formReadyData[key] = '';
+            }
+
+            if (typeof value === 'string' && value.match(reg)) {
+                return formReadyData[key] = value.replace(/\,/g,"");
             }
         })
 
