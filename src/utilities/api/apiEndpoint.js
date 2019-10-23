@@ -6,6 +6,7 @@ process.env.REACT_APP_STAGE === 'dev'
 
 const Endpoints = {
   getUser: (user_uuid) => `${API_URL}/api/users/${user_uuid}`,
+  getTemplates: (user_uuid) => `${API_URL}/api/users/${user_uuid}/templates`,
   getClients: (user_uuid) => `${API_URL}/api/users/${user_uuid}/clients/data`,
   getClient: (client_uuid) => `${API_URL}/api/clients/${client_uuid}/data`,
   deleteClient: (client_uuid) => `${API_URL}/api/clients/${client_uuid}`,
