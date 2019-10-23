@@ -6,6 +6,7 @@ import AuthenticatedHeader from 'components/Header/AuthenticatedHeader';
 import NewClient from "components/NewClient/NewClient";
 import Login from 'components/Login/Login';
 import APIHandler from './utilities/api/apiHandler';
+import Templates from 'components/Templates/Templates';
 import './App.scss';
 
 export const UnauthenticatedApp = (props) => {
@@ -13,6 +14,7 @@ export const UnauthenticatedApp = (props) => {
   return (
     <Switch>
       {props.children}
+      <Route exact path="/templates" render={(props) => <Templates apiHandler={apiHandler} />} />
       <Route path="/login/:uuid" render={(props) => <Login setUser={setUser} apiHandler={apiHandler} {...props} />} />
       <Route path="/" render={(props) => <Login setUser={setUser} apiHandler={apiHandler} {...props} />} />
     </Switch>
