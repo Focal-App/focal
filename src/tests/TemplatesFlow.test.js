@@ -1,11 +1,11 @@
 import React from 'react';
 import { App } from 'App';
 import { MemoryRouter } from "react-router-dom";
-import { render, cleanup, waitForElement } from '@testing-library/react';
+import { render, cleanup, fireEvent, waitForElement, getByTestId, queryByLabelText } from '@testing-library/react';
 import MockAPIHandler from 'utilities/api/mockApiHandler';
 import Endpoints from "utilities/api/apiEndpoint";
+import { act } from 'react-dom/test-utils';
 import MockApiData from "utilities/api/mockApiData";
-import Templates from "components/Templates/Templates"
 
 describe('Templates Flow', () => {
     afterEach(() => {
@@ -18,16 +18,27 @@ describe('Templates Flow', () => {
             [Endpoints.getTemplates(uuid)]: [{ templates: [] }]
         })
 
-        // const { findByText } = render(
-        //     <MemoryRouter initialEntries={[`/templates`]} initialIndex={0}>
-        //         <App apiHandler={apiHandler} />
-        //     </MemoryRouter>
-        // )
-
-        const { findByText } = render(
-            <Templates />
+        const { getByText, getByTestId, getByLabelText, queryByLabelText } = render(
+            <MemoryRouter initialEntries={[`/templates`]} initialIndex={0}>
+                <App apiHandler={apiHandler} />
+            </MemoryRouter>
         )
-        findByText("Templates")
-        findByText("Hello")
+
+        getByText("Templates")
+        getByText(/Emails/i)
+        getByText(/No templates yet!/i)
+        getByText(/Create a new template by clicking the button below./i)
+
+        const nameField = queryByLabelText("Name");
+        expect(nameField).toBeNull()
+
+        await act(async () => {
+            fireEvent.click(getByTestId("new-template-btn"));
+        });
+
+        const templateName = getByLabelText("Name");
+        fireEvent.change(templateName, { target: { value: "Request More Information" } });
+
+        getByLabelText("Category");
     })
 })
