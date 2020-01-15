@@ -1,0 +1,5 @@
+image: utopiafallen/focal:focal-test
+
+frontend-test:
+  script:
+  - npm test
